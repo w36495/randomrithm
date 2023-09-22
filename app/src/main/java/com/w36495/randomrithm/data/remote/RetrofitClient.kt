@@ -2,6 +2,7 @@ package com.w36495.randomrithm.data.remote
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.w36495.randomrithm.data.remote.endpoints.AlgorithmAPI
 import com.w36495.randomrithm.data.remote.endpoints.LevelAPI
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -21,6 +22,10 @@ object RetrofitClient {
 
     val levelApi: LevelAPI by lazy {
         retrofit.create(LevelAPI::class.java)
+    }
+
+    val algorithmAPI: AlgorithmAPI by lazy {
+        retrofit.create(AlgorithmAPI::class.java)
     }
 
 }
