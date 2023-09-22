@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.entity.Level
-import com.w36495.randomrithm.databinding.ItemCategoryBinding
+import com.w36495.randomrithm.databinding.ItemLevelBinding
 
 class LevelListAdapter : BaseAdapter() {
 
@@ -22,11 +22,11 @@ class LevelListAdapter : BaseAdapter() {
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         var convertView: View? = view
-        var binding: ItemCategoryBinding
+        var binding: ItemLevelBinding
         var holder: LevelListViewHolder
 
         if (convertView == null) {
-            binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent!!.context), parent, false)
+            binding = ItemLevelBinding.inflate(LayoutInflater.from(parent!!.context), parent, false)
             convertView = binding.root
 
             holder = LevelListViewHolder(binding)
@@ -43,7 +43,7 @@ class LevelListAdapter : BaseAdapter() {
 
 }
 
-class LevelListViewHolder(private val binding: ItemCategoryBinding) {
+class LevelListViewHolder(private val binding: ItemLevelBinding) {
     fun bind(level: Level) {
         binding.tvCategory.text = "${binding.root.resources.getStringArray(R.array.levelList)[level.level]} (${level.count})"
     }
