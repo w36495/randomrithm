@@ -2,4 +2,71 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="unrank">#2D2D2D</color>
+    <color name="bronze5">#9D4900</color>
+    <color name="bronze4">#A54F00</color>
+    <color name="bronze3">#AD5600</color>
+    <color name="bronze2">#B55D0A</color>
+    <color name="bronze1">#C67739</color>
+    <color name="silver5">#38546E</color>
+    <color name="silver4">#3D5A74</color>
+    <color name="silver3">#435F7A</color>
+    <color name="silver2">#496580</color>
+    <color name="silver1">#4E6A86</color>
+    <color name="gold5">#D28500</color>
+    <color name="gold4">#DF8F00</color>
+    <color name="gold3">#EC9A00</color>
+    <color name="gold2">#F9A518</color>
+    <color name="gold1">#FFB028</color>
+    <color name="platinum5">#00C78B</color>
+    <color name="platinum4">#00D497</color>
+    <color name="platinum3">#27E2A4</color>
+    <color name="platinum2">#3EF0B1</color>
+    <color name="platinum1">#51FDBD</color>
+    <color name="diamond5">#009EE5</color>
+    <color name="diamond4">#00A9F0</color>
+    <color name="diamond3">#00B4FC</color>
+    <color name="diamond2">#2BBFFF</color>
+    <color name="diamond1">#41CAFF</color>
+    <color name="ruby5">#E0004C</color>
+    <color name="ruby4">#EA0053</color>
+    <color name="ruby3">#F5005A</color>
+    <color name="ruby2">#FF0062</color>
+    <color name="ruby1">#FF3071</color>
+
+    <array name="levelColorList">
+        <item>@color/unrank</item>
+        <item>@color/bronze5</item>
+        <item>@color/bronze4</item>
+        <item>@color/bronze3</item>
+        <item>@color/bronze2</item>
+        <item>@color/bronze1</item>
+        <item>@color/silver5</item>
+        <item>@color/silver4</item>
+        <item>@color/silver3</item>
+        <item>@color/silver2</item>
+        <item>@color/silver1</item>
+        <item>@color/gold5</item>
+        <item>@color/gold4</item>
+        <item>@color/gold3</item>
+        <item>@color/gold2</item>
+        <item>@color/gold1</item>
+        <item>@color/platinum5</item>
+        <item>@color/platinum4</item>
+        <item>@color/platinum3</item>
+        <item>@color/platinum2</item>
+        <item>@color/platinum1</item>
+        <item>@color/diamond5</item>
+        <item>@color/diamond4</item>
+        <item>@color/diamond3</item>
+        <item>@color/diamond2</item>
+        <item>@color/diamond1</item>
+        <item>@color/ruby5</item>
+        <item>@color/ruby4</item>
+        <item>@color/ruby3</item>
+        <item>@color/ruby2</item>
+        <item>@color/ruby1</item>
+    </array>
+
 </resources>
