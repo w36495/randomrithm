@@ -4,6 +4,14 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
+data class AlgorithmDTO(
+    @Json(name = "count")
+    val count: Int,
+    @Json(name = "items")
+    val items: List<AlgorithmItem>
+)
+
+@JsonClass(generateAdapter = true)
 data class AlgorithmItem(
     @Json(name = "aliases")
     val aliases: List<Any>,
@@ -17,4 +25,14 @@ data class AlgorithmItem(
     val key: String,
     @Json(name = "problemCount")
     val problemCount: Int
+)
+
+@JsonClass(generateAdapter = true)
+data class DisplayName(
+    @Json(name = "language")
+    val language: String,
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "short")
+    val short: String
 )

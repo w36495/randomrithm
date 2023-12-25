@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.entity.Level
+import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.databinding.ItemLevelBinding
 
 class LevelListAdapter : BaseAdapter() {
 
-    private var levelList: List<Level> = arrayListOf()
+    private var levelList: List<LevelDTO> = arrayListOf()
+    private lateinit var levelItemClickListener: LevelItemClickListener
 
     override fun getCount(): Int = levelList.size
 
@@ -36,7 +37,7 @@ class LevelListAdapter : BaseAdapter() {
         return convertView
     }
 
-    fun setLevelList(list: ArrayList<Level>) {
+    fun setLevelList(list: ArrayList<LevelDTO>) {
         levelList = list
         notifyDataSetChanged()
     }

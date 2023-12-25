@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.entity.Level
+import com.w36495.randomrithm.data.entity.LevelDTO
+import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
 import com.w36495.randomrithm.ui.MainActivity
@@ -26,8 +27,11 @@ class LevelListFragment(
 
     private lateinit var levelListAdapter: LevelListAdapter
 
-    private val _levelList = MutableLiveData<List<Level>>()
-    private val levelList = arrayListOf<Level>()
+    private val _levelList = MutableLiveData<List<LevelDTO>>()
+    private val levelList = arrayListOf<LevelDTO>()
+
+    private var currentLevel: Int? = null
+    private val problemList = MutableLiveData<List<ProblemItem>>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -104,10 +108,10 @@ class LevelListFragment(
     }
 
     private fun getCountOfLevel() {
-        RetrofitClient.levelApi.getCountByLevel().enqueue(object: Callback<List<Level>> {
+        RetrofitClient.levelAPI.getCountByLevel().enqueue(object: Callback<List<LevelDTO>> {
             override fun onResponse(
-                call: Call<List<Level>>,
-                response: Response<List<Level>>
+                call: Call<List<LevelDTO>>,
+                response: Response<List<LevelDTO>>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -115,7 +119,7 @@ class LevelListFragment(
                     }
                 }
             }
-            override fun onFailure(call: Call<List<Level>>, t: Throwable) {
+            override fun onFailure(call: Call<List<LevelDTO>>, t: Throwable) {
                 Log.d("LEVEL_LIST(getCountOfLevel)", t.localizedMessage)
             }
         })

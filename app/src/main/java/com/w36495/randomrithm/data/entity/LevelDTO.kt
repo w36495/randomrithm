@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Problem(
+data class LevelDTO(
     @Json(name = "count")
     val count: Int,
-    @Json(name = "items")
-    val items: List<ProblemItem>
+    @Json(name = "level")
+    val level: Int
 )

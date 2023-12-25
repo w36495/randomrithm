@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.entity.Algorithm
+import com.w36495.randomrithm.data.entity.AlgorithmDTO
 import com.w36495.randomrithm.data.entity.AlgorithmItem
-import com.w36495.randomrithm.data.entity.Problem
+import com.w36495.randomrithm.data.entity.ProblemDTO
 import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
@@ -86,8 +86,8 @@ class AlgorithmFragment : Fragment(), AlgorithmItemClickListener, ProblemClickLi
     }
 
     private fun getCategoryList() {
-        RetrofitClient.algorithmAPI.getCountOfAlgorithm().enqueue(object : Callback<Algorithm> {
-            override fun onResponse(call: Call<Algorithm>, response: Response<Algorithm>) {
+        RetrofitClient.algorithmAPI.getCountOfAlgorithm().enqueue(object : Callback<AlgorithmDTO> {
+            override fun onResponse(call: Call<AlgorithmDTO>, response: Response<AlgorithmDTO>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         categoryList.value = it.items
@@ -97,7 +97,7 @@ class AlgorithmFragment : Fragment(), AlgorithmItemClickListener, ProblemClickLi
                 }
             }
 
-            override fun onFailure(call: Call<Algorithm>, t: Throwable) {
+            override fun onFailure(call: Call<AlgorithmDTO>, t: Throwable) {
                 Log.d("Failed(getCategoryList)", t.localizedMessage)
             }
         })
@@ -106,8 +106,8 @@ class AlgorithmFragment : Fragment(), AlgorithmItemClickListener, ProblemClickLi
     private fun getProblemList(tag: String) {
         val requestQuery = "solvable:true+tag:${tag}"
 
-        RetrofitClient.algorithmAPI.getProblemList(requestQuery).enqueue(object : Callback<Problem> {
-            override fun onResponse(call: Call<Problem>, response: Response<Problem>) {
+        RetrofitClient.algorithmAPI.getProblemList(requestQuery).enqueue(object : Callback<ProblemDTO> {
+            override fun onResponse(call: Call<ProblemDTO>, response: Response<ProblemDTO>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         problemList.value = it.items
@@ -116,7 +116,7 @@ class AlgorithmFragment : Fragment(), AlgorithmItemClickListener, ProblemClickLi
                     Log.d("Not-Success(getProblemList)", response.code().toString())
                 }
             }
-            override fun onFailure(call: Call<Problem>, t: Throwable) {
+            override fun onFailure(call: Call<ProblemDTO>, t: Throwable) {
                 Log.d("Failed(getProblemList)", t.localizedMessage)
             }
         })
