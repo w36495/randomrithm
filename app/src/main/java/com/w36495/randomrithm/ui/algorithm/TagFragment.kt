@@ -89,7 +89,7 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
     }
 
     private fun setupViewModel() {
-        tagViewModelFactory = TagViewModelFactory(GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.algorithmAPI))))
+        tagViewModelFactory = TagViewModelFactory(GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.tagAPI))))
         tagViewModel = ViewModelProvider(requireActivity(), tagViewModelFactory)[TagViewModel::class.java]
     }
 
@@ -114,7 +114,7 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
     private fun getProblemList(tag: String) {
         val requestQuery = "solvable:true+tag:${tag}"
 
-        RetrofitClient.algorithmAPI.getProblemList(requestQuery).enqueue(object : Callback<ProblemDTO> {
+        RetrofitClient.tagAPI.getProblemList(requestQuery).enqueue(object : Callback<ProblemDTO> {
             override fun onResponse(call: Call<ProblemDTO>, response: Response<ProblemDTO>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -142,5 +142,9 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
 
     override fun onClickNextProblem(tag: String) {
         getProblemList(tag)
+    }
+
+    companion object {
+        const val TAG: String = "TagFragment"
     }
 }

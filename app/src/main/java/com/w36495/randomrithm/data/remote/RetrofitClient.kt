@@ -2,7 +2,7 @@ package com.w36495.randomrithm.data.remote
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.w36495.randomrithm.data.remote.endpoints.AlgorithmAPI
+import com.w36495.randomrithm.data.remote.endpoints.TagAPI
 import com.w36495.randomrithm.data.remote.endpoints.LevelAPI
 import com.w36495.randomrithm.data.remote.endpoints.ProblemAPI
 import retrofit2.Retrofit
@@ -25,8 +25,8 @@ object RetrofitClient {
         retrofit.create(LevelAPI::class.java)
     }
 
-    val algorithmAPI: AlgorithmAPI by lazy {
-        retrofit.create(AlgorithmAPI::class.java)
+    val tagAPI: TagAPI by lazy {
+        retrofit.create(TagAPI::class.java)
     }
 
     val problemAPI: ProblemAPI by lazy {
