@@ -11,4 +11,8 @@ class ProblemRepositoryImpl(
     override suspend fun fetchProblem(problemId: Int): Response<ProblemItem> {
         return problemRemoteDataSource.fetchProblem(problemId)
     }
+
+    override suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> {
+        return problemRemoteDataSource.fetchProblemsByTag(query, page)
+    }
 }

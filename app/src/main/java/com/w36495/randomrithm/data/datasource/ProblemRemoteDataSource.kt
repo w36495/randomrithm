@@ -1,5 +1,6 @@
 package com.w36495.randomrithm.data.datasource
 
+import com.w36495.randomrithm.data.entity.ProblemDTO
 import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.data.remote.endpoints.ProblemAPI
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,4 +14,7 @@ class ProblemRemoteDataSource(
 ) {
     suspend fun fetchProblem(problemId: Int): Response<ProblemItem> =
         withContext(ioDispatcher) { problemAPI.fetchProblem(problemId) }
+
+    suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> =
+        withContext(ioDispatcher) { problemAPI.fetchProblemsByTag(query, page) }
 }

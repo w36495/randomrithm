@@ -57,6 +57,9 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
             tagAdapter.setList(it)
         }
 
+        tagViewModel.problems.observe(requireActivity()) {
+            Log.d(TAG, it.toString())
+        }
 //        problemList.observe(requireActivity()) {
 //            val randomProblemId = it.random().problemId
 //            val bundle = Bundle().apply {
@@ -89,7 +92,10 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
     }
 
     private fun setupViewModel() {
-        tagViewModelFactory = TagViewModelFactory(GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.tagAPI))))
+        tagViewModelFactory = TagViewModelFactory(
+            GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.tagAPI))),
+            GetProblemsByTagUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI)))
+            )
         tagViewModel = ViewModelProvider(requireActivity(), tagViewModelFactory)[TagViewModel::class.java]
     }
 
@@ -135,9 +141,8 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
         _binding = null
     }
 
-    override fun onClickAlgorithmItem(tag: String) {
-        currentTag = tag
-        getProblemList(tag)
+    override fun onClickTagItem(tagKey: String) {
+        tagViewModel.getProblemsByTag(tagKey)
     }
 
     override fun onClickNextProblem(tag: String) {
