@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.w36495.randomrithm.databinding.ItemAlgorhtimBinding
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.ui.AlgorithmItemClickListener
+import com.w36495.randomrithm.ui.TagClickListener
 
 class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
-    private lateinit var algorithmItemClickListener: AlgorithmItemClickListener
+    private lateinit var tagClickListener: TagClickListener
 
     private var tags: List<Tag> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagViewHolder {
@@ -21,7 +21,7 @@ class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
         holder.bind(tags[position])
 
         holder.onClickItem = {
-            algorithmItemClickListener.onClickAlgorithmItem(tags[position].id.toString())
+            tagClickListener.onClickTagItem(tags[position].key)
         }
     }
 
@@ -30,8 +30,8 @@ class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setAlgorithmItemClickListener(listener: AlgorithmItemClickListener) {
-        algorithmItemClickListener = listener
+    fun setTagClickListener(listener: TagClickListener) {
+        tagClickListener = listener
     }
 }
 

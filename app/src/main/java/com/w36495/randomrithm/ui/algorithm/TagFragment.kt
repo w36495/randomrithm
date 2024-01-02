@@ -19,14 +19,14 @@ import com.w36495.randomrithm.domain.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.repository.TagRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
-import com.w36495.randomrithm.ui.AlgorithmItemClickListener
+import com.w36495.randomrithm.ui.TagClickListener
 import com.w36495.randomrithm.ui.ProblemOfAlgorithmClickListener
 import com.w36495.randomrithm.ui.viewmodel.TagViewModelFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmClickListener {
+class TagFragment : Fragment(), TagClickListener, ProblemOfAlgorithmClickListener {
 
     private var _binding: FragmentAlgorithmBinding? = null
     private val binding: FragmentAlgorithmBinding get() = _binding!!
@@ -91,7 +91,7 @@ class TagFragment : Fragment(), AlgorithmItemClickListener, ProblemOfAlgorithmCl
             adapter = tagAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-        tagAdapter.setAlgorithmItemClickListener(this)
+        tagAdapter.setTagClickListener(this)
     }
 
     private fun setupViewModel() {
