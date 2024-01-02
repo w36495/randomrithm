@@ -32,7 +32,7 @@ class TagViewModel(
                     val tempTags = mutableListOf<Tag>()
                     tags.body()?.let { dto ->
                         dto.items.forEach {
-                            tempTags.add(Tag(it.bojTagId, it.displayNames[0].name, it.problemCount))
+                            tempTags.add(Tag(it.bojTagId, it.key, it.displayNames[0].name, it.problemCount))
                         }
 
                         _tags.value = tempTags.toList()

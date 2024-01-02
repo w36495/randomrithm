@@ -4,5 +4,5 @@ data class Problem(
     val id: Int,
     val level: String,
     val title: String,
-    val algorithms: List<String>
+    val tags: List<Tag>
 )

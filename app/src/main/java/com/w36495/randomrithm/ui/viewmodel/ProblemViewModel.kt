@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
+import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetProblemUseCase
 import kotlinx.coroutines.launch
 
@@ -23,18 +24,16 @@ class ProblemViewModel(
 
                 if (result.isSuccessful) {
                     result.body()?.let { it ->
-                        val algorithms = mutableListOf<String>()
-                        it.tags.flatMap {
-                            it.displayNames
-                        }.forEach {
-                            if (it.language == "ko") algorithms.add(it.name)
+                        val tags = mutableListOf<Tag>()
+                        it.tags.forEach {
+                            tags.add(Tag(it.bojTagId, it.key, it.displayNames[0].name, it.problemCount))
                         }
 
                         _problem.value = Problem(
                             id = it.problemId,
                             level = it.level.toString(),
                             title = it.titleKo,
-                            algorithms = algorithms.sorted()
+                            tags = tags.sortedBy { it.name }
                         )
                     }
                 }

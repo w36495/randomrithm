@@ -11,6 +11,7 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
+import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetProblemUseCase
 import com.w36495.randomrithm.ui.ProblemOfAlgorithmClickListener
@@ -69,7 +70,7 @@ class ProblemFragment : Fragment() {
             binding.tvLevel.setBackgroundColor(levelBackgroundColors[problem.level.toInt()])
             binding.tvTitle.text = problem.title
             binding.tvId.text = problem.id.toString()
-            showAlgorithmChips(problem.algorithms)
+            showAlgorithmChips(problem.tags)
         }
     }
 
@@ -92,10 +93,10 @@ class ProblemFragment : Fragment() {
         }
     }
 
-    private fun showAlgorithmChips(chips: List<String>) {
+    private fun showAlgorithmChips(chips: List<Tag>) {
         chips.forEach {
             val chip = Chip(requireContext()).apply {
-                text = it
+                text = it.name
             }
             binding.layoutChip.addView(chip)
         }
