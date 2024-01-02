@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
 import com.w36495.randomrithm.data.entity.ProblemDTO
 import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
+import com.w36495.randomrithm.domain.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.repository.TagRepositoryImpl
+import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import com.w36495.randomrithm.ui.AlgorithmItemClickListener
 import com.w36495.randomrithm.ui.ProblemOfAlgorithmClickListener
