@@ -24,12 +24,11 @@ class ProblemViewModelFactory(
 }
 
 class TagViewModelFactory(
-    private val getTagsUseCase: GetTagsUseCase,
-    private val getProblemsByTagUseCase: GetProblemsByTagUseCase
+    private val getTagsUseCase: GetTagsUseCase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TagViewModel::class.java)) {
-            return TagViewModel(getTagsUseCase, getProblemsByTagUseCase) as T
+            return TagViewModel(getTagsUseCase) as T
         } else {
             throw IllegalArgumentException("Unknow Tag ViewModel Factory")
         }

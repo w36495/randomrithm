@@ -10,8 +10,7 @@ import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import kotlinx.coroutines.launch
 
 class TagViewModel(
-    private val getTagsUseCase: GetTagsUseCase,
-    private val getProblemsByTagUseCase: GetProblemsByTagUseCase
+    private val getTagsUseCase: GetTagsUseCase
 ) : ViewModel() {
     private val _tags = MutableLiveData<List<Tag>>()
     val tags: LiveData<List<Tag>>

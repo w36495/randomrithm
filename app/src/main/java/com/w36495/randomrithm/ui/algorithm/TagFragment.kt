@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
+import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
 import com.w36495.randomrithm.domain.repository.TagRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
-import com.w36495.randomrithm.ui.TagClickListener
-import com.w36495.randomrithm.ui.ProblemOfAlgorithmClickListener
+import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.TagViewModelFactory
 
 class TagFragment : Fragment(), TagClickListener {
@@ -41,8 +40,8 @@ class TagFragment : Fragment(), TagClickListener {
         setupViewModel()
 
         tagViewModel.getTags()
-        tagViewModel.tags.observe(requireActivity()) {
-            tagAdapter.setList(it)
+        tagViewModel.tags.observe(requireActivity()) { tags ->
+            tagAdapter.setList(tags)
         }
     }
 
@@ -56,10 +55,7 @@ class TagFragment : Fragment(), TagClickListener {
     }
 
     private fun setupViewModel() {
-        tagViewModelFactory = TagViewModelFactory(
-            GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.tagAPI))),
-            GetProblemsByTagUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI)))
-            )
+        tagViewModelFactory = TagViewModelFactory(GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.tagAPI))))
         tagViewModel = ViewModelProvider(requireActivity(), tagViewModelFactory)[TagViewModel::class.java]
     }
 
