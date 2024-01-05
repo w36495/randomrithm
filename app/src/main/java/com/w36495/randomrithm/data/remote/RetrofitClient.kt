@@ -30,7 +30,7 @@ object RetrofitClient {
         .client(httpClient)
         .build()
 
-    val levelApi: LevelAPI by lazy {
+    val levelAPI: LevelAPI by lazy {
         retrofit.create(LevelAPI::class.java)
     }
 
