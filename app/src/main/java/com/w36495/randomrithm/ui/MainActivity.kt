@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.ActivityMainBinding
-import com.w36495.randomrithm.ui.algorithm.AlgorithmFragment
+import com.w36495.randomrithm.ui.tag.TagFragment
 import com.w36495.randomrithm.ui.level.LevelFragment
 
 class MainActivity : AppCompatActivity() {
@@ -38,10 +38,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.nav_algorithm -> {
+                R.id.nav_tag -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container_fragment, AlgorithmFragment())
-                        .addToBackStack(TAG_ALGORITHM_FRAGMENT)
+                        .replace(R.id.container_fragment, TagFragment())
+                        .addToBackStack(TagFragment.TAG)
                         .setReorderingAllowed(true)
                         .commit()
                     true
@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG_LEVEL_FRAGMENT: String = "LEVEL_FRAGMENT"
-        const val TAG_ALGORITHM_FRAGMENT: String = "ALGORITHM_FRAGMENT"
         const val TAG_PROBLEM_FRAGMENT: String = "PROBLEM_FRAGMENT"
     }
 

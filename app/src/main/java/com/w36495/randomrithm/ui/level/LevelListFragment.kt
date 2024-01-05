@@ -1,33 +1,30 @@
 package com.w36495.randomrithm.ui.level
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.entity.Level
+import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
+import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
-import com.w36495.randomrithm.ui.MainActivity
+import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
+import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 
 class LevelListFragment(
-    private val level: Int
-) : Fragment() {
-
+    private val selectedLevel: Int
+) : Fragment(), LevelItemClickListener {
     private var _binding: FragmentLevelListBinding? = null
     private val binding: FragmentLevelListBinding get() = _binding!!
 
+    private lateinit var levelViewModel: LevelViewModel
+    private lateinit var levelViewModelFactory: LevelViewModelFactory
     private lateinit var levelListAdapter: LevelListAdapter
-
-    private val _levelList = MutableLiveData<List<Level>>()
-    private val levelList = arrayListOf<Level>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,85 +37,40 @@ class LevelListFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListView()
-        setupListViewClickEvent()
-        getCountOfLevel()
 
-        _levelList.observe(requireActivity()) {
-            when (level) {
-                0 -> levelList.add(it[0])
-                1 -> {
-                    for (i in 1..5) {
-                        levelList.add(it[i])
-                    }
-                }
+        setupViewModel()
 
-                2 -> {
-                    for (i in 6..10) {
-                        levelList.add(it[i])
-                    }
-                }
-
-                3 -> {
-                    for (i in 11..15) {
-                        levelList.add(it[i])
-                    }
-                }
-
-                4 -> {
-                    for (i in 16..20) {
-                        levelList.add(it[i])
-                    }
-                }
-
-                5 -> {
-                    for (i in 21..25) {
-                        levelList.add(it[i])
-                    }
-                }
-
-                else -> {
-                    for (i in 26..30) {
-                        levelList.add(it[i])
-                    }
-                }
-            }
-            levelListAdapter.setLevelList(levelList)
+        levelViewModel.getLevels(selectedLevel)
+        levelViewModel.levels.observe(requireActivity()) {
+            setupListView(it)
         }
     }
 
-    private fun setupListView() {
-        levelListAdapter = LevelListAdapter()
-        levelListAdapter.setLevelList(levelList)
+    private fun setupListView(levels: List<LevelDTO>) {
+        levelListAdapter = LevelListAdapter().apply {
+            setLevelList(levels)
+            setLevelItemClickListener(this@LevelListFragment)
+        }
         binding.containerListview.adapter = levelListAdapter
     }
 
-    private fun setupListViewClickEvent() {
-        binding.containerListview.setOnItemClickListener { adapterView, view, position, id ->
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.container_fragment, ProblemFragment())
-                .addToBackStack(MainActivity.TAG_PROBLEM_FRAGMENT)
-                .setReorderingAllowed(true)
-                .commit()
-        }
+    private fun setupViewModel() {
+        levelViewModelFactory = LevelViewModelFactory(GetLevelsUseCase(LevelRepositoryImpl(LevelRemoteDataSource(RetrofitClient.levelAPI))))
+        levelViewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
     }
 
-    private fun getCountOfLevel() {
-        RetrofitClient.levelApi.getCountByLevel().enqueue(object: Callback<List<Level>> {
-            override fun onResponse(
-                call: Call<List<Level>>,
-                response: Response<List<Level>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        _levelList.value = it
-                    }
-                }
+    override fun onClickLevelItem(level: Int) {
+        val problemFragment = ProblemFragment().apply {
+            arguments = Bundle().apply {
+                putInt("level", level)
             }
-            override fun onFailure(call: Call<List<Level>>, t: Throwable) {
-                Log.d("LEVEL_LIST(getCountOfLevel)", t.localizedMessage)
-            }
-        })
+        }
+
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(ProblemFragment.TAG)
+            .setReorderingAllowed(true)
+            .replace(R.id.container_fragment, problemFragment)
+            .commit()
     }
 
     override fun onDestroyView() {
