@@ -1,7 +1,6 @@
 package com.w36495.randomrithm.ui.algorithm
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,7 @@ import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
-import com.w36495.randomrithm.domain.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.repository.TagRepositoryImpl
-import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import com.w36495.randomrithm.ui.TagClickListener
 import com.w36495.randomrithm.ui.ProblemOfAlgorithmClickListener
@@ -26,7 +23,6 @@ class TagFragment : Fragment(), TagClickListener, ProblemOfAlgorithmClickListene
     private val binding: FragmentAlgorithmBinding get() = _binding!!
     private lateinit var tagViewModel: TagViewModel
     private lateinit var tagViewModelFactory: TagViewModelFactory
-
     private lateinit var tagAdapter: TagAdapter
 
     override fun onCreateView(
@@ -48,30 +44,6 @@ class TagFragment : Fragment(), TagClickListener, ProblemOfAlgorithmClickListene
         tagViewModel.tags.observe(requireActivity()) {
             tagAdapter.setList(it)
         }
-
-        tagViewModel.problems.observe(requireActivity()) {
-            Log.d(TAG, it.toString())
-        }
-//        problemList.observe(requireActivity()) {
-//            val randomProblemId = it.random().problemId
-//            val bundle = Bundle().apply {
-//                currentTag?.let {
-//                    this.putString("tag", it)
-//                }
-//                this.putInt("problemId", randomProblemId)
-//            }
-//
-//            val problemFragment = ProblemFragment().apply {
-//                setProblemOfAlgorithmCLickListener(this@AlgorithmFragment)
-//                arguments = bundle
-//            }
-//
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.container_fragment, problemFragment)
-//                .addToBackStack(MainActivity.TAG_PROBLEM_FRAGMENT)
-//                .setReorderingAllowed(true)
-//                .commit()
-//        }
     }
 
     private fun setupRecyclerView() {
@@ -94,14 +66,6 @@ class TagFragment : Fragment(), TagClickListener, ProblemOfAlgorithmClickListene
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onClickTagItem(tagKey: String) {
-        tagViewModel.getProblemsByTag(tagKey)
-    }
-
-    override fun onClickNextProblem(tag: String) {
-
     }
 
     companion object {

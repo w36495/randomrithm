@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.w36495.randomrithm.databinding.ItemAlgorhtimBinding
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.ui.TagClickListener
 
 class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
     private lateinit var tagClickListener: TagClickListener

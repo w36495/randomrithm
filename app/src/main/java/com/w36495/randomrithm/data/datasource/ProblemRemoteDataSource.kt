@@ -1,7 +1,6 @@
 package com.w36495.randomrithm.data.datasource
 
 import com.w36495.randomrithm.data.entity.ProblemDTO
-import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.data.remote.endpoints.ProblemAPI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

@@ -1,7 +1,6 @@
 package com.w36495.randomrithm.ui.level
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.entity.LevelDTO
-import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
 import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
@@ -28,12 +26,6 @@ class LevelListFragment(
     private lateinit var levelViewModelFactory: LevelViewModelFactory
     private lateinit var levelListAdapter: LevelListAdapter
 
-    private val _levelList = MutableLiveData<List<LevelDTO>>()
-    private val levelList = arrayListOf<LevelDTO>()
-
-    private var currentLevel: Int? = null
-    private val problemList = MutableLiveData<List<ProblemItem>>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,30 +37,6 @@ class LevelListFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListView()
-        setupListViewClickEvent()
-        getCountOfLevel()
-
-        _levelList.observe(requireActivity()) {
-            when (level) {
-                0 -> levelList.add(it[0])
-                1 -> {
-                    for (i in 1..5) {
-                        levelList.add(it[i])
-                    }
-                }
-
-                2 -> {
-                    for (i in 6..10) {
-                        levelList.add(it[i])
-                    }
-                }
-
-                3 -> {
-                    for (i in 11..15) {
-                        levelList.add(it[i])
-                    }
-                }
 
         setupViewModel()
 
@@ -83,11 +51,6 @@ class LevelListFragment(
             setLevelList(levels)
             setLevelItemClickListener(this@LevelListFragment)
         }
-    }
-
-    private fun setupListView() {
-        levelListAdapter = LevelListAdapter()
-        levelListAdapter.setLevelList(levelList)
         binding.containerListview.adapter = levelListAdapter
     }
 
