@@ -12,8 +12,8 @@ class ProblemRemoteDataSource(
     private val problemAPI: ProblemAPI,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-    suspend fun fetchProblem(problemId: Int): Response<ProblemItem> =
-        withContext(ioDispatcher) { problemAPI.fetchProblem(problemId) }
+    suspend fun fetchProblemsByLevel(query: String, page: Int): Response<ProblemDTO> =
+        withContext(ioDispatcher) { problemAPI.fetchProblemsByLevel(query, page) }
 
     suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> =
         withContext(ioDispatcher) { problemAPI.fetchProblemsByTag(query, page) }

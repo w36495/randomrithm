@@ -5,6 +5,6 @@ import com.w36495.randomrithm.data.entity.ProblemItem
 import retrofit2.Response
 
 interface ProblemRepository {
-    suspend fun fetchProblem(problemId: Int): Response<ProblemItem>
+    suspend fun fetchProblemsByLevel(query: String, page: Int): Response<ProblemDTO>
     suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO>
 }

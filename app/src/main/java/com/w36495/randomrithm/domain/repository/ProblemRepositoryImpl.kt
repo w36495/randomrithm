@@ -9,8 +9,8 @@ import retrofit2.Response
 class ProblemRepositoryImpl(
     private val problemRemoteDataSource: ProblemRemoteDataSource
 ) : ProblemRepository {
-    override suspend fun fetchProblem(problemId: Int): Response<ProblemItem> {
-        return problemRemoteDataSource.fetchProblem(problemId)
+    override suspend fun fetchProblemsByLevel(query: String, page: Int): Response<ProblemDTO> {
+        return problemRemoteDataSource.fetchProblemsByLevel(query, page)
     }
 
     override suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> {

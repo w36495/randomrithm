@@ -15,4 +15,10 @@ interface ProblemAPI {
         @Query("query", encoded = true) query: String,
         @Query("page") page: Int
     ): Response<ProblemDTO>
+
+    @GET("search/problem")
+    suspend fun fetchProblemsByLevel(
+        @Query("query", encoded = true) query: String,
+        @Query("page") page: Int
+    ): Response<ProblemDTO>
 }
