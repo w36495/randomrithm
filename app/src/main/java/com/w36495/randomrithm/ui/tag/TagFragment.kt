@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.algorithm
+package com.w36495.randomrithm.ui.tag
 
 import android.os.Bundle
 import android.view.LayoutInflater

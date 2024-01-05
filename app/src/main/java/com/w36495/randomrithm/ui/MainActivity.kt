@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.ActivityMainBinding
-import com.w36495.randomrithm.ui.algorithm.TagFragment
+import com.w36495.randomrithm.ui.tag.TagFragment
 import com.w36495.randomrithm.ui.level.LevelFragment
 
 class MainActivity : AppCompatActivity() {
