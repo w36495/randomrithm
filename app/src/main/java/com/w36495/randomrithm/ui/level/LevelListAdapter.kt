@@ -32,6 +32,10 @@ class LevelListAdapter : BaseAdapter() {
 
             holder = LevelListViewHolder(binding)
             holder.bind(levelList[position])
+
+            holder.onClickItem = {
+                levelItemClickListener.onClickLevelItem(levelList[position].level)
+            }
         }
 
         return convertView
@@ -42,10 +46,21 @@ class LevelListAdapter : BaseAdapter() {
         notifyDataSetChanged()
     }
 
+    fun setLevelItemClickListener(listener: LevelItemClickListener) {
+        levelItemClickListener = listener
+    }
 }
 
 class LevelListViewHolder(private val binding: ItemLevelBinding) {
-    fun bind(level: Level) {
+    var onClickItem: ((LevelListViewHolder) -> Unit)? = null
+
+    fun bind(level: LevelDTO) {
         binding.tvCategory.text = "${binding.root.resources.getStringArray(R.array.levelList)[level.level]} (${level.count})"
+
+        binding.root.setOnClickListener {
+            onClickItem?.let { onClickItem ->
+                onClickItem(this@LevelListViewHolder)
+            }
+        }
     }
 }

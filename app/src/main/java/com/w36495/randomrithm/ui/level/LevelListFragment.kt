@@ -19,9 +19,8 @@ import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 
 class LevelListFragment(
-    private val level: Int
-) : Fragment() {
-
+    private val selectedLevel: Int
+) : Fragment(), LevelItemClickListener {
     private var _binding: FragmentLevelListBinding? = null
     private val binding: FragmentLevelListBinding get() = _binding!!
 
@@ -79,13 +78,10 @@ class LevelListFragment(
         }
     }
 
-                else -> {
-                    for (i in 26..30) {
-                        levelList.add(it[i])
-                    }
-                }
-            }
-            levelListAdapter.setLevelList(levelList)
+    private fun setupListView(levels: List<LevelDTO>) {
+        levelListAdapter = LevelListAdapter().apply {
+            setLevelList(levels)
+            setLevelItemClickListener(this@LevelListFragment)
         }
     }
 
@@ -100,22 +96,18 @@ class LevelListFragment(
         levelViewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
     }
 
-    private fun getCountOfLevel() {
-        RetrofitClient.levelAPI.getCountByLevel().enqueue(object: Callback<List<LevelDTO>> {
-            override fun onResponse(
-                call: Call<List<LevelDTO>>,
-                response: Response<List<LevelDTO>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        _levelList.value = it
-                    }
-                }
+    override fun onClickLevelItem(level: Int) {
+        val problemFragment = ProblemFragment().apply {
+            arguments = Bundle().apply {
+                putInt("level", level)
             }
-            override fun onFailure(call: Call<List<LevelDTO>>, t: Throwable) {
-                Log.d("LEVEL_LIST(getCountOfLevel)", t.localizedMessage)
-            }
-        })
+        }
+
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(ProblemFragment.TAG)
+            .setReorderingAllowed(true)
+            .replace(R.id.container_fragment, problemFragment)
+            .commit()
     }
 
     override fun onDestroyView() {
