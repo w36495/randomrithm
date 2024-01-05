@@ -17,7 +17,7 @@ import com.w36495.randomrithm.ui.TagClickListener
 import com.w36495.randomrithm.ui.ProblemOfAlgorithmClickListener
 import com.w36495.randomrithm.ui.viewmodel.TagViewModelFactory
 
-class TagFragment : Fragment(), TagClickListener, ProblemOfAlgorithmClickListener {
+class TagFragment : Fragment(), TagClickListener {
 
     private var _binding: FragmentAlgorithmBinding? = null
     private val binding: FragmentAlgorithmBinding get() = _binding!!
@@ -61,6 +61,20 @@ class TagFragment : Fragment(), TagClickListener, ProblemOfAlgorithmClickListene
             GetProblemsByTagUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI)))
             )
         tagViewModel = ViewModelProvider(requireActivity(), tagViewModelFactory)[TagViewModel::class.java]
+    }
+
+    override fun onClickTagItem(tagKey: String) {
+        val problemFragment = ProblemFragment().apply {
+            arguments = Bundle().apply {
+                this.putString("tag", tagKey)
+            }
+        }
+
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(ProblemFragment.TAG)
+            .setReorderingAllowed(true)
+            .replace(R.id.container_fragment, problemFragment)
+            .commit()
     }
 
     override fun onDestroyView() {
