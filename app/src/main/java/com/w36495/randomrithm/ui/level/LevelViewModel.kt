@@ -23,28 +23,15 @@ class LevelViewModel(
 
                 if (result.isSuccessful) {
                     result.body()?.let { response ->
-                        when (selectedLevel) {
-                            0 -> {
-                                _levels.value = response.filter { it.level == 0 }.sortedByDescending { it.level }
-                            }
-                            1 -> {
-                                _levels.value = response.filter { it.level in 1..5 }.sortedByDescending { it.level }
-                            }
-                            2 -> {
-                                _levels.value = response.filter { it.level in 6..10 }.sortedByDescending { it.level }
-                            }
-                            3 -> {
-                                _levels.value = response.filter { it.level in 11..15 }.sortedByDescending { it.level }
-                            }
-                            4 -> {
-                                _levels.value = response.filter { it.level in 16..20 }.sortedByDescending { it.level }
-                            }
-                            5 -> {
-                                _levels.value = response.filter { it.level in 21..25 }.sortedByDescending { it.level }
-                            }
-                            6 -> {
-                                _levels.value = response.filter { it.level in 26..30 }.sortedByDescending { it.level }
-                            }
+                        _levels.value = when (selectedLevel) {
+                            0 -> response.filter { it.level == 0 }.sortedByDescending { it.level }
+                            1 -> response.filter { it.level in 1..5 }.sortedByDescending { it.level }
+                            2 -> response.filter { it.level in 6..10 }.sortedByDescending { it.level }
+                            3 -> response.filter { it.level in 11..15 }.sortedByDescending { it.level }
+                            4 -> response.filter { it.level in 16..20 }.sortedByDescending { it.level }
+                            5 -> response.filter { it.level in 21..25 }.sortedByDescending { it.level }
+                            6 -> response.filter { it.level in 26..30 }.sortedByDescending { it.level }
+                            else -> emptyList()
                         }
                     }
                 }
