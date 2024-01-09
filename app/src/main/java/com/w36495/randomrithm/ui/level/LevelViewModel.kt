@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class LevelViewModel(
     private val getLevelsUseCase: GetLevelsUseCase
 ) : ViewModel() {
-
     private var _levels = MutableLiveData<List<LevelDTO>>()
     val levels: LiveData<List<LevelDTO>>
         get() = _levels
