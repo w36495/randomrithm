@@ -5,14 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.w36495.randomrithm.R
+import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
+import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelBinding
+import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
+import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
+import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 
 class LevelFragment : Fragment() {
 
     private var _binding: FragmentLevelBinding? = null
     private val binding: FragmentLevelBinding get() = _binding!!
+
+    private lateinit var viewModelFactory: LevelViewModelFactory
+    private lateinit var viewModel: LevelViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,15 +36,38 @@ class LevelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewModel()
         setupTabLayout()
+
+        initSelectLevel()
     }
 
     private fun setupTabLayout() {
-        binding.layoutViewpager.adapter = ListViewPagerAdapter(requireActivity())
+        binding.layoutTab.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.let {
+                    viewModel.getLevels(it.position)
+                }
+            }
 
-        TabLayoutMediator(binding.layoutTab, binding.layoutViewpager) { tab, position ->
-            tab.text = resources.getStringArray(R.array.levelForTabItem)[position]
-        }.attach()
+            override fun onTabUnselected(tab: TabLayout.Tab?) { }
+            override fun onTabReselected(tab: TabLayout.Tab?) { }
+        })
+    }
+
+    private fun setupViewModel() {
+        viewModelFactory = LevelViewModelFactory(GetLevelsUseCase(LevelRepositoryImpl(LevelRemoteDataSource(RetrofitClient.levelAPI))))
+        viewModel = ViewModelProvider(requireActivity(), viewModelFactory)[LevelViewModel::class.java]
+    }
+
+    private fun initSelectLevel() {
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(LevelListFragment.TAG)
+            .setReorderingAllowed(true)
+            .replace(R.id.container_level_fragment, LevelListFragment())
+            .commit()
+
+        viewModel.getLevels(0)
     }
 
     override fun onDestroyView() {
