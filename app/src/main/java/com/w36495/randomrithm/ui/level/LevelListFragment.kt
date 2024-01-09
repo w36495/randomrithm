@@ -16,9 +16,7 @@ import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 
-class LevelListFragment(
-    private val selectedLevel: Int
-) : Fragment(), LevelItemClickListener {
+class LevelListFragment : Fragment(), LevelItemClickListener {
     private var _binding: FragmentLevelListBinding? = null
     private val binding: FragmentLevelListBinding get() = _binding!!
 
@@ -39,8 +37,6 @@ class LevelListFragment(
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-
-        levelViewModel.getLevels(selectedLevel)
         levelViewModel.levels.observe(requireActivity()) {
             setupListView(it)
         }
@@ -76,5 +72,9 @@ class LevelListFragment(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val TAG: String = "LevelListFragment"
     }
 }
