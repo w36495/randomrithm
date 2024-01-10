@@ -55,8 +55,8 @@ class ProblemFragment : Fragment() {
         levelBackgroundColors = resources.getIntArray(R.array.levelColorList)
 
         arguments?.let {
-            if (it.getString("tagKey") != null) {
-                currentTag = it.getString("tagKey")
+            if (it.getString("tag") != null) {
+                currentTag = it.getString("tag")
                 problemViewModel.getProblemsByTag(currentTag!!)
             } else if (it.getInt("level") != null) {
                 currentLevel = it.getInt("level")
