@@ -14,9 +14,10 @@ import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelBinding
 import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
+import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 
-class LevelFragment : Fragment() {
+class LevelFragment : Fragment(), LevelItemClickListener {
 
     private var _binding: FragmentLevelBinding? = null
     private val binding: FragmentLevelBinding get() = _binding!!
@@ -46,6 +47,10 @@ class LevelFragment : Fragment() {
             viewModel.getLevels(it)
             binding.layoutTab.getTabAt(it)?.select()
         }
+
+        viewModel.levels.observe(requireActivity()) {
+            levelListAdapter.setLevelList(it)
+        }
     }
 
     private fun setupListView() {
@@ -74,14 +79,12 @@ class LevelFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity(), viewModelFactory)[LevelViewModel::class.java]
     }
 
-    private fun initSelectLevel() {
+    override fun onClickLevelItem(level: Int) {
         parentFragmentManager.beginTransaction()
-            .addToBackStack(LevelListFragment.TAG)
+            .addToBackStack(ProblemFragment.TAG)
             .setReorderingAllowed(true)
-            .replace(R.id.container_level_fragment, LevelListFragment())
+            .replace(R.id.container_fragment, ProblemFragment.newInstance(level))
             .commit()
-
-        viewModel.getLevels(0)
     }
 
     override fun onDestroyView() {

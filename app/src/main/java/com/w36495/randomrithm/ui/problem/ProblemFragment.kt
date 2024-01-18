@@ -30,7 +30,7 @@ class ProblemFragment : Fragment() {
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null
-    private val currentProblems = mutableListOf<Problem>()
+    private var currentProblems = emptyList<Problem>()
 
     private lateinit var levels: Array<String>
     private lateinit var levelBackgroundColors: IntArray
@@ -65,8 +65,7 @@ class ProblemFragment : Fragment() {
         }
 
         problemViewModel.problems.observe(requireActivity()) {
-            currentProblems.clear()
-            currentProblems.addAll(it)
+            currentProblems = it.toList()
 
             getRandomProblem()
         }
@@ -124,5 +123,14 @@ class ProblemFragment : Fragment() {
 
     companion object {
         const val TAG: String = "ProblemFragment"
+        fun newInstance(level: Int): Fragment {
+            val problemFragment = ProblemFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("level", level)
+                }
+            }
+
+            return problemFragment
+        }
     }
 }
