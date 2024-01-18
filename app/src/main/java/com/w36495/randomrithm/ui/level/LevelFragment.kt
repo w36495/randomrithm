@@ -24,6 +24,8 @@ class LevelFragment : Fragment() {
     private lateinit var viewModelFactory: LevelViewModelFactory
     private lateinit var viewModel: LevelViewModel
 
+    private lateinit var levelListAdapter: LevelListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,8 +40,15 @@ class LevelFragment : Fragment() {
 
         setupViewModel()
         setupTabLayout()
+        setupListView()
+    }
 
-        initSelectLevel()
+    private fun setupListView() {
+        levelListAdapter = LevelListAdapter().apply {
+            setLevelItemClickListener(this@LevelFragment)
+        }
+
+        binding.lvLevels.adapter = levelListAdapter
     }
 
     private fun setupTabLayout() {
