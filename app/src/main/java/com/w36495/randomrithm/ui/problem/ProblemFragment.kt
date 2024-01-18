@@ -92,7 +92,7 @@ class ProblemFragment : Fragment() {
     }
 
     private fun getRandomProblem() {
-        if (currentProblems.isNotEmpty()) {
+        if (currentProblems.isNotEmpty() && currentProblems.all { it.level.toInt() == currentLevel }) {
             val randomProblem = currentProblems.random()
 
             randomProblem.run {
