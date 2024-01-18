@@ -67,8 +67,8 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/container_level_fragment"
+    <ListView
+        android:id="@+id/lv_levels"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
