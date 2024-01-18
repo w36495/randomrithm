@@ -9,7 +9,7 @@ import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.databinding.ItemLevelBinding
 
 class LevelListAdapter : BaseAdapter() {
-    private val levelList = arrayListOf<LevelDTO>()
+    private var levelList = emptyList<LevelDTO>()
     private lateinit var levelItemClickListener: LevelItemClickListener
 
     override fun getCount(): Int = levelList.size
@@ -28,19 +28,23 @@ class LevelListAdapter : BaseAdapter() {
             convertView = binding.root
 
             holder = LevelListViewHolder(binding)
-            holder.bind(levelList[position])
+            convertView.tag = holder
+        } else {
+            binding = ItemLevelBinding.bind(convertView)
+            holder = convertView.tag as LevelListViewHolder
+        }
 
-            holder.onClickItem = {
-                levelItemClickListener.onClickLevelItem(levelList[position].level)
-            }
+        holder.bind(levelList[position])
+
+        holder.onClickItem = {
+            levelItemClickListener.onClickLevelItem(levelList[position].level)
         }
 
         return convertView
     }
 
     fun setLevelList(list: List<LevelDTO>) {
-        levelList.clear()
-        levelList.addAll(list)
+        levelList = list.toList()
 
         notifyDataSetChanged()
     }
