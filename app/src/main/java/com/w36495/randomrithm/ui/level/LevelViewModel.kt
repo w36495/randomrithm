@@ -13,8 +13,14 @@ class LevelViewModel(
     private val getLevelsUseCase: GetLevelsUseCase
 ) : ViewModel() {
     private var _levels = MutableLiveData<List<LevelDTO>>()
-    val levels: LiveData<List<LevelDTO>>
-        get() = _levels
+    private var _menu = MutableLiveData(0)
+
+    val levels: LiveData<List<LevelDTO>> get() = _levels
+    val menu: LiveData<Int> get() = _menu
+
+    fun changeMenu(selectMenu: Int) {
+        _menu.value = selectMenu
+    }
 
     fun getLevels(selectedLevel: Int) {
         viewModelScope.launch {

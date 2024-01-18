@@ -41,6 +41,11 @@ class LevelFragment : Fragment() {
         setupViewModel()
         setupTabLayout()
         setupListView()
+
+        viewModel.menu.observe(requireActivity()) {
+            viewModel.getLevels(it)
+            binding.layoutTab.getTabAt(it)?.select()
+        }
     }
 
     private fun setupListView() {
@@ -55,7 +60,7 @@ class LevelFragment : Fragment() {
         binding.layoutTab.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
-                    viewModel.getLevels(it.position)
+                    viewModel.changeMenu(it.position)
                 }
             }
 
