@@ -28,7 +28,13 @@ class LevelListAdapter : BaseAdapter() {
             convertView = binding.root
 
             holder = LevelListViewHolder(binding)
-            holder.bind(levelList[position])
+            convertView.tag = holder
+        } else {
+            binding = ItemLevelBinding.bind(convertView)
+            holder = convertView.tag as LevelListViewHolder
+        }
+
+        holder.bind(levelList[position])
 
             holder.onClickItem = {
                 levelItemClickListener.onClickLevelItem(levelList[position].level)
