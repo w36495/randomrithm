@@ -12,7 +12,7 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelBinding
-import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
+import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 

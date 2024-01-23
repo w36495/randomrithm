@@ -11,7 +11,7 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
-import com.w36495.randomrithm.domain.repository.TagRepositoryImpl
+import com.w36495.randomrithm.data.repository.TagRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.TagViewModelFactory

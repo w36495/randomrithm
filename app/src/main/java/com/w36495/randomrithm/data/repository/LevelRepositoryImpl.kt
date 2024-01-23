@@ -1,8 +1,8 @@
-package com.w36495.randomrithm.domain.repository
+package com.w36495.randomrithm.data.repository
 
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.entity.LevelDTO
-import com.w36495.randomrithm.data.repository.LevelRepository
+import com.w36495.randomrithm.domain.repository.LevelRepository
 import retrofit2.Response
 
 class LevelRepositoryImpl(

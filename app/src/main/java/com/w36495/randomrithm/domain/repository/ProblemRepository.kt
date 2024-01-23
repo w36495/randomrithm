@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.data.repository
+package com.w36495.randomrithm.domain.repository
 
 import com.w36495.randomrithm.data.entity.ProblemDTO
 import com.w36495.randomrithm.data.entity.ProblemItem
