@@ -20,7 +20,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     private var _binding: FragmentLevelListBinding? = null
     private val binding: FragmentLevelListBinding get() = _binding!!
 
-    private lateinit var levelViewModel: LevelViewModel
+    private lateinit var viewModel: LevelViewModel
     private lateinit var levelViewModelFactory: LevelViewModelFactory
     private lateinit var levelListAdapter: LevelListAdapter
 
@@ -37,8 +37,10 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        levelViewModel.levels.observe(requireActivity()) {
-            setupListView(it)
+        setupListView()
+
+        viewModel.levels.observe(requireActivity()) {
+            levelListAdapter.setLevelList(it)
         }
     }
 
@@ -52,7 +54,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
 
     private fun setupViewModel() {
         levelViewModelFactory = LevelViewModelFactory(GetLevelsUseCase(LevelRepositoryImpl(LevelRemoteDataSource(RetrofitClient.levelAPI))))
-        levelViewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
     }
 
     override fun onClickLevelItem(level: Int) {
