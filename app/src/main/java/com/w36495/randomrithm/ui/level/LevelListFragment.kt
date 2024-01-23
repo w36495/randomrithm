@@ -76,5 +76,14 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
 
     companion object {
         const val TAG: String = "LevelListFragment"
+
+        fun newInstance(level: Int): Fragment {
+            val fragment = LevelListFragment()
+            fragment.arguments = Bundle().apply {
+                putInt("level", level)
+            }
+
+            return fragment
+        }
     }
 }
