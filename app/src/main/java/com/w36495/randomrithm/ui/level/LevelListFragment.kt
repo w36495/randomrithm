@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
-import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
-import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
+import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
@@ -20,7 +19,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     private var _binding: FragmentLevelListBinding? = null
     private val binding: FragmentLevelListBinding get() = _binding!!
 
-    private lateinit var levelViewModel: LevelViewModel
+    private lateinit var viewModel: LevelViewModel
     private lateinit var levelViewModelFactory: LevelViewModelFactory
     private lateinit var levelListAdapter: LevelListAdapter
 
@@ -37,36 +36,34 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        levelViewModel.levels.observe(requireActivity()) {
-            setupListView(it)
-        }
-    }
+        setupListView()
 
-    private fun setupListView(levels: List<LevelDTO>) {
-        levelListAdapter = LevelListAdapter().apply {
-            setLevelList(levels)
-            setLevelItemClickListener(this@LevelListFragment)
+        viewModel.levels.observe(requireActivity()) {
+            levelListAdapter.setLevelList(it)
         }
-        binding.containerListview.adapter = levelListAdapter
     }
 
     private fun setupViewModel() {
         levelViewModelFactory = LevelViewModelFactory(GetLevelsUseCase(LevelRepositoryImpl(LevelRemoteDataSource(RetrofitClient.levelAPI))))
-        levelViewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
+    }
+
+    private fun setupListView() {
+        levelListAdapter = LevelListAdapter().apply {
+            setLevelItemClickListener(this@LevelListFragment)
+        }
+
+        binding.containerListview.adapter = levelListAdapter
     }
 
     override fun onClickLevelItem(level: Int) {
-        val problemFragment = ProblemFragment().apply {
-            arguments = Bundle().apply {
-                putInt("level", level)
-            }
+        parentFragment?.let {
+            it.parentFragmentManager.beginTransaction()
+                .addToBackStack(ProblemFragment.TAG)
+                .setReorderingAllowed(true)
+                .replace(R.id.container_fragment, ProblemFragment.newInstance(level))
+                .commit()
         }
-
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(R.id.container_fragment, problemFragment)
-            .commit()
     }
 
     override fun onDestroyView() {
@@ -76,5 +73,14 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
 
     companion object {
         const val TAG: String = "LevelListFragment"
+
+        fun newInstance(level: Int): Fragment {
+            val fragment = LevelListFragment()
+            fragment.arguments = Bundle().apply {
+                putInt("level", level)
+            }
+
+            return fragment
+        }
     }
 }

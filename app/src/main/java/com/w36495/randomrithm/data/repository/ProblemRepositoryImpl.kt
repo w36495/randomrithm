@@ -1,8 +1,8 @@
-package com.w36495.randomrithm.domain.repository
+package com.w36495.randomrithm.data.repository
 
 import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.entity.ProblemDTO
-import com.w36495.randomrithm.data.repository.ProblemRepository
+import com.w36495.randomrithm.domain.repository.ProblemRepository
 import retrofit2.Response
 
 class ProblemRepositoryImpl(

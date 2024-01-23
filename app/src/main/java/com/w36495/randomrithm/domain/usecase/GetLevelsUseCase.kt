@@ -1,7 +1,7 @@
 package com.w36495.randomrithm.domain.usecase
 
 import com.w36495.randomrithm.data.entity.LevelDTO
-import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
+import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
 import retrofit2.Response
 
 class GetLevelsUseCase(

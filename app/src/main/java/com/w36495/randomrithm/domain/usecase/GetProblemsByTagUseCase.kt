@@ -1,7 +1,7 @@
 package com.w36495.randomrithm.domain.usecase
 
 import com.w36495.randomrithm.data.entity.ProblemDTO
-import com.w36495.randomrithm.domain.repository.ProblemRepositoryImpl
+import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
 import retrofit2.Response
 
 class GetProblemsByTagUseCase(

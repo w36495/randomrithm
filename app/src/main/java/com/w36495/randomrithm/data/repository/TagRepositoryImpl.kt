@@ -1,8 +1,8 @@
-package com.w36495.randomrithm.domain.repository
+package com.w36495.randomrithm.data.repository
 
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
 import com.w36495.randomrithm.data.entity.AlgorithmDTO
-import com.w36495.randomrithm.data.repository.TagRepository
+import com.w36495.randomrithm.domain.repository.TagRepository
 import retrofit2.Response
 
 class TagRepositoryImpl(

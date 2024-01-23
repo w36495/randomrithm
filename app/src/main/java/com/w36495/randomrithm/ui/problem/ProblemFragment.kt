@@ -13,7 +13,7 @@ import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.domain.repository.ProblemRepositoryImpl
+import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.ui.viewmodel.ProblemViewModelFactory

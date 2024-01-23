@@ -6,18 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelBinding
-import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
+import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
-import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 
-class LevelFragment : Fragment(), LevelItemClickListener {
+class LevelFragment : Fragment() {
 
     private var _binding: FragmentLevelBinding? = null
     private val binding: FragmentLevelBinding get() = _binding!!
@@ -25,7 +24,7 @@ class LevelFragment : Fragment(), LevelItemClickListener {
     private lateinit var viewModelFactory: LevelViewModelFactory
     private lateinit var viewModel: LevelViewModel
 
-    private lateinit var levelListAdapter: LevelListAdapter
+    private lateinit var viewPagerAdapter: LevelViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,38 +39,8 @@ class LevelFragment : Fragment(), LevelItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
+        setupViewPager()
         setupTabLayout()
-        setupListView()
-
-        viewModel.menu.observe(requireActivity()) {
-            viewModel.getLevels(it)
-            binding.layoutTab.getTabAt(it)?.select()
-        }
-
-        viewModel.levels.observe(requireActivity()) {
-            levelListAdapter.setLevelList(it)
-        }
-    }
-
-    private fun setupListView() {
-        levelListAdapter = LevelListAdapter().apply {
-            setLevelItemClickListener(this@LevelFragment)
-        }
-
-        binding.lvLevels.adapter = levelListAdapter
-    }
-
-    private fun setupTabLayout() {
-        binding.layoutTab.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    viewModel.changeMenu(it.position)
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) { }
-            override fun onTabReselected(tab: TabLayout.Tab?) { }
-        })
     }
 
     private fun setupViewModel() {
@@ -79,12 +48,23 @@ class LevelFragment : Fragment(), LevelItemClickListener {
         viewModel = ViewModelProvider(requireActivity(), viewModelFactory)[LevelViewModel::class.java]
     }
 
-    override fun onClickLevelItem(level: Int) {
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(R.id.container_fragment, ProblemFragment.newInstance(level))
-            .commit()
+    private fun setupViewPager() {
+        viewPagerAdapter = LevelViewPagerAdapter(this)
+
+        binding.containerViewpager.adapter = viewPagerAdapter
+        binding.containerViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                viewModel.getLevels(position)
+            }
+        })
+    }
+
+    private fun setupTabLayout() {
+        TabLayoutMediator(binding.layoutTab, binding.containerViewpager) { tab, position ->
+            tab.text = resources.getStringArray(R.array.levelForTabItem)[position]
+        }.attach()
     }
 
     override fun onDestroyView() {
