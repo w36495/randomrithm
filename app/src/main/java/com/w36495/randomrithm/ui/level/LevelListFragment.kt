@@ -57,6 +57,14 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
         viewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
     }
 
+    private fun setupListView() {
+        levelListAdapter = LevelListAdapter().apply {
+            setLevelItemClickListener(this@LevelListFragment)
+        }
+
+        binding.containerListview.adapter = levelListAdapter
+    }
+
     override fun onClickLevelItem(level: Int) {
         val problemFragment = ProblemFragment().apply {
             arguments = Bundle().apply {
