@@ -66,17 +66,13 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     }
 
     override fun onClickLevelItem(level: Int) {
-        val problemFragment = ProblemFragment().apply {
-            arguments = Bundle().apply {
-                putInt("level", level)
-            }
+        parentFragment?.let {
+            it.parentFragmentManager.beginTransaction()
+                .addToBackStack(ProblemFragment.TAG)
+                .setReorderingAllowed(true)
+                .replace(R.id.container_fragment, ProblemFragment.newInstance(level))
+                .commit()
         }
-
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(R.id.container_fragment, problemFragment)
-            .commit()
     }
 
     override fun onDestroyView() {
