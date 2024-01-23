@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
-import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
 import com.w36495.randomrithm.domain.repository.LevelRepositoryImpl
@@ -42,14 +41,6 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
         viewModel.levels.observe(requireActivity()) {
             levelListAdapter.setLevelList(it)
         }
-    }
-
-    private fun setupListView(levels: List<LevelDTO>) {
-        levelListAdapter = LevelListAdapter().apply {
-            setLevelList(levels)
-            setLevelItemClickListener(this@LevelListFragment)
-        }
-        binding.containerListview.adapter = levelListAdapter
     }
 
     private fun setupViewModel() {
