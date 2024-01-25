@@ -90,7 +90,8 @@ class ProblemFragment : Fragment() {
     }
 
     private fun getRandomProblem() {
-        if (currentProblems.isNotEmpty() && currentProblems.all { it.level.toInt() == currentLevel }) {
+        if (currentProblems.isNotEmpty() &&
+            (currentProblems.all { it.level.toInt() == currentLevel } || currentProblems.flatMap { it.tags }.any { it.key == currentTag })) {
             val randomProblem = currentProblems.random()
 
             randomProblem.run {
