@@ -37,7 +37,7 @@ class ProblemViewModel(
 
                             tempProblems.add(Problem(it.problemId, it.level.toString(), it.titleKo, tags.toList()))
                         }
-                        _problems.value = tempProblems
+                        _problems.value = tempProblems.toList()
                     }
                 }
             } catch (exception: Exception) {
@@ -64,7 +64,7 @@ class ProblemViewModel(
 
                             tempProblems.add(Problem(it.problemId, it.level.toString(), it.titleKo, tags.toList()))
                         }
-                        _problems.value = tempProblems
+                        _problems.value = tempProblems.toList()
                     }
                 }
             } catch (exception: Exception) {
