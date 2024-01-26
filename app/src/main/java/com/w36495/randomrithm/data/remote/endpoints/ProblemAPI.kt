@@ -9,12 +9,16 @@ interface ProblemAPI {
     @GET("search/problem")
     suspend fun fetchProblemsByTag(
         @Query("query", encoded = true) query: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sort") sort: String = "random",
+        @Query("direction") direction: String = "asc"
     ): Response<ProblemDTO>
 
     @GET("search/problem")
     suspend fun fetchProblemsByLevel(
         @Query("query", encoded = true) query: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sort") sort: String = "random",
+        @Query("direction") direction: String = "asc"
     ): Response<ProblemDTO>
 }
