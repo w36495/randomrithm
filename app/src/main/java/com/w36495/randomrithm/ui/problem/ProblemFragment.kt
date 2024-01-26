@@ -62,10 +62,11 @@ class ProblemFragment : Fragment() {
             }
         }
 
-        problemViewModel.problems.observe(requireActivity()) {
+        problemViewModel.problems.observe(viewLifecycleOwner) {
             currentProblems = it.toList()
 
-            getRandomProblem()
+            currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
+            currentTag?.let { getRandomProblemByTag(it, currentProblems) }
         }
     }
 
@@ -74,12 +75,13 @@ class ProblemFragment : Fragment() {
             GetProblemsByLevelUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI))),
             GetProblemsByTagUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI)))
         )
-        problemViewModel = ViewModelProvider(requireActivity(), problemViewModelFactory)[ProblemViewModel::class.java]
+        problemViewModel = ViewModelProvider(this, problemViewModelFactory)[ProblemViewModel::class.java]
     }
 
     private fun setupButtonClickEvent() {
         binding.btnNextProblem.setOnClickListener {
-            getRandomProblem()
+            currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
+            currentTag?.let { getRandomProblemByTag(it, currentProblems) }
         }
     }
 
@@ -89,17 +91,29 @@ class ProblemFragment : Fragment() {
         }
     }
 
-    private fun getRandomProblem() {
+    private fun getRandomProblemByLevel(currentLevel: Int, currentProblems: List<Problem>) {
         if (currentProblems.isNotEmpty() && currentProblems.all { it.level.toInt() == currentLevel }) {
             val randomProblem = currentProblems.random()
 
-            randomProblem.run {
-                binding.tvTitle.text = title
-                binding.tvId.text = id.toString()
-                binding.tvLevel.text = levels[level.toInt()]
-                binding.tvLevel.setBackgroundColor(levelBackgroundColors[level.toInt()])
-                showAlgorithmChips(tags)
-            }
+            showRandomProblem(randomProblem)
+        }
+    }
+
+    private fun getRandomProblemByTag(currentTag: String, currentProblems: List<Problem>) {
+        if (currentProblems.isNotEmpty() && currentProblems.all { problem -> problem.tags.any { it.key == currentTag } }) {
+            val randomProblem = currentProblems.random()
+
+            showRandomProblem(randomProblem)
+        }
+    }
+
+    private fun showRandomProblem(randomProblem: Problem) {
+        randomProblem.run {
+            binding.tvTitle.text = title
+            binding.tvId.text = id.toString()
+            binding.tvLevel.text = levels[level.toInt()]
+            binding.tvLevel.setBackgroundColor(levelBackgroundColors[level.toInt()])
+            showAlgorithmChips(tags)
         }
     }
 
