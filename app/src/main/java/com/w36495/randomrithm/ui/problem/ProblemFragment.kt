@@ -62,7 +62,7 @@ class ProblemFragment : Fragment() {
             }
         }
 
-        problemViewModel.problems.observe(requireActivity()) {
+        problemViewModel.problems.observe(viewLifecycleOwner) {
             currentProblems = it.toList()
 
             currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
