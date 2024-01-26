@@ -74,7 +74,7 @@ class ProblemFragment : Fragment() {
             GetProblemsByLevelUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI))),
             GetProblemsByTagUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI)))
         )
-        problemViewModel = ViewModelProvider(requireActivity(), problemViewModelFactory)[ProblemViewModel::class.java]
+        problemViewModel = ViewModelProvider(this, problemViewModelFactory)[ProblemViewModel::class.java]
     }
 
     private fun setupButtonClickEvent() {
