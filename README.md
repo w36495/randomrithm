@@ -6,7 +6,7 @@
 
 |`레벨별 랜덤 문제`|`알고리즘별 랜덤 문제`|
 |:--:|:--:|
-|![2024-01-2421 58 48-ezgif com-video-to-gif-converter](https://github.com/w36495/Randomrithm/assets/52291662/4319ba16-efa6-4d45-bb68-2a6855b53f9e)|수정중 ..|
+|![2024-01-2421 58 48-ezgif com-video-to-gif-converter](https://github.com/w36495/Randomrithm/assets/52291662/4319ba16-efa6-4d45-bb68-2a6855b53f9e)|![2024-01-2616 53 12-ezgif com-video-to-gif-converter](https://github.com/w36495/Randomrithm/assets/52291662/2b9ed3c7-a414-418d-87d3-17e142ec1c42)|
 
 
 ## 🛠️ 사용 기술
