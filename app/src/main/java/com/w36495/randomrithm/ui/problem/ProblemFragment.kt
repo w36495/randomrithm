@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
@@ -120,12 +121,34 @@ class ProblemFragment : Fragment() {
     private fun showAlgorithmChips(chips: List<Tag>) {
         binding.layoutChip.removeAllViews()
 
-        chips.forEach {
+        chips.forEach {tag ->
             val chip = Chip(requireContext()).apply {
-                text = it.name
+                text = tag.name
+                this.setOnClickListener {
+                    showChangeProblemDialog(tag)
+                }
             }
             binding.layoutChip.addView(chip)
         }
+    }
+
+    private fun showChangeProblemDialog(tag: Tag) {
+        AlertDialog.Builder(requireContext())
+            .apply {
+                setTitle(getString(R.string.dialog_title_change_problem, tag.name))
+                setPositiveButton(getString(R.string.dialog_btn_okay)) { dialog, _ ->
+                    parentFragmentManager.beginTransaction()
+                        .addToBackStack(TAG)
+                        .setReorderingAllowed(true)
+                        .replace(R.id.container_fragment, newInstance(tag.key))
+                        .commit()
+
+                    dialog.dismiss()
+                }
+                setNeutralButton(getString(R.string.dialog_btn_cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            }.show()
     }
 
     override fun onDestroyView() {
@@ -143,6 +166,16 @@ class ProblemFragment : Fragment() {
             }
 
             return problemFragment
+        }
+
+        fun newInstance(tag: String): Fragment {
+            val fragment = ProblemFragment().apply {
+                arguments = Bundle().apply {
+                    putString("tag", tag)
+                }
+            }
+
+            return fragment
         }
     }
 }
