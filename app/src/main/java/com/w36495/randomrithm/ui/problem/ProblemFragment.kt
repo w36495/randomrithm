@@ -121,9 +121,12 @@ class ProblemFragment : Fragment() {
     private fun showAlgorithmChips(chips: List<Tag>) {
         binding.layoutChip.removeAllViews()
 
-        chips.forEach {
+        chips.forEach {tag ->
             val chip = Chip(requireContext()).apply {
-                text = it.name
+                text = tag.name
+                this.setOnClickListener {
+                    showChangeProblemDialog(tag)
+                }
             }
             binding.layoutChip.addView(chip)
         }
