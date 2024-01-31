@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
+import com.w36495.randomrithm.utils.sortedByLevel
 import kotlinx.coroutines.launch
 
 class LevelViewModel(
@@ -27,13 +28,13 @@ class LevelViewModel(
                 if (result.isSuccessful) {
                     result.body()?.let { response ->
                         _levels.value = when (selectedLevel) {
-                            0 -> response.filter { it.level == 0 }.sortedByDescending { it.level }
-                            1 -> response.filter { it.level in 1..5 }.sortedByDescending { it.level }
-                            2 -> response.filter { it.level in 6..10 }.sortedByDescending { it.level }
-                            3 -> response.filter { it.level in 11..15 }.sortedByDescending { it.level }
-                            4 -> response.filter { it.level in 16..20 }.sortedByDescending { it.level }
-                            5 -> response.filter { it.level in 21..25 }.sortedByDescending { it.level }
-                            6 -> response.filter { it.level in 26..30 }.sortedByDescending { it.level }
+                            0 -> response.sortedByLevel(0, 0)
+                            1 -> response.sortedByLevel(1, 5)
+                            2 -> response.sortedByLevel(6, 10)
+                            3 -> response.sortedByLevel(11, 15)
+                            4 -> response.sortedByLevel(16, 20)
+                            5 -> response.sortedByLevel(21, 25)
+                            6 -> response.sortedByLevel(26, 30)
                             else -> emptyList()
                         }
                     }
