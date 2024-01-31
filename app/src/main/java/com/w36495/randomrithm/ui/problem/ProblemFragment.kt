@@ -71,6 +71,16 @@ class ProblemFragment : Fragment() {
             currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
             currentTag?.let { getRandomProblemByTag(it, currentProblems) }
         }
+
+        problemViewModel.loading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.layoutShimmer.startShimmer()
+                binding.layoutShimmer.visibility = View.VISIBLE
+            } else {
+                binding.layoutShimmer.stopShimmer()
+                binding.layoutShimmer.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun setupViewModel() {

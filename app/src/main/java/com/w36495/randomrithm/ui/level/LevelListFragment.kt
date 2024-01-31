@@ -41,6 +41,14 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
         viewModel.levels.observe(requireActivity()) {
             levelListAdapter.setLevelList(it)
         }
+
+        viewModel.loading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.layoutProgress.visibility = View.VISIBLE
+            } else {
+                binding.layoutProgress.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun setupViewModel() {

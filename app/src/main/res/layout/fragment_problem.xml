@@ -24,6 +24,57 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/layout_shimmer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:shimmer_duration="1000"
+        app:layout_constraintTop_toBottomOf="@id/layout_appbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="#E9E5F2" />
+
+            <TextView
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="34dp"
+                android:background="#E9E5F2" />
+
+            <TextView
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:paddingVertical="4dp"
+                android:layout_marginTop="38dp"
+                android:background="#E9E5F2" />
+
+            <TextView
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_marginTop="80dp"
+                android:paddingVertical="4dp"
+                android:background="#E9E5F2" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <TextView
         android:id="@+id/tv_level"
         android:layout_width="wrap_content"

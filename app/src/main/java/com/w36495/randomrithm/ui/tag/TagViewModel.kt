@@ -13,12 +13,16 @@ class TagViewModel(
     private val getTagsUseCase: GetTagsUseCase
 ) : ViewModel() {
     private val _tags = MutableLiveData<List<Tag>>()
+    private val _loading = MutableLiveData(false)
     val tags: LiveData<List<Tag>>
         get() = _tags
+    val loading: LiveData<Boolean>
+        get() = _loading
 
     fun getTags() {
         viewModelScope.launch {
             try {
+                _loading.value = true
                 val tags = getTagsUseCase.fetchTags()
 
                 if (tags.isSuccessful) {
@@ -33,6 +37,8 @@ class TagViewModel(
                 }
             } catch (exception: Exception) {
                 exception.localizedMessage?.let { Log.d(TAG, it) }
+            } finally {
+                _loading.value = false
             }
         }
     }

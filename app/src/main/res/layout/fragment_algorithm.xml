@@ -21,6 +21,39 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_appbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/tv_progress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="데이터를 불러오고 있습니다."
+            android:textAlignment="center"
+            android:visibility="visible"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/container_recyclerview"
         android:layout_width="0dp"

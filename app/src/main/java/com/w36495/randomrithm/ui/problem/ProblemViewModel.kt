@@ -9,6 +9,7 @@ import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProblemViewModel(
@@ -16,14 +17,20 @@ class ProblemViewModel(
     private val getProblemsByTagUseCase: GetProblemsByTagUseCase
 ) : ViewModel() {
     private val _problems = MutableLiveData<List<Problem>>()
+    private val _loading = MutableLiveData(false)
     val problems: LiveData<List<Problem>>
         get() = _problems
+    val loading: LiveData<Boolean>
+        get() = _loading
 
     fun getProblemsByTag(tagKey: String) {
         val requestQuery = "solvable:true+tag:$tagKey"
 
         viewModelScope.launch {
             try {
+                _loading.value = true
+                delay(500)
+
                 val result = getProblemsByTagUseCase.invoke(requestQuery, 1)
 
                 if (result.isSuccessful) {
@@ -42,6 +49,8 @@ class ProblemViewModel(
                 }
             } catch (exception: Exception) {
                 exception.localizedMessage?.let { Log.d(TAG, it) } ?: Log.d(TAG, "error message == null")
+            } finally {
+                _loading.value = false
             }
         }
     }
@@ -51,6 +60,9 @@ class ProblemViewModel(
 
         viewModelScope.launch {
             try {
+                _loading.value = true
+                delay(500)
+
                 val result = getProblemsByLevelUseCase.invoke(requestQuery, 1)
 
                 if (result.isSuccessful) {
@@ -69,6 +81,8 @@ class ProblemViewModel(
                 }
             } catch (exception: Exception) {
                 Log.d(TAG, exception.localizedMessage)
+            } finally {
+                _loading.value = false
             }
         }
     }
