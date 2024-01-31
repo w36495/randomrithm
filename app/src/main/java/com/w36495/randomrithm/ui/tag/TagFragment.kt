@@ -43,6 +43,14 @@ class TagFragment : Fragment(), TagClickListener {
         tagViewModel.tags.observe(requireActivity()) { tags ->
             tagAdapter.setList(tags)
         }
+
+        tagViewModel.loading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.layoutProgress.visibility = View.VISIBLE
+            } else {
+                binding.layoutProgress.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun setupRecyclerView() {

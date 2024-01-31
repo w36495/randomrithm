@@ -13,12 +13,15 @@ class LevelViewModel(
     private val getLevelsUseCase: GetLevelsUseCase
 ) : ViewModel() {
     private var _levels = MutableLiveData<List<LevelDTO>>()
+    private var _loading = MutableLiveData(false)
 
     val levels: LiveData<List<LevelDTO>> get() = _levels
+    val loading: LiveData<Boolean> get() = _loading
 
     fun getLevels(selectedLevel: Int) {
         viewModelScope.launch {
             try {
+                _loading.value = true
                 val result = getLevelsUseCase.invoke()
 
                 if (result.isSuccessful) {
@@ -39,6 +42,8 @@ class LevelViewModel(
                 exception.localizedMessage?.let {
                     Log.d(TAG, exception.localizedMessage)
                 }
+            } finally {
+                _loading.value = false
             }
         }
     }
