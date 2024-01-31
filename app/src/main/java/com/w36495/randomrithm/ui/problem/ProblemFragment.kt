@@ -18,6 +18,7 @@ import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.ui.viewmodel.ProblemViewModelFactory
+import com.w36495.randomrithm.utils.putValue
 
 class ProblemFragment : Fragment() {
 
@@ -150,7 +151,7 @@ class ProblemFragment : Fragment() {
                     parentFragmentManager.beginTransaction()
                         .addToBackStack(TAG)
                         .setReorderingAllowed(true)
-                        .replace(R.id.container_fragment, newInstance(tag.key))
+                        .replace(R.id.container_fragment, newInstance(INSTANCE_TAG, tag.key))
                         .commit()
 
                     dialog.dismiss()
@@ -168,24 +169,13 @@ class ProblemFragment : Fragment() {
 
     companion object {
         const val TAG: String = "ProblemFragment"
-        fun newInstance(level: Int): Fragment {
-            val problemFragment = ProblemFragment().apply {
-                arguments = Bundle().apply {
-                    putInt("level", level)
-                }
+        const val INSTANCE_TAG: String = "tag"
+        const val INSTANCE_LEVEL: String = "level"
+
+        fun <T> newInstance(tag: String, value: T): Fragment {
+            return ProblemFragment().apply {
+                arguments = Bundle().putValue(tag, value)
             }
-
-            return problemFragment
-        }
-
-        fun newInstance(tag: String): Fragment {
-            val fragment = ProblemFragment().apply {
-                arguments = Bundle().apply {
-                    putString("tag", tag)
-                }
-            }
-
-            return fragment
         }
     }
 }
