@@ -68,16 +68,10 @@ class TagFragment : Fragment(), TagClickListener {
     }
 
     override fun onClickTagItem(tagKey: String) {
-        val problemFragment = ProblemFragment().apply {
-            arguments = Bundle().apply {
-                this.putString("tag", tagKey)
-            }
-        }
-
         parentFragmentManager.beginTransaction()
             .addToBackStack(ProblemFragment.TAG)
             .setReorderingAllowed(true)
-            .replace(R.id.container_fragment, problemFragment)
+            .replace(R.id.container_fragment, ProblemFragment.newInstance(ProblemFragment.INSTANCE_TAG, tagKey))
             .commit()
     }
 

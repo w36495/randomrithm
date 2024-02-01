@@ -69,7 +69,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
             it.parentFragmentManager.beginTransaction()
                 .addToBackStack(ProblemFragment.TAG)
                 .setReorderingAllowed(true)
-                .replace(R.id.container_fragment, ProblemFragment.newInstance(level))
+                .replace(R.id.container_fragment, ProblemFragment.newInstance(ProblemFragment.INSTANCE_LEVEL, level))
                 .commit()
         }
     }

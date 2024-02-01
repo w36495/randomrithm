@@ -18,6 +18,7 @@ import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.ui.viewmodel.ProblemViewModelFactory
+import com.w36495.randomrithm.utils.putValue
 
 class ProblemFragment : Fragment() {
 
@@ -93,6 +94,8 @@ class ProblemFragment : Fragment() {
 
     private fun setupButtonClickEvent() {
         binding.btnNextProblem.setOnClickListener {
+            if (problemViewModel.hasSavedProblem()) problemViewModel.clearSavedProblem()
+
             currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
             currentTag?.let { getRandomProblemByTag(it, currentProblems) }
         }
@@ -107,6 +110,7 @@ class ProblemFragment : Fragment() {
     private fun getRandomProblemByLevel(currentLevel: Int, currentProblems: List<Problem>) {
         if (currentProblems.isNotEmpty() && currentProblems.all { it.level.toInt() == currentLevel }) {
             if (count >= currentProblems.size) problemViewModel.getProblemsByLevel(currentLevel)
+            else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
             else showRandomProblem(currentProblems[count++])
         }
     }
@@ -114,6 +118,7 @@ class ProblemFragment : Fragment() {
     private fun getRandomProblemByTag(currentTag: String, currentProblems: List<Problem>) {
         if (currentProblems.isNotEmpty() && currentProblems.all { problem -> problem.tags.any { it.key == currentTag } }) {
             if (count >= currentProblems.size) problemViewModel.getProblemsByTag(currentTag)
+            else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
             else showRandomProblem(currentProblems[count++])
         }
     }
@@ -147,10 +152,12 @@ class ProblemFragment : Fragment() {
             .apply {
                 setTitle(getString(R.string.dialog_title_change_problem, tag.name))
                 setPositiveButton(getString(R.string.dialog_btn_okay)) { dialog, _ ->
+                    problemViewModel.saveCurrentProblem(currentProblems[count-1])
+
                     parentFragmentManager.beginTransaction()
                         .addToBackStack(TAG)
                         .setReorderingAllowed(true)
-                        .replace(R.id.container_fragment, newInstance(tag.key))
+                        .replace(R.id.container_fragment, newInstance(INSTANCE_TAG, tag.key))
                         .commit()
 
                     dialog.dismiss()
@@ -168,24 +175,13 @@ class ProblemFragment : Fragment() {
 
     companion object {
         const val TAG: String = "ProblemFragment"
-        fun newInstance(level: Int): Fragment {
-            val problemFragment = ProblemFragment().apply {
-                arguments = Bundle().apply {
-                    putInt("level", level)
-                }
+        const val INSTANCE_TAG: String = "tag"
+        const val INSTANCE_LEVEL: String = "level"
+
+        fun <T> newInstance(tag: String, value: T): Fragment {
+            return ProblemFragment().apply {
+                arguments = Bundle().putValue(tag, value)
             }
-
-            return problemFragment
-        }
-
-        fun newInstance(tag: String): Fragment {
-            val fragment = ProblemFragment().apply {
-                arguments = Bundle().apply {
-                    putString("tag", tag)
-                }
-            }
-
-            return fragment
         }
     }
 }
