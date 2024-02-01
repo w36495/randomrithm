@@ -16,12 +16,29 @@ class ProblemViewModel(
     private val getProblemsByLevelUseCase: GetProblemsByLevelUseCase,
     private val getProblemsByTagUseCase: GetProblemsByTagUseCase
 ) : ViewModel() {
+    private var savedProblem: Problem? = null
+
     private val _problems = MutableLiveData<List<Problem>>()
     private val _loading = MutableLiveData(false)
     val problems: LiveData<List<Problem>>
         get() = _problems
     val loading: LiveData<Boolean>
         get() = _loading
+
+    fun getSavedProblem(): Problem {
+        _loading.value = false
+        return this.savedProblem!!
+    }
+
+    fun saveCurrentProblem(problem: Problem) {
+        this.savedProblem = problem
+    }
+
+    fun hasSavedProblem(): Boolean = savedProblem != null
+
+    fun clearSavedProblem() {
+        this.savedProblem = null
+    }
 
     fun getProblemsByTag(tagKey: String) {
         val requestQuery = "solvable:true+tag:$tagKey"
