@@ -1,5 +1,7 @@
 package com.w36495.randomrithm.ui.problem
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -99,6 +101,10 @@ class ProblemFragment : Fragment() {
             currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
             currentTag?.let { getRandomProblemByTag(it, currentProblems) }
         }
+
+        binding.btnMoveProblem.setOnClickListener {
+            openProblemFromWebBrowser(currentProblems[count-1].id)
+        }
     }
 
     private fun setupToolbarNavigation() {
@@ -168,12 +174,20 @@ class ProblemFragment : Fragment() {
             }.show()
     }
 
+    private fun openProblemFromWebBrowser(problemId: Int) {
+        val webpage: Uri = Uri.parse(BASE_URL + problemId)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+
+        startActivity(intent)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     companion object {
+        private const val BASE_URL: String = "https://www.acmicpc.net/problem/"
         const val TAG: String = "ProblemFragment"
         const val INSTANCE_TAG: String = "tag"
         const val INSTANCE_LEVEL: String = "level"
