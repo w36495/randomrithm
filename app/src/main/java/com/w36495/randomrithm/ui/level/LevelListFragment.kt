@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
@@ -14,13 +15,14 @@ import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LevelListFragment : Fragment(), LevelItemClickListener {
     private var _binding: FragmentLevelListBinding? = null
     private val binding: FragmentLevelListBinding get() = _binding!!
 
-    private lateinit var viewModel: LevelViewModel
-    private lateinit var levelViewModelFactory: LevelViewModelFactory
+    private val viewModel: LevelViewModel by activityViewModels()
     private lateinit var levelListAdapter: LevelListAdapter
 
     override fun onCreateView(

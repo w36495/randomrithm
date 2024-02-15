@@ -1,7 +1,9 @@
 package com.w36495.randomrithm.di
 
+import com.w36495.randomrithm.domain.repository.LevelRepository
 import com.w36495.randomrithm.domain.repository.ProblemRepository
 import com.w36495.randomrithm.domain.repository.TagRepository
+import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
@@ -18,6 +20,11 @@ object UseCaseModule {
     fun provideGetTagsUseCase(
         tagRepository: TagRepository
     ): GetTagsUseCase = GetTagsUseCase(tagRepository)
+
+    @Provides
+    fun provideGetLevelsUseCase(
+        levelRepository: LevelRepository
+    ): GetLevelsUseCase = GetLevelsUseCase(levelRepository)
 
     @Provides
     fun provideGetProblemsByLevelUseCase(

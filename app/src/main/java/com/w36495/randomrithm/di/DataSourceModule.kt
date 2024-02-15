@@ -1,7 +1,9 @@
 package com.w36495.randomrithm.di
 
+import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
+import com.w36495.randomrithm.data.remote.endpoints.LevelAPI
 import com.w36495.randomrithm.data.remote.endpoints.ProblemAPI
 import com.w36495.randomrithm.data.remote.endpoints.TagAPI
 import dagger.Module
@@ -17,6 +19,11 @@ object DataSourceModule {
     fun provideTagRemoteDataSource(
         tagAPI: TagAPI
     ): TagRemoteDataSource = TagRemoteDataSource(tagAPI)
+
+    @Provides
+    fun provideLevelRemoteDataSource(
+        levelAPI: LevelAPI
+    ): LevelRemoteDataSource = LevelRemoteDataSource(levelAPI)
 
     @Provides
     fun provideProblemRemoteDataSource(
