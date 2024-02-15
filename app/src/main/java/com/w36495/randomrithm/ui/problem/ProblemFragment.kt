@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.w36495.randomrithm.R
@@ -21,14 +22,14 @@ import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.ui.viewmodel.ProblemViewModelFactory
 import com.w36495.randomrithm.utils.putValue
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProblemFragment : Fragment() {
 
     private var _binding: FragmentProblemBinding? = null
     private val binding: FragmentProblemBinding get() = _binding!!
-
-    private lateinit var problemViewModel: ProblemViewModel
-    private lateinit var problemViewModelFactory: ProblemViewModelFactory
+    private val problemViewModel: ProblemViewModel by viewModels()
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null

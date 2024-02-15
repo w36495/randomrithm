@@ -1,6 +1,8 @@
 package com.w36495.randomrithm.di
 
+import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.data.repository.TagRepositoryImpl
+import com.w36495.randomrithm.domain.repository.ProblemRepository
 import com.w36495.randomrithm.domain.repository.TagRepository
 import dagger.Binds
 import dagger.Module
@@ -14,4 +16,9 @@ abstract class RepositoryModule {
     abstract fun bindTagRepository(
         tagRepositoryImpl: TagRepositoryImpl
     ): TagRepository
+
+    @Binds
+    abstract fun bindProblemRepository(
+        problemRepositoryImpl: ProblemRepositoryImpl
+    ): ProblemRepository
 }

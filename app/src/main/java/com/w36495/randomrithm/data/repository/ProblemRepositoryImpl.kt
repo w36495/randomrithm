@@ -4,8 +4,9 @@ import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.entity.ProblemDTO
 import com.w36495.randomrithm.domain.repository.ProblemRepository
 import retrofit2.Response
+import javax.inject.Inject
 
-class ProblemRepositoryImpl(
+class ProblemRepositoryImpl @Inject constructor(
     private val problemRemoteDataSource: ProblemRemoteDataSource
 ) : ProblemRepository {
     override suspend fun fetchProblemsByLevel(query: String, page: Int): Response<ProblemDTO> {
