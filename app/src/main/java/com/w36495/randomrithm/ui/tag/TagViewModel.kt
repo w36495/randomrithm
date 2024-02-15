@@ -7,9 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TagViewModel(
+@HiltViewModel
+class TagViewModel @Inject constructor(
     private val getTagsUseCase: GetTagsUseCase
 ) : ViewModel() {
     private val _tags = MutableLiveData<List<Tag>>()

@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -27,15 +29,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     buildFeatures {
         viewBinding = true
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 }
 
@@ -45,6 +51,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation ("androidx.fragment:fragment-ktx:1.6.2")
 
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
@@ -64,6 +71,10 @@ dependencies {
 
     // shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    // Hilt
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
 
     testImplementation("junit:junit:4.13.2")
 

@@ -6,8 +6,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class ProblemRemoteDataSource(
+class ProblemRemoteDataSource @Inject constructor(
     private val problemAPI: ProblemAPI,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {

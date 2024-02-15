@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.utils.sortedByLevel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LevelViewModel(
+@HiltViewModel
+class LevelViewModel @Inject constructor(
     private val getLevelsUseCase: GetLevelsUseCase
 ) : ViewModel() {
     private var _levels = MutableLiveData<List<LevelDTO>>()

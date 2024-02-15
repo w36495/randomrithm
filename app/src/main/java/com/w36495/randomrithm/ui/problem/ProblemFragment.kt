@@ -8,27 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
-import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
-import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
-import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
-import com.w36495.randomrithm.ui.viewmodel.ProblemViewModelFactory
 import com.w36495.randomrithm.utils.putValue
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProblemFragment : Fragment() {
 
     private var _binding: FragmentProblemBinding? = null
     private val binding: FragmentProblemBinding get() = _binding!!
-
-    private lateinit var problemViewModel: ProblemViewModel
-    private lateinit var problemViewModelFactory: ProblemViewModelFactory
+    private val problemViewModel: ProblemViewModel by viewModels()
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null
@@ -50,7 +44,6 @@ class ProblemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
         setupButtonClickEvent()
         setupToolbarNavigation()
 
@@ -84,14 +77,6 @@ class ProblemFragment : Fragment() {
                 binding.layoutShimmer.visibility = View.INVISIBLE
             }
         }
-    }
-
-    private fun setupViewModel() {
-        problemViewModelFactory = ProblemViewModelFactory(
-            GetProblemsByLevelUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI))),
-            GetProblemsByTagUseCase(ProblemRepositoryImpl(ProblemRemoteDataSource(RetrofitClient.problemAPI)))
-        )
-        problemViewModel = ViewModelProvider(this, problemViewModelFactory)[ProblemViewModel::class.java]
     }
 
     private fun setupButtonClickEvent() {

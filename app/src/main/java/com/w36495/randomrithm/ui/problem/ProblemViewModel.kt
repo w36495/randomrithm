@@ -9,10 +9,13 @@ import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProblemViewModel(
+@HiltViewModel
+class ProblemViewModel @Inject constructor(
     private val getProblemsByLevelUseCase: GetProblemsByLevelUseCase,
     private val getProblemsByTagUseCase: GetProblemsByTagUseCase
 ) : ViewModel() {
