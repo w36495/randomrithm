@@ -18,6 +18,7 @@
 |Android Architecture Component|LiveData, ViewModel|
 |Asynchronous Processing|Coroutine|
 |Network|Retrofit2, Moshi|
+|Dependency Injection|Hilt|
 |Other Tool|Figma|
 
 
