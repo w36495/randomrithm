@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
@@ -14,14 +14,15 @@ import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
 import com.w36495.randomrithm.data.repository.TagRepositoryImpl
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
-import com.w36495.randomrithm.ui.viewmodel.TagViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TagFragment : Fragment(), TagClickListener {
 
     private var _binding: FragmentAlgorithmBinding? = null
     private val binding: FragmentAlgorithmBinding get() = _binding!!
-    private lateinit var tagViewModel: TagViewModel
-    private lateinit var tagViewModelFactory: TagViewModelFactory
+    private val tagViewModel: TagViewModel by viewModels()
+
     private lateinit var tagAdapter: TagAdapter
 
     override fun onCreateView(

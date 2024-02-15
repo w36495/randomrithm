@@ -6,7 +6,9 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.ActivityMainBinding
 import com.w36495.randomrithm.ui.tag.TagFragment
 import com.w36495.randomrithm.ui.level.LevelFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null

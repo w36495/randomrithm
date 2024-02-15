@@ -1,0 +1,17 @@
+package com.w36495.randomrithm.di
+
+import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
+import com.w36495.randomrithm.data.remote.endpoints.TagAPI
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+
+@Module
+@InstallIn(ViewModelComponent::class)
+object DataSourceModule {
+    @Provides
+    fun provideTagRemoteDataSource(
+        tagAPI: TagAPI
+    ): TagRemoteDataSource = TagRemoteDataSource(tagAPI)
+}

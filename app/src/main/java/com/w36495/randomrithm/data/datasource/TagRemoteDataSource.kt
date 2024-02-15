@@ -6,8 +6,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class TagRemoteDataSource(
+class TagRemoteDataSource @Inject constructor(
     private val tagAPI: TagAPI,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
