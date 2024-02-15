@@ -6,15 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
-import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
-import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
-import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
-import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +31,6 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
         setupListView()
 
         viewModel.levels.observe(requireActivity()) {
@@ -51,11 +44,6 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
                 binding.layoutProgress.visibility = View.INVISIBLE
             }
         }
-    }
-
-    private fun setupViewModel() {
-        levelViewModelFactory = LevelViewModelFactory(GetLevelsUseCase(LevelRepositoryImpl(LevelRemoteDataSource(RetrofitClient.levelAPI))))
-        viewModel = ViewModelProvider(requireActivity(), levelViewModelFactory)[LevelViewModel::class.java]
     }
 
     private fun setupListView() {

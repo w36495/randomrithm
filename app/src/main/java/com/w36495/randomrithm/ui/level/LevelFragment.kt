@@ -6,16 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
-import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentLevelBinding
-import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
-import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
-import com.w36495.randomrithm.ui.viewmodel.LevelViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,14 +33,8 @@ class LevelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
         setupViewPager()
         setupTabLayout()
-    }
-
-    private fun setupViewModel() {
-        viewModelFactory = LevelViewModelFactory(GetLevelsUseCase(LevelRepositoryImpl(LevelRemoteDataSource(RetrofitClient.levelAPI))))
-        viewModel = ViewModelProvider(requireActivity(), viewModelFactory)[LevelViewModel::class.java]
     }
 
     private fun setupViewPager() {

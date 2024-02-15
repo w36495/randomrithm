@@ -8,11 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
-import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
-import com.w36495.randomrithm.data.remote.RetrofitClient
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
-import com.w36495.randomrithm.data.repository.TagRepositoryImpl
-import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +34,6 @@ class TagFragment : Fragment(), TagClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        setupViewModel()
 
         tagViewModel.getTags()
         tagViewModel.tags.observe(requireActivity()) { tags ->
@@ -61,11 +56,6 @@ class TagFragment : Fragment(), TagClickListener {
             layoutManager = LinearLayoutManager(requireContext())
         }
         tagAdapter.setTagClickListener(this)
-    }
-
-    private fun setupViewModel() {
-        tagViewModelFactory = TagViewModelFactory(GetTagsUseCase(TagRepositoryImpl(TagRemoteDataSource(RetrofitClient.tagAPI))))
-        tagViewModel = ViewModelProvider(requireActivity(), tagViewModelFactory)[TagViewModel::class.java]
     }
 
     override fun onClickTagItem(tagKey: String) {
