@@ -130,6 +130,8 @@ class ProblemFragment : Fragment() {
         chips.forEach {tag ->
             val chip = Chip(requireContext()).apply {
                 text = tag.name
+                setChipBackgroundColorResource(R.color.white)
+
                 this.setOnClickListener {
                     showChangeProblemDialog(tag)
                 }
