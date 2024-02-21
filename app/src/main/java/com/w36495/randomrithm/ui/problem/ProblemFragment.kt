@@ -130,6 +130,8 @@ class ProblemFragment : Fragment() {
         chips.forEach {tag ->
             val chip = Chip(requireContext()).apply {
                 text = tag.name
+                setChipBackgroundColorResource(R.color.white)
+
                 this.setOnClickListener {
                     showChangeProblemDialog(tag)
                 }
@@ -143,7 +145,11 @@ class ProblemFragment : Fragment() {
             .apply {
                 setTitle(getString(R.string.dialog_title_change_problem, tag.name))
                 setPositiveButton(getString(R.string.dialog_btn_okay)) { dialog, _ ->
-                    problemViewModel.saveCurrentProblem(currentProblems[count-1])
+                    if (problemViewModel.hasSavedProblem()) {
+                        problemViewModel.saveCurrentProblem(problemViewModel.getSavedProblem())
+                    } else {
+                        problemViewModel.saveCurrentProblem(currentProblems[count-1])
+                    }
 
                     parentFragmentManager.beginTransaction()
                         .addToBackStack(TAG)

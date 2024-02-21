@@ -18,6 +18,7 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:title="랜덤리즘"
             app:titleCentered="true" />
@@ -28,48 +29,49 @@
         android:id="@+id/layout_shimmer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:shimmer_duration="1000"
-        app:layout_constraintTop_toBottomOf="@id/layout_appbar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_appbar"
+        app:shimmer_duration="1000">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
-                android:layout_marginHorizontal="16dp"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:background="#E9E5F2" />
 
             <TextView
-                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="34dp"
-                android:background="#E9E5F2" />
+                android:background="#E9E5F2"
+                android:textSize="18sp" />
 
             <TextView
-                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:paddingVertical="4dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="38dp"
-                android:background="#E9E5F2" />
+                android:background="#E9E5F2"
+                android:paddingVertical="4dp"
+                android:textSize="18sp" />
 
             <TextView
-                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="80dp"
+                android:background="#E9E5F2"
                 android:paddingVertical="4dp"
-                android:background="#E9E5F2" />
+                android:textSize="24sp" />
 
         </LinearLayout>
 
@@ -172,18 +174,6 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_btn_primary_color"
         android:text="해당 문제로 이동"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/btn_copy_problem"
-        app:layout_constraintEnd_toEndOf="@id/btn_copy_problem"
-        app:layout_constraintStart_toStartOf="@id/btn_copy_problem" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_copy_problem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bg_btn_primary_color"
-        android:text="문제 링크 복사"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/btn_next_problem"
         app:layout_constraintEnd_toEndOf="@id/btn_next_problem"
