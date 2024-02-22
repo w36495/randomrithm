@@ -4,6 +4,11 @@
     <string name="dialog_btn_okay">확인</string>
     <string name="dialog_btn_cancel">취소</string>
 
+    <string name="appbar_title_setting">설정</string>
+
+    <string name="setting_btn_mail">의견 보내기</string>
+    <string name="setting_tv_current_version">v1.1</string>
+
     <string-array name="levelForTabItem">
         <item>Unrank</item>
         <item>브론즈</item>

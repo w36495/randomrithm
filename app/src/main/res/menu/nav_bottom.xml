@@ -14,4 +14,10 @@
         android:icon="@drawable/ic_tag_24"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/nav_settings"
+        android:title="설정"
+        android:icon="@drawable/ic_settings_24"
+        app:showAsAction="ifRoom" />
+
 </menu>
