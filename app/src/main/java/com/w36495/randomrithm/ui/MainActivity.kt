@@ -7,6 +7,7 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.ActivityMainBinding
 import com.w36495.randomrithm.ui.tag.TagFragment
 import com.w36495.randomrithm.ui.level.LevelFragment
+import com.w36495.randomrithm.ui.settings.SettingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +48,15 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.container_fragment, TagFragment())
                         .addToBackStack(TagFragment.TAG)
+                        .setReorderingAllowed(true)
+                        .commit()
+                    true
+                }
+
+                R.id.nav_settings -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container_fragment, SettingFragment())
+                        .addToBackStack(SettingFragment.TAG)
                         .setReorderingAllowed(true)
                         .commit()
                     true
