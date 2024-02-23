@@ -9,13 +9,17 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
+import com.w36495.randomrithm.ui.settings.SettingViewModel
 import com.w36495.randomrithm.utils.putValue
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProblemFragment : Fragment() {
@@ -23,6 +27,7 @@ class ProblemFragment : Fragment() {
     private var _binding: FragmentProblemBinding? = null
     private val binding: FragmentProblemBinding get() = _binding!!
     private val problemViewModel: ProblemViewModel by viewModels()
+    private val settingViewModel: SettingViewModel by viewModels()
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null
@@ -75,6 +80,12 @@ class ProblemFragment : Fragment() {
             } else {
                 binding.layoutShimmer.stopShimmer()
                 binding.layoutShimmer.visibility = View.INVISIBLE
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            settingViewModel.tagState.collectLatest { state ->
+
             }
         }
     }
