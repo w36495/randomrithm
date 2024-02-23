@@ -85,8 +85,35 @@ class ProblemFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             settingViewModel.tagState.collectLatest { state ->
+                binding.iBtnAlgorithm.tag = state
 
+                if (state) {
+                    binding.layoutChip.visibility = View.VISIBLE
+                    binding.iBtnAlgorithm.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_drop_down_24))
+                } else {
+                    binding.layoutChip.visibility = View.INVISIBLE
+                    binding.iBtnAlgorithm.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_drop_up_24))
+                }
             }
+        }
+
+        binding.iBtnAlgorithm.setOnClickListener {
+            val currentState = binding.iBtnAlgorithm.tag
+            binding.iBtnAlgorithm.tag = if (currentState == "true") "false" else "true"
+
+            changeTagImageButton()
+        }
+    }
+
+    private fun changeTagImageButton() {
+        val currentState = binding.iBtnAlgorithm.tag
+
+        if (currentState == "true") {
+            binding.iBtnAlgorithm.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_drop_down_24))
+            binding.layoutChip.visibility = View.VISIBLE
+        } else {
+            binding.iBtnAlgorithm.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_drop_up_24))
+            binding.layoutChip.visibility = View.INVISIBLE
         }
     }
 
