@@ -7,6 +7,7 @@ import com.w36495.randomrithm.domain.repository.TagRepository
 import com.w36495.randomrithm.domain.usecase.ChangeTagStateUseCase
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
+import com.w36495.randomrithm.domain.usecase.GetProblemsByTagAndLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase

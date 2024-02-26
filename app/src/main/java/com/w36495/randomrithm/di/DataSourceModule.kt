@@ -3,9 +3,9 @@ package com.w36495.randomrithm.di
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
-import com.w36495.randomrithm.data.remote.endpoints.LevelAPI
-import com.w36495.randomrithm.data.remote.endpoints.ProblemAPI
-import com.w36495.randomrithm.data.remote.endpoints.TagAPI
+import com.w36495.randomrithm.data.service.LevelService
+import com.w36495.randomrithm.data.service.ProblemService
+import com.w36495.randomrithm.data.service.TagService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,16 +16,16 @@ import dagger.hilt.components.SingletonComponent
 object DataSourceModule {
     @Provides
     fun provideTagRemoteDataSource(
-        tagAPI: TagAPI
-    ): TagRemoteDataSource = TagRemoteDataSource(tagAPI)
+        tagService: TagService
+    ): TagRemoteDataSource = TagRemoteDataSource(tagService)
 
     @Provides
     fun provideLevelRemoteDataSource(
-        levelAPI: LevelAPI
-    ): LevelRemoteDataSource = LevelRemoteDataSource(levelAPI)
+        levelService: LevelService
+    ): LevelRemoteDataSource = LevelRemoteDataSource(levelService)
 
     @Provides
     fun provideProblemRemoteDataSource(
-        problemAPI: ProblemAPI
-    ): ProblemRemoteDataSource = ProblemRemoteDataSource(problemAPI)
+        problemService: ProblemService
+    ): ProblemRemoteDataSource = ProblemRemoteDataSource(problemService)
 }
