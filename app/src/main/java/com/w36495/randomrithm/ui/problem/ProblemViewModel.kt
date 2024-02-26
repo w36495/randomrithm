@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
+import com.w36495.randomrithm.domain.usecase.GetProblemsByTagAndLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProblemViewModel @Inject constructor(
     private val getProblemsByLevelUseCase: GetProblemsByLevelUseCase,
-    private val getProblemsByTagUseCase: GetProblemsByTagUseCase
+    private val getProblemsByTagUseCase: GetProblemsByTagUseCase,
+    private val getProblemsByTagAndLevelUseCase: GetProblemsByTagAndLevelUseCase
 ) : ViewModel() {
     private var savedProblem: Problem? = null
 
@@ -41,6 +43,21 @@ class ProblemViewModel @Inject constructor(
 
     fun clearSavedProblem() {
         this.savedProblem = null
+    }
+
+    fun getProblemByTagAndLevel(tag: String, level: Int) {
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+                delay(500)
+
+                _problems.value = getProblemsByTagAndLevelUseCase.invoke(tag, level)
+            } catch (exception: Exception) {
+                exception.localizedMessage?.let { Log.d(TAG, it) } ?: Log.d(TAG, "error message == null")
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
     fun getProblemsByTag(tagKey: String) {

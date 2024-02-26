@@ -13,7 +13,7 @@ import com.w36495.randomrithm.ui.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TagFragment : Fragment(), TagClickListener {
+class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
 
     private var _binding: FragmentAlgorithmBinding? = null
     private val binding: FragmentAlgorithmBinding get() = _binding!!
@@ -59,11 +59,12 @@ class TagFragment : Fragment(), TagClickListener {
     }
 
     override fun onClickTagItem(tagKey: String) {
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(R.id.container_fragment, ProblemFragment.newInstance(ProblemFragment.INSTANCE_TAG, tagKey))
-            .commit()
+        LevelSelectionDialog().apply {
+            setLevelSelectionClickListener(this@TagFragment)
+            arguments = Bundle().apply {
+                putString("tag", tagKey)
+            }
+        }.show(parentFragmentManager, LevelSelectionDialog.TAG)
     }
 
     override fun onDestroyView() {
@@ -73,5 +74,16 @@ class TagFragment : Fragment(), TagClickListener {
 
     companion object {
         const val TAG: String = "TagFragment"
+    }
+
+    override fun onClickLevel(level: Int, tag: String) {
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(ProblemFragment.TAG)
+            .setReorderingAllowed(true)
+            .replace(
+                R.id.container_fragment,
+                ProblemFragment.newInstance(ProblemFragment.INSTANCE_TAG, tag, ProblemFragment.INSTANCE_LEVEL, level)
+            )
+            .commit()
     }
 }
