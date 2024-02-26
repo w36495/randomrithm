@@ -5,6 +5,7 @@ import com.w36495.randomrithm.domain.repository.ProblemRepository
 import com.w36495.randomrithm.domain.repository.TagRepository
 import com.w36495.randomrithm.domain.usecase.GetLevelsUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
+import com.w36495.randomrithm.domain.usecase.GetProblemsByTagAndLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import dagger.Module
@@ -34,4 +35,9 @@ object UseCaseModule {
     fun provideGetProblemsByTagUseCase(
         problemRepository: ProblemRepository
     ): GetProblemsByTagUseCase = GetProblemsByTagUseCase(problemRepository)
+
+    @Provides
+    fun provideGetProblemsByTagAndLevelUseCase(
+        problemRepository: ProblemRepository
+    ): GetProblemsByTagAndLevelUseCase = GetProblemsByTagAndLevelUseCase(problemRepository)
 }

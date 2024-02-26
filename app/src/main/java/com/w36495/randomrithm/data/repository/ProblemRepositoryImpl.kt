@@ -16,4 +16,8 @@ class ProblemRepositoryImpl @Inject constructor(
     override suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> {
         return problemRemoteDataSource.fetchProblemsByTag(query, page)
     }
+
+    override suspend fun fetchProblemsByTagAndLevel(query: String): Response<ProblemDTO> {
+        return problemRemoteDataSource.fetchProblemsByTagAndLevel(query)
+    }
 }

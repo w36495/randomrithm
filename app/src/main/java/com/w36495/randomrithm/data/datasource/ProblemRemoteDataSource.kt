@@ -17,4 +17,7 @@ class ProblemRemoteDataSource @Inject constructor(
 
     suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> =
         withContext(ioDispatcher) { problemAPI.fetchProblemsByTag(query, page) }
+
+    suspend fun fetchProblemsByTagAndLevel(query: String): Response<ProblemDTO> =
+        problemAPI.fetchProblemsByTagAndLevel(query)
 }
