@@ -2,9 +2,9 @@ package com.w36495.randomrithm.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.w36495.randomrithm.data.remote.endpoints.LevelAPI
-import com.w36495.randomrithm.data.remote.endpoints.ProblemAPI
-import com.w36495.randomrithm.data.remote.endpoints.TagAPI
+import com.w36495.randomrithm.data.service.LevelService
+import com.w36495.randomrithm.data.service.ProblemService
+import com.w36495.randomrithm.data.service.TagService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,13 +59,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLevelAPI(retrofit: Retrofit): LevelAPI = retrofit.create(LevelAPI::class.java)
+    fun provideLevelAPI(retrofit: Retrofit): LevelService = retrofit.create(LevelService::class.java)
 
     @Provides
     @Singleton
-    fun provideTagAPI(retrofit: Retrofit): TagAPI = retrofit.create(TagAPI::class.java)
+    fun provideTagAPI(retrofit: Retrofit): TagService = retrofit.create(TagService::class.java)
 
     @Provides
     @Singleton
-    fun provideProblemService(retrofit: Retrofit): ProblemAPI = retrofit.create(ProblemAPI::class.java)
+    fun provideProblemService(retrofit: Retrofit): ProblemService = retrofit.create(ProblemService::class.java)
 }
