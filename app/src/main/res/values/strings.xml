@@ -9,6 +9,15 @@
     <string name="setting_btn_mail">의견 보내기</string>
     <string name="setting_tv_current_version">v1.1</string>
 
+    <string name="title_level_selection">레벨 선택</string>
+
+    <string name="tv_bronze">브론즈</string>
+    <string name="tv_silver">실버</string>
+    <string name="tv_gold">골드</string>
+    <string name="tv_platinum">플래티넘</string>
+    <string name="tv_diamond">다이아몬드</string>
+    <string name="tv_ruby">루비</string>
+
     <string-array name="levelForTabItem">
         <item>Unrank</item>
         <item>브론즈</item>
