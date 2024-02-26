@@ -5,12 +5,14 @@
 ## 배포
 - [v1.0 (2024.02.21)](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
 
+</br>
+
 ## 기능
+|**`레벨별 랜덤 문제`**|**`알고리즘별 랜덤 문제(전체 레벨)`**|**`알고리즘별 랜덤 문제(특정 레벨)`**|
+|:--:|:--:|:--:|
+|![레벨별-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/1a79bb2f-9a73-4137-8b35-24a33392a65d)|![전체-레벨-선택](https://github.com/w36495/randomrithm/assets/52291662/fc107bdf-bd8e-4971-97fb-641df8a5f38e)|![특정-레벨-선택](https://github.com/w36495/randomrithm/assets/52291662/e5a3ba65-165f-4c39-bfc3-6c92dc41db99)|
 
-|`레벨별 랜덤 문제`|`알고리즘별 랜덤 문제`|
-|:--:|:--:|
-|![2024-01-2421 58 48-ezgif com-video-to-gif-converter](https://github.com/w36495/Randomrithm/assets/52291662/4319ba16-efa6-4d45-bb68-2a6855b53f9e)|![2024-01-2616 53 12-ezgif com-video-to-gif-converter](https://github.com/w36495/Randomrithm/assets/52291662/2b9ed3c7-a414-418d-87d3-17e142ec1c42)|
-
+</br>
 
 ## 🛠️ 사용 기술
 |Title|Contents|
@@ -24,6 +26,7 @@
 |Dependency Injection|Hilt|
 |Other Tool|Figma|
 
+</br>
 
 ## 💥 Trouble Shooting
 ### 1️⃣ 기존에 선택했던 메뉴를 클릭한 후, 다른 메뉴를 클릭했을 때 화면에 문제가 보이지 않음
