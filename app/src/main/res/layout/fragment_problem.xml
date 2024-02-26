@@ -152,9 +152,21 @@
         android:layout_marginTop="16dp"
         android:text="관련 알고리즘"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iBtn_algorithm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_divier" />
+
+    <ImageButton
+        android:id="@+id/iBtn_algorithm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_arrow_drop_down_24"
+        android:tag="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_algorithm_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_algorithm_title" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/layout_chip"
