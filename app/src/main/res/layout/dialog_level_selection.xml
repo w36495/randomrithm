@@ -110,6 +110,19 @@
             app:drawableRightCompat="@drawable/ic_round_square_24"
             app:drawableTint="@color/ruby" />
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="@string/tv_all"
+            app:drawableRightCompat="@drawable/ic_round_square_24"
+            app:drawableTint="#DFDFDF" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@
     <string name="tv_platinum">플래티넘</string>
     <string name="tv_diamond">다이아몬드</string>
     <string name="tv_ruby">루비</string>
+    <string name="tv_all">전체 레벨</string>
 
     <string-array name="levelForTabItem">
         <item>Unrank</item>
