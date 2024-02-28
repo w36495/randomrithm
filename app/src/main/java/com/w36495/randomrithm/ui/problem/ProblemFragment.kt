@@ -15,7 +15,6 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.ui.settings.SettingViewModel
 import com.w36495.randomrithm.utils.putValue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -27,7 +26,6 @@ class ProblemFragment : Fragment() {
     private var _binding: FragmentProblemBinding? = null
     private val binding: FragmentProblemBinding get() = _binding!!
     private val problemViewModel: ProblemViewModel by viewModels()
-    private val settingViewModel: SettingViewModel by viewModels()
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null
@@ -97,7 +95,7 @@ class ProblemFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            settingViewModel.tagState.collectLatest { state ->
+            problemViewModel.tagState.collectLatest { state ->
                 binding.iBtnAlgorithm.tag = state
 
                 if (state) {
