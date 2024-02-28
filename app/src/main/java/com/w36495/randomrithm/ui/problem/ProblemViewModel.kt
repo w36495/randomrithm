@@ -10,8 +10,10 @@ import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagAndLevelUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
+import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class ProblemViewModel @Inject constructor(
     private val getProblemsByLevelUseCase: GetProblemsByLevelUseCase,
     private val getProblemsByTagUseCase: GetProblemsByTagUseCase,
-    private val getProblemsByTagAndLevelUseCase: GetProblemsByTagAndLevelUseCase
+    private val getProblemsByTagAndLevelUseCase: GetProblemsByTagAndLevelUseCase,
+    private val getTagStateUseCase: GetTagStateUseCase
 ) : ViewModel() {
     private var savedProblem: Problem? = null
 
@@ -29,6 +32,8 @@ class ProblemViewModel @Inject constructor(
         get() = _problems
     val loading: LiveData<Boolean>
         get() = _loading
+
+    val tagState: Flow<Boolean> = getTagStateUseCase.invoke()
 
     fun getSavedProblem(): Problem {
         _loading.value = false
