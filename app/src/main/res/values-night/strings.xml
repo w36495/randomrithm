@@ -11,6 +11,15 @@
 
     <string name="title_level_selection">레벨 선택</string>
 
+    <string name="source_btn_camp">Camp</string>
+    <string name="source_btn_contest">Contest</string>
+    <string name="source_btn_high_school">High School</string>
+    <string name="source_btn_icpc">ICPC</string>
+    <string name="source_btn_olympiad">Olympiad</string>
+    <string name="source_btn_university">University</string>
+    <string name="source_desc_prefix">로 분류된 총 </string>
+    <string name="source_desc_postfix"> 개의 문제들이 랜덤으로 보여집니다.</string>
+
     <string name="tv_bronze">브론즈</string>
     <string name="tv_silver">실버</string>
     <string name="tv_gold">골드</string>
