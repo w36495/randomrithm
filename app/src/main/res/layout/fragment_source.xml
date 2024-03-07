@@ -61,6 +61,7 @@
                         app:drawableRightCompat="@drawable/ic_arrow_right_24" />
 
                     <TextView
+                        android:id="@+id/tv_camp_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -94,6 +95,7 @@
                         app:drawableRightCompat="@drawable/ic_arrow_right_24" />
 
                     <TextView
+                        android:id="@+id/tv_contest_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -127,6 +129,7 @@
                         app:drawableRightCompat="@drawable/ic_arrow_right_24" />
 
                     <TextView
+                        android:id="@+id/tv_high_school_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -160,6 +163,7 @@
                         app:drawableRightCompat="@drawable/ic_arrow_right_24" />
 
                     <TextView
+                        android:id="@+id/tv_icpc_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -193,6 +197,7 @@
                         app:drawableRightCompat="@drawable/ic_arrow_right_24" />
 
                     <TextView
+                        android:id="@+id/tv_olympiad_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -228,6 +233,7 @@
                         app:drawableRightCompat="@drawable/ic_arrow_right_24" />
 
                     <TextView
+                        android:id="@+id/tv_university_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
