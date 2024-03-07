@@ -9,15 +9,7 @@ import javax.inject.Inject
 class ProblemRepositoryImpl @Inject constructor(
     private val problemRemoteDataSource: ProblemRemoteDataSource
 ) : ProblemRepository {
-    override suspend fun fetchProblemsByLevel(query: String, page: Int): Response<ProblemDTO> {
-        return problemRemoteDataSource.fetchProblemsByLevel(query, page)
-    }
-
-    override suspend fun fetchProblemsByTag(query: String, page: Int): Response<ProblemDTO> {
-        return problemRemoteDataSource.fetchProblemsByTag(query, page)
-    }
-
-    override suspend fun fetchProblemsByTagAndLevel(query: String): Response<ProblemDTO> {
-        return problemRemoteDataSource.fetchProblemsByTagAndLevel(query)
+    override suspend fun fetchProblems(query: String): Response<ProblemDTO> {
+        return problemRemoteDataSource.fetchProblems(query)
     }
 }
