@@ -29,6 +29,8 @@ class ProblemFragment : Fragment() {
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null
+    private var currentSource: String? = null
+
     private var currentProblems = emptyList<Problem>()
     private var count: Int = 0
 
@@ -54,8 +56,9 @@ class ProblemFragment : Fragment() {
         levelBackgroundColors = resources.getIntArray(R.array.levelColorList)
 
         arguments?.let {
-            currentTag = it.getString("tag")
-            currentLevel = it.getInt("level")
+            currentTag = it.getString(INSTANCE_TAG)
+            currentLevel = it.getInt(INSTANCE_LEVEL)
+            currentSource = it.getString(INSTANCE_SOURCE)
         }
 
         currentTag?.let { tag ->
@@ -63,8 +66,15 @@ class ProblemFragment : Fragment() {
                 if (level == -1) problemViewModel.getProblemsByTag(tag)
                 else problemViewModel.getProblemByTagAndLevel(tag, level)
             }
-        } ?: currentLevel?.let { level ->
-            problemViewModel.getProblemsByLevel(level)
+        } ?: {
+            currentLevel?.let { level ->
+                problemViewModel.getProblemsByLevel(level)
+            }
+
+        }
+
+        currentSource?.let { source ->
+            problemViewModel.getProblemsBySourceOfProblem(source)
         }
 
         problemViewModel.problems.observe(viewLifecycleOwner) {
@@ -78,6 +88,10 @@ class ProblemFragment : Fragment() {
                 }
             } ?: currentLevel?.let { level ->
                 getRandomProblemByLevel(level, currentProblems)
+            }
+
+            currentSource?.let {
+                showRandomProblem(currentProblems[0])
             }
 
             currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
@@ -243,6 +257,7 @@ class ProblemFragment : Fragment() {
         const val TAG: String = "ProblemFragment"
         const val INSTANCE_TAG: String = "tag"
         const val INSTANCE_LEVEL: String = "level"
+        const val INSTANCE_SOURCE: String = "source"
 
         fun <T> newInstance(tag: String, value: T): Fragment {
             return ProblemFragment().apply {

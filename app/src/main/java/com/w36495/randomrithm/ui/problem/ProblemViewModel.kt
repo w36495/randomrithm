@@ -112,7 +112,7 @@ class ProblemViewModel @Inject constructor(
                 _loading.value = true
                 delay(500)
 
-                Log.d(TAG, getProblemsUseCase.invoke(query).toString())
+                _problems.value = getProblemsUseCase.invoke(query)
             } catch (exception: Exception) {
 
             } finally {
