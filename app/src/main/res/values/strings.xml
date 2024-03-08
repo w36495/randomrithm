@@ -12,7 +12,6 @@
     <string name="title_level_selection">레벨 선택</string>
 
     <string name="source_btn_camp">Camp</string>
-    <string name="source_btn_contest">Contest</string>
     <string name="source_btn_high_school">High School</string>
     <string name="source_btn_icpc">ICPC</string>
     <string name="source_btn_olympiad">Olympiad</string>
