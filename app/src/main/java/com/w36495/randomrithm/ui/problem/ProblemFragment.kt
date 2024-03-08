@@ -66,11 +66,8 @@ class ProblemFragment : Fragment() {
                 if (level == -1) problemViewModel.getProblemsByTag(tag)
                 else problemViewModel.getProblemByTagAndLevel(tag, level)
             }
-        } ?: {
-            currentLevel?.let { level ->
-                problemViewModel.getProblemsByLevel(level)
-            }
-
+        } ?: currentLevel?.let { level ->
+            problemViewModel.getProblemsByLevel(level)
         }
 
         currentSource?.let { source ->
@@ -83,19 +80,16 @@ class ProblemFragment : Fragment() {
 
             currentTag?.let { tag ->
                 currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblemByTag(tag, currentProblems)
-                    else getRandomProblemByTagAndLevel(tag, level, currentProblems)
+                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
+                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
                 }
             } ?: currentLevel?.let { level ->
-                getRandomProblemByLevel(level, currentProblems)
+                getRandomProblems { problemViewModel.getProblemsByLevel(level) }
             }
 
-            currentSource?.let {
-                showRandomProblem(currentProblems[0])
+            currentSource?.let { source ->
+                getRandomProblems { problemViewModel.getProblemsBySourceOfProblem(source) }
             }
-
-            currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
-            currentTag?.let { getRandomProblemByTag(it, currentProblems) }
         }
 
         problemViewModel.loading.observe(viewLifecycleOwner) {
@@ -148,11 +142,15 @@ class ProblemFragment : Fragment() {
 
             currentTag?.let { tag ->
                 currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblemByTag(tag, currentProblems)
-                    else getRandomProblemByTagAndLevel(tag, level, currentProblems)
+                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
+                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
                 }
             } ?: currentLevel?.let { level ->
-                getRandomProblemByLevel(level, currentProblems)
+                getRandomProblems { problemViewModel.getProblemsByLevel(level) }
+            }
+
+            currentSource?.let { source ->
+                getRandomProblems { problemViewModel.getProblemsBySourceOfProblem(source) }
             }
         }
 
@@ -167,26 +165,10 @@ class ProblemFragment : Fragment() {
         }
     }
 
-    private fun getRandomProblemByTagAndLevel(tag: String, level: Int, currentProblems: List<Problem>) {
-        if (count >= currentProblems.size) problemViewModel.getProblemByTagAndLevel(tag, level)
+    private fun getRandomProblems(block: () -> Unit) {
+        if (count >= currentProblems.size) block()
         else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
         else showRandomProblem(currentProblems[count++])
-    }
-
-    private fun getRandomProblemByLevel(currentLevel: Int, currentProblems: List<Problem>) {
-        if (currentProblems.isNotEmpty() && currentProblems.all { it.level.toInt() == currentLevel }) {
-            if (count >= currentProblems.size) problemViewModel.getProblemsByLevel(currentLevel)
-            else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
-            else showRandomProblem(currentProblems[count++])
-        }
-    }
-
-    private fun getRandomProblemByTag(currentTag: String, currentProblems: List<Problem>) {
-        if (currentProblems.isNotEmpty() && currentProblems.all { problem -> problem.tags.any { it.key == currentTag } }) {
-            if (count >= currentProblems.size) problemViewModel.getProblemsByTag(currentTag)
-            else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
-            else showRandomProblem(currentProblems[count++])
-        }
     }
 
     private fun showRandomProblem(randomProblem: Problem) {
