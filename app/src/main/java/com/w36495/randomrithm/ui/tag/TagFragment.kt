@@ -21,6 +21,8 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
 
     private lateinit var tagAdapter: TagAdapter
 
+    private var currentTag: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,6 +49,12 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
                 binding.layoutProgress.visibility = View.INVISIBLE
             }
         }
+
+        tagViewModel.problemCountOfTag.observe(viewLifecycleOwner) {
+            currentTag?.let { tag ->
+                showLevelSelectionDialog(tag, it)
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -59,10 +67,16 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     }
 
     override fun onClickTagItem(tagKey: String) {
+        currentTag = tagKey
+        tagViewModel.hasProblemOfTag(tagKey)
+    }
+
+    private fun showLevelSelectionDialog(tag: String, possibleSelectionLevel: List<Boolean>) {
         LevelSelectionDialog().apply {
             setLevelSelectionClickListener(this@TagFragment)
             arguments = Bundle().apply {
-                putString("tag", tagKey)
+                putString("tag", tag)
+                putBooleanArray("levels", possibleSelectionLevel.toBooleanArray())
             }
         }.show(parentFragmentManager, LevelSelectionDialog.TAG)
     }

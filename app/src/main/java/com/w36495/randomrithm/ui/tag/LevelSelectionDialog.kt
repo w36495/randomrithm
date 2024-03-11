@@ -28,12 +28,37 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         tag = arguments?.takeIf { it.containsKey("tag") }?.getString("tag")
+        val levels = arguments?.takeIf { it.containsKey("levels") }?.getBooleanArray("levels")
 
+        if (levels != null) {
+            initButtons(levels)
+        }
         selectLevel()
     }
 
     fun setLevelSelectionClickListener(levelSelectionClickListener: LevelSelectionClickListener) {
         this.levelSelectionClickListener = levelSelectionClickListener
+    }
+
+    private fun initButtons(levels: BooleanArray) {
+        if (!levels[0]) {
+            binding.tvBronze.isEnabled = false
+        }
+        if (!levels[1]) {
+            binding.tvSilver.isEnabled = false
+        }
+        if (!levels[2]) {
+            binding.tvGold.isEnabled = false
+        }
+        if (!levels[3]) {
+            binding.tvPlatinum.isEnabled = false
+        }
+        if (!levels[4]) {
+            binding.tvDiamond.isEnabled = false
+        }
+        if (!levels[5]) {
+            binding.tvRuby.isEnabled = false
+        }
     }
 
     private fun selectLevel() {
