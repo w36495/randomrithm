@@ -29,6 +29,8 @@ class ProblemFragment : Fragment() {
 
     private var currentTag: String? = null
     private var currentLevel: Int? = null
+    private var currentSource: String? = null
+
     private var currentProblems = emptyList<Problem>()
     private var count: Int = 0
 
@@ -54,8 +56,9 @@ class ProblemFragment : Fragment() {
         levelBackgroundColors = resources.getIntArray(R.array.levelColorList)
 
         arguments?.let {
-            currentTag = it.getString("tag")
-            currentLevel = it.getInt("level")
+            currentTag = it.getString(INSTANCE_TAG)
+            currentLevel = it.getInt(INSTANCE_LEVEL)
+            currentSource = it.getString(INSTANCE_SOURCE)
         }
 
         currentTag?.let { tag ->
@@ -67,21 +70,26 @@ class ProblemFragment : Fragment() {
             problemViewModel.getProblemsByLevel(level)
         }
 
+        currentSource?.let { source ->
+            problemViewModel.getProblemsBySourceOfProblem(source)
+        }
+
         problemViewModel.problems.observe(viewLifecycleOwner) {
             currentProblems = it.toList()
             count = 0
 
             currentTag?.let { tag ->
                 currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblemByTag(tag, currentProblems)
-                    else getRandomProblemByTagAndLevel(tag, level, currentProblems)
+                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
+                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
                 }
             } ?: currentLevel?.let { level ->
-                getRandomProblemByLevel(level, currentProblems)
+                getRandomProblems { problemViewModel.getProblemsByLevel(level) }
             }
 
-            currentLevel?.let { getRandomProblemByLevel(it, currentProblems) }
-            currentTag?.let { getRandomProblemByTag(it, currentProblems) }
+            currentSource?.let { source ->
+                getRandomProblems { problemViewModel.getProblemsBySourceOfProblem(source) }
+            }
         }
 
         problemViewModel.loading.observe(viewLifecycleOwner) {
@@ -134,11 +142,15 @@ class ProblemFragment : Fragment() {
 
             currentTag?.let { tag ->
                 currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblemByTag(tag, currentProblems)
-                    else getRandomProblemByTagAndLevel(tag, level, currentProblems)
+                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
+                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
                 }
             } ?: currentLevel?.let { level ->
-                getRandomProblemByLevel(level, currentProblems)
+                getRandomProblems { problemViewModel.getProblemsByLevel(level) }
+            }
+
+            currentSource?.let { source ->
+                getRandomProblems { problemViewModel.getProblemsBySourceOfProblem(source) }
             }
         }
 
@@ -153,26 +165,10 @@ class ProblemFragment : Fragment() {
         }
     }
 
-    private fun getRandomProblemByTagAndLevel(tag: String, level: Int, currentProblems: List<Problem>) {
-        if (count >= currentProblems.size) problemViewModel.getProblemByTagAndLevel(tag, level)
+    private fun getRandomProblems(block: () -> Unit) {
+        if (count >= currentProblems.size) block()
         else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
         else showRandomProblem(currentProblems[count++])
-    }
-
-    private fun getRandomProblemByLevel(currentLevel: Int, currentProblems: List<Problem>) {
-        if (currentProblems.isNotEmpty() && currentProblems.all { it.level.toInt() == currentLevel }) {
-            if (count >= currentProblems.size) problemViewModel.getProblemsByLevel(currentLevel)
-            else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
-            else showRandomProblem(currentProblems[count++])
-        }
-    }
-
-    private fun getRandomProblemByTag(currentTag: String, currentProblems: List<Problem>) {
-        if (currentProblems.isNotEmpty() && currentProblems.all { problem -> problem.tags.any { it.key == currentTag } }) {
-            if (count >= currentProblems.size) problemViewModel.getProblemsByTag(currentTag)
-            else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
-            else showRandomProblem(currentProblems[count++])
-        }
     }
 
     private fun showRandomProblem(randomProblem: Problem) {
@@ -243,6 +239,7 @@ class ProblemFragment : Fragment() {
         const val TAG: String = "ProblemFragment"
         const val INSTANCE_TAG: String = "tag"
         const val INSTANCE_LEVEL: String = "level"
+        const val INSTANCE_SOURCE: String = "source"
 
         fun <T> newInstance(tag: String, value: T): Fragment {
             return ProblemFragment().apply {

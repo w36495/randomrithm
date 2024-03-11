@@ -7,23 +7,7 @@ import retrofit2.http.Query
 
 interface ProblemService {
     @GET("search/problem")
-    suspend fun fetchProblemsByTag(
-        @Query("query", encoded = true) query: String,
-        @Query("page") page: Int,
-        @Query("sort") sort: String = "random",
-        @Query("direction") direction: String = "asc"
-    ): Response<ProblemDTO>
-
-    @GET("search/problem")
-    suspend fun fetchProblemsByLevel(
-        @Query("query", encoded = true) query: String,
-        @Query("page") page: Int,
-        @Query("sort") sort: String = "random",
-        @Query("direction") direction: String = "asc"
-    ): Response<ProblemDTO>
-
-    @GET("search/problem")
-    suspend fun fetchProblemsByTagAndLevel(
+    suspend fun fetchProblems(
         @Query("query", encoded = true) query: String,
         @Query("page") page: Int = 1,
         @Query("sort") sort: String = "random",

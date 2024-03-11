@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
-import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.domain.usecase.GetProblemsByLevelUseCase
-import com.w36495.randomrithm.domain.usecase.GetProblemsByTagAndLevelUseCase
-import com.w36495.randomrithm.domain.usecase.GetProblemsByTagUseCase
+import com.w36495.randomrithm.domain.usecase.GetProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -19,10 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProblemViewModel @Inject constructor(
-    private val getProblemsByLevelUseCase: GetProblemsByLevelUseCase,
-    private val getProblemsByTagUseCase: GetProblemsByTagUseCase,
-    private val getProblemsByTagAndLevelUseCase: GetProblemsByTagAndLevelUseCase,
-    private val getTagStateUseCase: GetTagStateUseCase
+    private val getTagStateUseCase: GetTagStateUseCase,
+    private val getProblemsUseCase: GetProblemsUseCase
 ) : ViewModel() {
     private var savedProblem: Problem? = null
 
@@ -51,12 +46,22 @@ class ProblemViewModel @Inject constructor(
     }
 
     fun getProblemByTagAndLevel(tag: String, level: Int) {
+        val replaceLevel = when (level) {
+            0 -> "b"
+            1 -> "s"
+            2 -> "g"
+            3 -> "p"
+            4 -> "d"
+            else -> "r"
+        }
+        val query = "%23$tag+*$replaceLevel"
+
         viewModelScope.launch {
             try {
                 _loading.value = true
                 delay(500)
 
-                _problems.value = getProblemsByTagAndLevelUseCase.invoke(tag, level)
+                _problems.value = getProblemsUseCase.invoke(query)
             } catch (exception: Exception) {
                 exception.localizedMessage?.let { Log.d(TAG, it) } ?: Log.d(TAG, "error message == null")
             } finally {
@@ -66,29 +71,14 @@ class ProblemViewModel @Inject constructor(
     }
 
     fun getProblemsByTag(tagKey: String) {
-        val requestQuery = "solvable:true+tag:$tagKey"
+        val query = "tag:$tagKey"
 
         viewModelScope.launch {
             try {
                 _loading.value = true
                 delay(500)
 
-                val result = getProblemsByTagUseCase.invoke(requestQuery, 1)
-
-                if (result.isSuccessful) {
-                    val tempProblems = mutableListOf<Problem>()
-                    result.body()?.let { dto ->
-                        dto.items.forEach {
-                            val tags = mutableListOf<Tag>()
-                            it.tags.forEach { tag ->
-                                tags.add(Tag(tag.bojTagId, tag.key, tag.displayNames[0].name, tag.problemCount))
-                            }
-
-                            tempProblems.add(Problem(it.problemId, it.level.toString(), it.titleKo, tags.toList()))
-                        }
-                        _problems.value = tempProblems.toList()
-                    }
-                }
+                _problems.value = getProblemsUseCase.invoke(query)
             } catch (exception: Exception) {
                 exception.localizedMessage?.let { Log.d(TAG, it) } ?: Log.d(TAG, "error message == null")
             } finally {
@@ -98,35 +88,38 @@ class ProblemViewModel @Inject constructor(
     }
 
     fun getProblemsByLevel(level: Int) {
-        val requestQuery = "solvable:true+tier:$level"
+        val query = "tier:$level"
 
         viewModelScope.launch {
             try {
                 _loading.value = true
                 delay(500)
 
-                val result = getProblemsByLevelUseCase.invoke(requestQuery, 1)
-
-                if (result.isSuccessful) {
-                    val tempProblems = mutableListOf<Problem>()
-                    result.body()?.let { dto ->
-                        dto.items.forEach {
-                            val tags = mutableListOf<Tag>()
-                            it.tags.forEach { tag ->
-                                tags.add(Tag(tag.bojTagId, tag.key, tag.displayNames[0].name, tag.problemCount))
-                            }
-
-                            tempProblems.add(Problem(it.problemId, it.level.toString(), it.titleKo, tags.toList()))
-                        }
-                        _problems.value = tempProblems.toList()
-                    }
-                }
+                _problems.value = getProblemsUseCase.invoke(query)
             } catch (exception: Exception) {
                 Log.d(TAG, exception.localizedMessage)
             } finally {
                 _loading.value = false
             }
         }
+    }
+
+    fun getProblemsBySourceOfProblem(selectedSource: String) {
+        val query = "%2F$selectedSource"
+
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+                delay(500)
+
+                _problems.value = getProblemsUseCase.invoke(query)
+            } catch (exception: Exception) {
+
+            } finally {
+                _loading.value = false
+            }
+        }
+
     }
 
     companion object {
