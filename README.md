@@ -7,6 +7,7 @@
 [playstore 이동](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
 - v1.0 (2024.02.21)
 - v1.1 (2024.02.26)
+- v1.2 (2024.03.12)
 
 </br>
 
