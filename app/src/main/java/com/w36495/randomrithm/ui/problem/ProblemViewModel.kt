@@ -22,9 +22,11 @@ class ProblemViewModel @Inject constructor(
 
     private val _problems = MutableLiveData<List<Problem>>()
     private val _loading = MutableLiveData(false)
+    private val _error = MutableLiveData("")
 
     val problems: LiveData<List<Problem>> get() = _problems
     val loading: LiveData<Boolean> get() = _loading
+    val error: LiveData<String> get() = _error
     val tagState: Flow<Boolean> = getTagStateUseCase.invoke()
 
     fun getSavedProblem(): Problem {

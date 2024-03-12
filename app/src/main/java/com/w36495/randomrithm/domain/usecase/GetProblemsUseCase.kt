@@ -1,5 +1,6 @@
 package com.w36495.randomrithm.domain.usecase
 
+import com.w36495.randomrithm.data.message.ExceptionMessage
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.repository.ProblemRepository
@@ -16,6 +17,9 @@ class GetProblemsUseCase @Inject constructor(
 
         if (result.isSuccessful) {
             result.body()?.let { dto ->
+                if (dto.count == 0) {
+                    throw IllegalStateException(ExceptionMessage.NonExistProblem.name)
+                }
                 dto.items.forEach {
                     val tags = mutableListOf<Tag>()
                     it.tags.forEach { tag ->
