@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,8 +63,8 @@ class ProblemFragment : Fragment() {
         }
 
         currentTag?.let { tag ->
-            currentLevel?.let {  level ->
-                if (level == -1) problemViewModel.getProblemsByTag(tag)
+            currentLevel?.let { level ->
+                if (level == All_LEVEL) { problemViewModel.getProblemsByTag(tag) }
                 else problemViewModel.getProblemByTagAndLevel(tag, level)
             }
         } ?: currentLevel?.let { level ->
@@ -79,9 +80,12 @@ class ProblemFragment : Fragment() {
             count = 0
 
             currentTag?.let { tag ->
-                currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
-                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
+                currentLevel?.let { level ->
+                    if (level == All_LEVEL) {
+                        getRandomProblems { problemViewModel.getProblemsByTag(tag) }
+                    } else {
+                        getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
+                    }
                 }
             } ?: currentLevel?.let { level ->
                 getRandomProblems { problemViewModel.getProblemsByLevel(level) }
@@ -99,6 +103,13 @@ class ProblemFragment : Fragment() {
             } else {
                 binding.layoutShimmer.stopShimmer()
                 binding.layoutShimmer.visibility = View.INVISIBLE
+            }
+        }
+
+        problemViewModel.error.observe(viewLifecycleOwner) {
+            if (!it.equals("")) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                parentFragmentManager.popBackStack()
             }
         }
 
@@ -142,8 +153,11 @@ class ProblemFragment : Fragment() {
 
             currentTag?.let { tag ->
                 currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
-                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
+                    if (level == All_LEVEL) {
+                        getRandomProblems { problemViewModel.getProblemsByTag(tag) }
+                    } else {
+                        getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
+                    }
                 }
             } ?: currentLevel?.let { level ->
                 getRandomProblems { problemViewModel.getProblemsByLevel(level) }
@@ -211,7 +225,7 @@ class ProblemFragment : Fragment() {
                     parentFragmentManager.beginTransaction()
                         .addToBackStack(TAG)
                         .setReorderingAllowed(true)
-                        .replace(R.id.container_fragment, newInstance(INSTANCE_TAG, tag.key))
+                        .replace(R.id.container_fragment, newInstance(INSTANCE_TAG, tag.key, INSTANCE_LEVEL, All_LEVEL))
                         .commit()
 
                     dialog.dismiss()
@@ -236,6 +250,7 @@ class ProblemFragment : Fragment() {
 
     companion object {
         private const val BASE_URL: String = "https://www.acmicpc.net/problem/"
+        private const val All_LEVEL: Int = -1
         const val TAG: String = "ProblemFragment"
         const val INSTANCE_TAG: String = "tag"
         const val INSTANCE_LEVEL: String = "level"
