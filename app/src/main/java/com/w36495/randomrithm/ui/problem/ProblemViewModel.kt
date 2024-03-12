@@ -1,6 +1,5 @@
 package com.w36495.randomrithm.ui.problem
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,11 +22,9 @@ class ProblemViewModel @Inject constructor(
 
     private val _problems = MutableLiveData<List<Problem>>()
     private val _loading = MutableLiveData(false)
-    val problems: LiveData<List<Problem>>
-        get() = _problems
-    val loading: LiveData<Boolean>
-        get() = _loading
 
+    val problems: LiveData<List<Problem>> get() = _problems
+    val loading: LiveData<Boolean> get() = _loading
     val tagState: Flow<Boolean> = getTagStateUseCase.invoke()
 
     fun getSavedProblem(): Problem {
@@ -55,58 +52,25 @@ class ProblemViewModel @Inject constructor(
             else -> "r"
         }
         val query = "%23$tag+*$replaceLevel"
-
-        viewModelScope.launch {
-            try {
-                _loading.value = true
-                delay(500)
-
-                _problems.value = getProblemsUseCase.invoke(query)
-            } catch (exception: Exception) {
-                exception.localizedMessage?.let { Log.d(TAG, it) } ?: Log.d(TAG, "error message == null")
-            } finally {
-                _loading.value = false
-            }
-        }
+        getProblems(query)
     }
 
     fun getProblemsByTag(tagKey: String) {
         val query = "tag:$tagKey"
-
-        viewModelScope.launch {
-            try {
-                _loading.value = true
-                delay(500)
-
-                _problems.value = getProblemsUseCase.invoke(query)
-            } catch (exception: Exception) {
-                exception.localizedMessage?.let { Log.d(TAG, it) } ?: Log.d(TAG, "error message == null")
-            } finally {
-                _loading.value = false
-            }
-        }
+        getProblems(query)
     }
 
     fun getProblemsByLevel(level: Int) {
         val query = "tier:$level"
-
-        viewModelScope.launch {
-            try {
-                _loading.value = true
-                delay(500)
-
-                _problems.value = getProblemsUseCase.invoke(query)
-            } catch (exception: Exception) {
-                Log.d(TAG, exception.localizedMessage)
-            } finally {
-                _loading.value = false
-            }
-        }
+        getProblems(query)
     }
 
     fun getProblemsBySourceOfProblem(selectedSource: String) {
         val query = "%2F$selectedSource"
+        getProblems(query)
+    }
 
+    private fun getProblems(query: String) {
         viewModelScope.launch {
             try {
                 _loading.value = true
@@ -114,12 +78,11 @@ class ProblemViewModel @Inject constructor(
 
                 _problems.value = getProblemsUseCase.invoke(query)
             } catch (exception: Exception) {
-
+                _error.value = exception.message
             } finally {
                 _loading.value = false
             }
         }
-
     }
 
     companion object {
