@@ -4,10 +4,7 @@
 `solved.ac` 의 비공식 API 사용 ==> [API 사이트로 이동](https://solvedac.github.io/unofficial-documentation/#/)
 
 ## 배포
-[playstore 이동](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
-- v1.0 (2024.02.21)
-- v1.1 (2024.02.26)
-- v1.2 (2024.03.12)
+[PlayStore 이동 (v1.3)](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
 
 </br>
 
