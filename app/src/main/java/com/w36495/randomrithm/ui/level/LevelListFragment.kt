@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
+import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,7 +60,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
             it.parentFragmentManager.beginTransaction()
                 .addToBackStack(ProblemFragment.TAG)
                 .setReorderingAllowed(true)
-                .replace(R.id.container_fragment, ProblemFragment.newInstance(ProblemFragment.INSTANCE_LEVEL, level))
+                .replace(R.id.container_fragment, ProblemFragment.newInstance(ProblemType(level = level)))
                 .commit()
         }
     }

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
+import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -96,7 +97,7 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
             .setReorderingAllowed(true)
             .replace(
                 R.id.container_fragment,
-                ProblemFragment.newInstance(ProblemFragment.INSTANCE_TAG, tag, ProblemFragment.INSTANCE_LEVEL, level)
+                ProblemFragment.newInstance(ProblemType(tag = tag, level = level))
             )
             .commit()
     }

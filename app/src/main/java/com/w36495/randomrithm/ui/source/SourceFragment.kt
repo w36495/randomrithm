@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentSourceBinding
+import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +55,7 @@ class SourceFragment : Fragment() {
             .setReorderingAllowed(true)
             .replace(
                 R.id.container_fragment,
-                ProblemFragment.newInstance(ProblemFragment.INSTANCE_SOURCE, source)
+                ProblemFragment.newInstance(ProblemType(source = source))
             )
             .commit()
     }
