@@ -41,7 +41,9 @@ class TagViewModel @Inject constructor(
                             tempTags.add(Tag(it.bojTagId, it.key, it.displayNames[0].name, it.problemCount))
                         }
 
-                        _tags.value = tempTags.toList()
+                        _tags.value = tempTags.filter {
+                            it.problemCount != 0
+                        }.toList()
                     }
                 }
             } catch (exception: Exception) {

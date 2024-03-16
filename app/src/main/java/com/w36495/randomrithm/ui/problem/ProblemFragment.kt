@@ -2,10 +2,13 @@ package com.w36495.randomrithm.ui.problem
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,8 +17,8 @@ import com.google.android.material.chip.Chip
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
+import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.utils.putValue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,13 +29,6 @@ class ProblemFragment : Fragment() {
     private var _binding: FragmentProblemBinding? = null
     private val binding: FragmentProblemBinding get() = _binding!!
     private val problemViewModel: ProblemViewModel by viewModels()
-
-    private var currentTag: String? = null
-    private var currentLevel: Int? = null
-    private var currentSource: String? = null
-
-    private var currentProblems = emptyList<Problem>()
-    private var count: Int = 0
 
     private lateinit var levels: Array<String>
     private lateinit var levelBackgroundColors: IntArray
@@ -46,6 +42,7 @@ class ProblemFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,41 +52,20 @@ class ProblemFragment : Fragment() {
         levels = resources.getStringArray(R.array.levelList)
         levelBackgroundColors = resources.getIntArray(R.array.levelColorList)
 
-        arguments?.let {
-            currentTag = it.getString(INSTANCE_TAG)
-            currentLevel = it.getInt(INSTANCE_LEVEL)
-            currentSource = it.getString(INSTANCE_SOURCE)
-        }
-
-        currentTag?.let { tag ->
-            currentLevel?.let {  level ->
-                if (level == -1) problemViewModel.getProblemsByTag(tag)
-                else problemViewModel.getProblemByTagAndLevel(tag, level)
-            }
-        } ?: currentLevel?.let { level ->
-            problemViewModel.getProblemsByLevel(level)
-        }
-
-        currentSource?.let { source ->
-            problemViewModel.getProblemsBySourceOfProblem(source)
-        }
-
-        problemViewModel.problems.observe(viewLifecycleOwner) {
-            currentProblems = it.toList()
-            count = 0
-
-            currentTag?.let { tag ->
-                currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
-                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
+        arguments?.let { bundle ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getSerializable(ARGUMENT_TAG, ProblemType::class.java)?.let { type ->
+                    problemViewModel.initCurrentProblemType(type)
                 }
-            } ?: currentLevel?.let { level ->
-                getRandomProblems { problemViewModel.getProblemsByLevel(level) }
-            }
 
-            currentSource?.let { source ->
-                getRandomProblems { problemViewModel.getProblemsBySourceOfProblem(source) }
+            } else {
+                val type = bundle.getSerializable(ARGUMENT_TAG) as? ProblemType
+                type?.let { problemViewModel.initCurrentProblemType(it) }
             }
+        }
+
+        problemViewModel.problem.observe(viewLifecycleOwner) {
+            showRandomProblem(it)
         }
 
         problemViewModel.loading.observe(viewLifecycleOwner) {
@@ -99,6 +75,13 @@ class ProblemFragment : Fragment() {
             } else {
                 binding.layoutShimmer.stopShimmer()
                 binding.layoutShimmer.visibility = View.INVISIBLE
+            }
+        }
+
+        problemViewModel.error.observe(viewLifecycleOwner) {
+            if (!it.equals("")) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                parentFragmentManager.popBackStack()
             }
         }
 
@@ -140,22 +123,13 @@ class ProblemFragment : Fragment() {
         binding.btnNextProblem.setOnClickListener {
             if (problemViewModel.hasSavedProblem()) problemViewModel.clearSavedProblem()
 
-            currentTag?.let { tag ->
-                currentLevel?.let {  level ->
-                    if (level == -1) getRandomProblems { problemViewModel.getProblemsByTag(tag) }
-                    else getRandomProblems { problemViewModel.getProblemByTagAndLevel(tag, level) }
-                }
-            } ?: currentLevel?.let { level ->
-                getRandomProblems { problemViewModel.getProblemsByLevel(level) }
-            }
-
-            currentSource?.let { source ->
-                getRandomProblems { problemViewModel.getProblemsBySourceOfProblem(source) }
-            }
+            problemViewModel.getProblem()
         }
 
         binding.btnMoveProblem.setOnClickListener {
-            openProblemFromWebBrowser(currentProblems[count-1].id)
+            problemViewModel.problem.value?.let { problem ->
+                openProblemFromWebBrowser(problem.id)
+            }
         }
     }
 
@@ -163,12 +137,6 @@ class ProblemFragment : Fragment() {
         binding.layoutToolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
-    }
-
-    private fun getRandomProblems(block: () -> Unit) {
-        if (count >= currentProblems.size) block()
-        else if (problemViewModel.hasSavedProblem()) showRandomProblem(problemViewModel.getSavedProblem())
-        else showRandomProblem(currentProblems[count++])
     }
 
     private fun showRandomProblem(randomProblem: Problem) {
@@ -189,9 +157,7 @@ class ProblemFragment : Fragment() {
                 text = tag.name
                 setChipBackgroundColorResource(R.color.white)
 
-                this.setOnClickListener {
-                    showChangeProblemDialog(tag)
-                }
+                this.setOnClickListener { showChangeProblemDialog(tag) }
             }
             binding.layoutChip.addView(chip)
         }
@@ -202,16 +168,12 @@ class ProblemFragment : Fragment() {
             .apply {
                 setTitle(getString(R.string.dialog_title_change_problem, tag.name))
                 setPositiveButton(getString(R.string.dialog_btn_okay)) { dialog, _ ->
-                    if (problemViewModel.hasSavedProblem()) {
-                        problemViewModel.saveCurrentProblem(problemViewModel.getSavedProblem())
-                    } else {
-                        problemViewModel.saveCurrentProblem(currentProblems[count-1])
-                    }
+                    problemViewModel.saveCurrentProblem()
 
                     parentFragmentManager.beginTransaction()
                         .addToBackStack(TAG)
                         .setReorderingAllowed(true)
-                        .replace(R.id.container_fragment, newInstance(INSTANCE_TAG, tag.key))
+                        .replace(R.id.container_fragment, newInstance(ProblemType(tag = tag.key)))
                         .commit()
 
                     dialog.dismiss()
@@ -236,22 +198,13 @@ class ProblemFragment : Fragment() {
 
     companion object {
         private const val BASE_URL: String = "https://www.acmicpc.net/problem/"
+        private const val ARGUMENT_TAG: String = "problemType"
         const val TAG: String = "ProblemFragment"
-        const val INSTANCE_TAG: String = "tag"
-        const val INSTANCE_LEVEL: String = "level"
-        const val INSTANCE_SOURCE: String = "source"
 
-        fun <T> newInstance(tag: String, value: T): Fragment {
-            return ProblemFragment().apply {
-                arguments = Bundle().putValue(tag, value)
-            }
-        }
-
-        fun <T> newInstance(tag: String, value1: T, tag2: String, value2: T): Fragment {
+        fun newInstance(value: ProblemType): Fragment {
             return ProblemFragment().apply {
                 arguments = Bundle().apply {
-                    putValue(tag, value1)
-                    putValue(tag2, value2)
+                    putSerializable(ARGUMENT_TAG, value)
                 }
             }
         }

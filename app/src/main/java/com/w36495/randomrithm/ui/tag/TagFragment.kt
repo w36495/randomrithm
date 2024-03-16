@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
+import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.ui.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,6 +58,22 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         }
     }
 
+    override fun onClickTagItem(tagKey: String) {
+        currentTag = tagKey
+        tagViewModel.hasProblemOfTag(tagKey)
+    }
+
+    override fun onClickLevel(level: Int, tag: String) {
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(ProblemFragment.TAG)
+            .setReorderingAllowed(true)
+            .replace(
+                R.id.container_fragment,
+                ProblemFragment.newInstance(ProblemType(tag = tag, level = level))
+            )
+            .commit()
+    }
+
     private fun setupRecyclerView() {
         tagAdapter = TagAdapter()
         binding.containerRecyclerview.apply {
@@ -64,11 +81,6 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
             layoutManager = LinearLayoutManager(requireContext())
         }
         tagAdapter.setTagClickListener(this)
-    }
-
-    override fun onClickTagItem(tagKey: String) {
-        currentTag = tagKey
-        tagViewModel.hasProblemOfTag(tagKey)
     }
 
     private fun showLevelSelectionDialog(tag: String, possibleSelectionLevel: List<Boolean>) {
@@ -88,16 +100,5 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
 
     companion object {
         const val TAG: String = "TagFragment"
-    }
-
-    override fun onClickLevel(level: Int, tag: String) {
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(
-                R.id.container_fragment,
-                ProblemFragment.newInstance(ProblemFragment.INSTANCE_TAG, tag, ProblemFragment.INSTANCE_LEVEL, level)
-            )
-            .commit()
     }
 }
