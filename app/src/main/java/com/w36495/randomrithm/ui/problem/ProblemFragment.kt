@@ -32,6 +32,7 @@ class ProblemFragment : Fragment() {
 
     private lateinit var levels: Array<String>
     private lateinit var levelBackgroundColors: IntArray
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -200,7 +201,7 @@ class ProblemFragment : Fragment() {
         private const val ARGUMENT_TAG: String = "problemType"
         const val TAG: String = "ProblemFragment"
 
-        fun  newInstance(value: ProblemType): Fragment {
+        fun newInstance(value: ProblemType): Fragment {
             return ProblemFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARGUMENT_TAG, value)
