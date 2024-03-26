@@ -3,24 +3,8 @@
 </br>
 `solved.ac` 의 비공식 API 사용 ==> [API 사이트로 이동](https://solvedac.github.io/unofficial-documentation/#/)
 
-## 배포
+## 🎯 배포
 [PlayStore 이동 (v1.3)](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
-
-</br>
-
-## 기능
-### 기본 기능
-|**`레벨별 랜덤 문제`**|**`알고리즘별 랜덤 문제(전체 레벨)`**|**`출처별 랜덤 문제`**|
-|:--:|:--:|:--:|
-|![레벨별-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/1a79bb2f-9a73-4137-8b35-24a33392a65d)|![전체-레벨-선택](https://github.com/w36495/randomrithm/assets/52291662/fc107bdf-bd8e-4971-97fb-641df8a5f38e)|![출처별-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/b4efaa88-dedb-4aad-a194-c563e21946ac)
-
-</br>
-
-### 상세 기능
-|**`알고리즘별 랜덤 문제(특정 레벨)`**|**`특정 레벨의 문제가 존재하지 않는 경우`**|**`관련 알고리즘을 통한 문제`**|
-|:--:|:--:|:--:|
-|![특정-레벨-선택](https://github.com/w36495/randomrithm/assets/52291662/e5a3ba65-165f-4c39-bfc3-6c92dc41db99)|![특정-레벨의-문제가-존재하지-않는-경우](https://github.com/w36495/randomrithm/assets/52291662/f75955d8-e6ef-428b-a566-a403123d8873)|![관련-알고리즘-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/3059e32b-39ec-4a64-b72d-ed852d867887)|
-
 
 </br>
 
@@ -35,6 +19,51 @@
 |Network|Retrofit2, okhttp3, Moshi|
 |Dependency Injection|Hilt|
 |Other Tool|Figma|
+
+</br>
+
+## 🌳 기능
+### 기본 기능
+|**`레벨별 랜덤 문제`**|**`알고리즘별 랜덤 문제(전체 레벨)`**|**`출처별 랜덤 문제`**|
+|:--:|:--:|:--:|
+|![레벨별-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/1a79bb2f-9a73-4137-8b35-24a33392a65d)|![전체-레벨-선택](https://github.com/w36495/randomrithm/assets/52291662/fc107bdf-bd8e-4971-97fb-641df8a5f38e)|![출처별-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/b4efaa88-dedb-4aad-a194-c563e21946ac)
+
+</br>
+
+### 상세 기능
+|**`알고리즘별 랜덤 문제(특정 레벨)`**|**`특정 레벨의 문제가 존재하지 않는 경우`**|**`관련 알고리즘을 통한 문제`**|
+|:--:|:--:|:--:|
+|![특정-레벨-선택](https://github.com/w36495/randomrithm/assets/52291662/e5a3ba65-165f-4c39-bfc3-6c92dc41db99)|![특정-레벨의-문제가-존재하지-않는-경우](https://github.com/w36495/randomrithm/assets/52291662/f75955d8-e6ef-428b-a566-a403123d8873)|![관련-알고리즘-랜덤-문제](https://github.com/w36495/randomrithm/assets/52291662/3059e32b-39ec-4a64-b72d-ed852d867887)|
+
+</br>
+
+## 💥 예외 처리
+### 문제가 존재하지 않는 경우 (count = 0인 경우)
+``` kotlin
+// GetProblemsUseCase.kt
+
+class GetProblemsUseCase @Inject constructor(
+    private val problemRepository: ProblemRepository
+){
+    suspend operator fun invoke(query: String): List<Problem> {
+        val queryPrefix = "solvable:true+"
+        val result = problemRepository.fetchProblems(queryPrefix + query)
+
+        if (result.isSuccessful) {
+            result.body()?.let { dto ->
+                if (dto.count == 0) {
+                    throw IllegalStateException(ExceptionMessage.NonExistProblem.message)
+                }
+
+                return dto.toProblems()
+            }
+        }
+
+        return emptyList()
+    }
+}
+```
+IllegalStateException 발생시킨 후, Toast를 통해 사용자에게 문제가 존재하지 않음을 인식하게 함
 
 </br>
 
