@@ -13,12 +13,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.Tag
+import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ class ProblemFragment : Fragment() {
     private var _binding: FragmentProblemBinding? = null
     private val binding: FragmentProblemBinding get() = _binding!!
     private val problemViewModel: ProblemViewModel by viewModels()
+    private val navController by lazy { binding.root.findNavController() }
 
     private lateinit var levels: Array<String>
     private lateinit var levelBackgroundColors: IntArray
@@ -170,11 +173,10 @@ class ProblemFragment : Fragment() {
                 setPositiveButton(getString(R.string.dialog_btn_okay)) { dialog, _ ->
                     problemViewModel.saveCurrentProblem()
 
-                    parentFragmentManager.beginTransaction()
-                        .addToBackStack(TAG)
-                        .setReorderingAllowed(true)
-                        .replace(R.id.container_fragment, newInstance(ProblemType(tag = tag.key)))
-                        .commit()
+                    navController.navigate(
+                        resId = R.id.action_problemFragment_to_problemFragment,
+                        args = Bundle().putProblemType(ProblemType(tag = tag.key))
+                    )
 
                     dialog.dismiss()
                 }
@@ -198,15 +200,7 @@ class ProblemFragment : Fragment() {
 
     companion object {
         private const val BASE_URL: String = "https://www.acmicpc.net/problem/"
-        private const val ARGUMENT_TAG: String = "problemType"
+        const val ARGUMENT_TAG: String = "problemType"
         const val TAG: String = "ProblemFragment"
-
-        fun newInstance(value: ProblemType): Fragment {
-            return ProblemFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARGUMENT_TAG, value)
-                }
-            }
-        }
     }
 }

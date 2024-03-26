@@ -5,16 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentSourceBinding
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.presentation.problem.ProblemFragment
+import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SourceFragment : Fragment() {
     private var _binding: FragmentSourceBinding? = null
     private val binding: FragmentSourceBinding get() = _binding!!
+
+    private val navController by lazy { binding.root.findNavController() }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,14 +54,10 @@ class SourceFragment : Fragment() {
     }
 
     private fun moveProblem(source: String) {
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(
-                R.id.container_fragment,
-                ProblemFragment.newInstance(ProblemType(source = source))
-            )
-            .commit()
+        navController.navigate(
+            resId = R.id.action_sourceFragment_to_problemFragment,
+            args = Bundle().putProblemType(ProblemType(source = source))
+        )
     }
 
     private fun initButtonDesc() {

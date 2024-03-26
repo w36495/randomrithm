@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.presentation.problem.ProblemFragment
+import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     private val binding: FragmentLevelListBinding get() = _binding!!
 
     private val viewModel: LevelViewModel by activityViewModels()
+    private val navController by lazy { binding.root.findNavController() }
     private lateinit var levelListAdapter: LevelListAdapter
 
     override fun onCreateView(
@@ -56,13 +58,11 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     }
 
     override fun onClickLevelItem(level: Int) {
-        parentFragment?.let {
-            it.parentFragmentManager.beginTransaction()
-                .addToBackStack(ProblemFragment.TAG)
-                .setReorderingAllowed(true)
-                .replace(R.id.container_fragment, ProblemFragment.newInstance(ProblemType(level = level)))
-                .commit()
-        }
+        navController.navigate(
+            resId = R.id.action_levelFragment_to_problemFragment,
+            args = Bundle().putProblemType(ProblemType(level = level)
+            )
+        )
     }
 
     override fun onDestroyView() {

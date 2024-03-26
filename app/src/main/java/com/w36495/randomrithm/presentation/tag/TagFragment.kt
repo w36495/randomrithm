@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.presentation.problem.ProblemFragment
+import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +20,7 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     private var _binding: FragmentAlgorithmBinding? = null
     private val binding: FragmentAlgorithmBinding get() = _binding!!
     private val tagViewModel: TagViewModel by viewModels()
+    private val navController by lazy { binding.root.findNavController() }
 
     private lateinit var tagAdapter: TagAdapter
 
@@ -64,14 +66,10 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     }
 
     override fun onClickLevel(level: Int, tag: String) {
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .replace(
-                R.id.container_fragment,
-                ProblemFragment.newInstance(ProblemType(tag = tag, level = level))
-            )
-            .commit()
+        navController.navigate(
+            resId = R.id.action_tagFragment_to_problemFragment,
+            args = Bundle().putProblemType(ProblemType(tag = tag, level = level))
+        )
     }
 
     private fun setupRecyclerView() {
