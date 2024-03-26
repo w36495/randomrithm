@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.tag
+package com.w36495.randomrithm.presentation.tag
 
 import android.util.Log
 import androidx.lifecycle.LiveData

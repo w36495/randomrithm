@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.settings
+package com.w36495.randomrithm.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
