@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.level
+package com.w36495.randomrithm.presentation.level
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.ui.problem.ProblemFragment
+import com.w36495.randomrithm.presentation.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

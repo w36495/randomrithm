@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Randomrithm"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".presentation.onboarding.AuthActivity"
             android:theme="@style/AppTheme.SplashScreen"
             android:exported="true">
             <intent-filter>

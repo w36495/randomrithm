@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.tag
+package com.w36495.randomrithm.presentation.tag
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.ui.problem.ProblemFragment
+import com.w36495.randomrithm.presentation.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

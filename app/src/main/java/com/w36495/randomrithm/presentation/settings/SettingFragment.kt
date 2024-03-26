@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.settings
+package com.w36495.randomrithm.presentation.settings
 
 import android.content.Intent
 import android.net.Uri

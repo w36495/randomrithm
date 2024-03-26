@@ -1,14 +1,14 @@
-package com.w36495.randomrithm.ui
+package com.w36495.randomrithm.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.ActivityMainBinding
-import com.w36495.randomrithm.ui.tag.TagFragment
-import com.w36495.randomrithm.ui.level.LevelFragment
-import com.w36495.randomrithm.ui.settings.SettingFragment
-import com.w36495.randomrithm.ui.source.SourceFragment
+import com.w36495.randomrithm.presentation.tag.TagFragment
+import com.w36495.randomrithm.presentation.level.LevelFragment
+import com.w36495.randomrithm.presentation.settings.SettingFragment
+import com.w36495.randomrithm.presentation.source.SourceFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

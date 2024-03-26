@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.level
+package com.w36495.randomrithm.presentation.level
 
 import android.os.Bundle
 import android.view.LayoutInflater

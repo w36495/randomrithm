@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.source
+package com.w36495.randomrithm.presentation.source
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentSourceBinding
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.ui.problem.ProblemFragment
+import com.w36495.randomrithm.presentation.problem.ProblemFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

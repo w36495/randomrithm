@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.ui.problem
+package com.w36495.randomrithm.presentation.problem
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
