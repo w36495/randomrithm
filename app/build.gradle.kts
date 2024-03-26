@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 val localProperties = Properties()
@@ -90,6 +91,11 @@ dependencies {
 
     // Data Store
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Jetpack Navigation
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
 
     testImplementation("junit:junit:4.13.2")
 
