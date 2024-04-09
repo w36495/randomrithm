@@ -12,4 +12,7 @@ class ProblemRemoteDataSource @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     suspend fun fetchProblems(query: String): Response<ProblemDTO> = problemService.fetchProblems(query)
+    suspend fun fetchSolvedProblems(query: String, page: Int): Response<ProblemDTO> {
+        return problemService.fetchSolvedProblems(query, page)
+    }
 }

@@ -13,4 +13,10 @@ interface ProblemService {
         @Query("sort") sort: String = "random",
         @Query("direction") direction: String = "asc"
     ): Response<ProblemDTO>
+
+    @GET("search/problem")
+    suspend fun fetchSolvedProblems(
+        @Query("query", encoded = true) query: String,
+        @Query("page") page: Int = 1,
+    ): Response<ProblemDTO>
 }
