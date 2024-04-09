@@ -71,14 +71,12 @@
         app:layout_constraintStart_toEndOf="@id/et_id"
         app:layout_constraintTop_toTopOf="@id/et_id" />
 
-    <CheckBox
-        android:id="@+id/cb_saved_id"
+    <TextView
+        android:id="@+id/tv_notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:checked="false"
-        android:text="@string/tv_login_saved_id"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="4dp"
+        app:layout_constraintStart_toStartOf="@id/et_id"
         app:layout_constraintTop_toBottomOf="@id/et_id" />
 
     <Button

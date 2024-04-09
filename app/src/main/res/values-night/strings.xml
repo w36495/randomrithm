@@ -29,7 +29,7 @@
     <string name="title_activity_on_boarding_screen">onBoardingScreen</string>
     <string name="tv_login_desc">solved.ac에서 사용하는 아이디를 입력해주세요.</string>
     <string name="tv_login_desc2">백준 온라인 저지 사이트의 계정이 solved.ac와 연동되어 있어야 이용가능합니다.</string>
-    <string name="tv_login_appbar">계정 생성</string>
+    <string name="tv_login_appbar">로그인</string>
     <string name="et_login_hint">solved.ac 아이디</string>
     <string name="btn_login_check_id">계정확인</string>
     <string name="tv_login_saved_id">아이디 기억하기</string>
