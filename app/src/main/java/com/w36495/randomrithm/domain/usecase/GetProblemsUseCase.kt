@@ -1,8 +1,8 @@
 package com.w36495.randomrithm.domain.usecase
 
-import com.w36495.randomrithm.data.message.ExceptionMessage
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.repository.ProblemRepository
+import com.w36495.randomrithm.utils.Constants
 import com.w36495.randomrithm.utils.toProblems
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class GetProblemsUseCase @Inject constructor(
         if (result.isSuccessful) {
             result.body()?.let { dto ->
                 if (dto.count == 0) {
-                    throw IllegalStateException(ExceptionMessage.NonExistProblem.message)
+                    throw IllegalStateException(Constants.EXCEPTION_NOT_EXIST_PROBLEM.message)
                 }
 
                 return dto.toProblems()

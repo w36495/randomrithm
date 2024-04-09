@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.w36495.randomrithm.data.message.ExceptionMessage
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.usecase.GetProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
+import com.w36495.randomrithm.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -47,7 +47,7 @@ class ProblemViewModel @Inject constructor(
                 _problems.value?.let { problems ->
                     if (currentProblemIndex >= problems.size) judgeCurrentProblemType()
                     else _problem.value = problems[currentProblemIndex++]
-                } ?: { _error.value = ExceptionMessage.NonExistProblem.message }
+                } ?: { _error.value = Constants.EXCEPTION_NOT_EXIST_PROBLEM.message }
             }
         }
     }
