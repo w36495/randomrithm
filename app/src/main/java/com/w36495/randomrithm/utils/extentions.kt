@@ -1,6 +1,8 @@
 package com.w36495.randomrithm.utils
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.data.entity.ProblemDTO
 import com.w36495.randomrithm.domain.entity.Problem
@@ -35,3 +37,5 @@ fun Bundle.putProblemType(problemType: ProblemType): Bundle {
         putSerializable(ProblemFragment.ARGUMENT_TAG, problemType)
     }
 }
+
+fun Context.showShortToast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

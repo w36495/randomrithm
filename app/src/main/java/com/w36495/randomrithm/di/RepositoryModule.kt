@@ -3,9 +3,11 @@ package com.w36495.randomrithm.di
 import com.w36495.randomrithm.data.repository.LevelRepositoryImpl
 import com.w36495.randomrithm.data.repository.ProblemRepositoryImpl
 import com.w36495.randomrithm.data.repository.TagRepositoryImpl
+import com.w36495.randomrithm.data.repository.UserRepositoryImpl
 import com.w36495.randomrithm.domain.repository.LevelRepository
 import com.w36495.randomrithm.domain.repository.ProblemRepository
 import com.w36495.randomrithm.domain.repository.TagRepository
+import com.w36495.randomrithm.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,4 +30,9 @@ abstract class RepositoryModule {
     abstract fun bindProblemRepository(
         problemRepositoryImpl: ProblemRepositoryImpl
     ): ProblemRepository
+
+    @Binds
+    abstract fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }
