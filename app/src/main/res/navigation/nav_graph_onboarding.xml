@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.w36495.randomrithm.presentation.onboarding.LoginFragment"
+        android:name="com.w36495.randomrithm.presentation.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login" />
 
