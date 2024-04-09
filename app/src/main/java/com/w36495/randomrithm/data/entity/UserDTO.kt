@@ -3,17 +3,18 @@ package com.w36495.randomrithm.data.entity
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.w36495.randomrithm.domain.entity.User
 
 @JsonClass(generateAdapter = true)
 data class UserDTO(
     @Json(name = "count")
     val count: Int,
     @Json(name = "items")
-    val items: List<Item>
+    val items: List<UserInfoDTO>
 )
 
 @JsonClass(generateAdapter = true)
-data class Item(
+data class UserInfoDTO(
     @Json(name = "arenaCompetedRoundCount")
     val arenaCompetedRoundCount: Int,
     @Json(name = "arenaMaxRating")
@@ -72,4 +73,10 @@ data class Item(
     val tier: Int,
     @Json(name = "voteCount")
     val voteCount: Int
+)
+
+fun UserInfoDTO.toDomainModel() = User(
+    id = handle,
+    tier = tier,
+    solvedCount = solvedCount
 )

@@ -71,6 +71,8 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             if (loginViewModel.loginState.value == true) {
                 requireContext().showShortToast(Constants.LOGIN_SUCCESS.message)
+                loginViewModel.getUserInfo(binding.etId.text.toString())
+
                 moveHomeActivity()
             } else {
                 if (binding.etId.text.toString().trim().isNotEmpty()) {
@@ -83,8 +85,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun moveHomeActivity() {
-        val intent = Intent(requireActivity(), HomeActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(requireActivity(), HomeActivity::class.java))
     }
 
     override fun onDestroyView() {
