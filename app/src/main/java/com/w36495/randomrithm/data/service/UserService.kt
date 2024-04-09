@@ -1,6 +1,5 @@
 package com.w36495.randomrithm.data.service
 
-import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.data.entity.UserDTO
 import com.w36495.randomrithm.data.entity.UserInfoDTO
 import retrofit2.Response

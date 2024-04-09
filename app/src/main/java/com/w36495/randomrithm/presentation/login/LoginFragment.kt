@@ -2,7 +2,6 @@ package com.w36495.randomrithm.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,6 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.loginState.observe(viewLifecycleOwner) { hasAccount ->
-            Log.d(TAG, hasAccount.toString())
             if (hasAccount) {
                 binding.tvNotice.text = Constants.LOGIN_EXIST_ACCOUNT.message
                 binding.tvNotice.setTextColor(resources.getColor(com.google.android.material.R.color.design_default_color_primary))

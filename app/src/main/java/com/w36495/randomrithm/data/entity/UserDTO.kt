@@ -1,6 +1,5 @@
 package com.w36495.randomrithm.data.entity
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.w36495.randomrithm.domain.entity.User
