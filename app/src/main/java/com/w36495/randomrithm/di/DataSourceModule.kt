@@ -3,9 +3,11 @@ package com.w36495.randomrithm.di
 import com.w36495.randomrithm.data.datasource.LevelRemoteDataSource
 import com.w36495.randomrithm.data.datasource.ProblemRemoteDataSource
 import com.w36495.randomrithm.data.datasource.TagRemoteDataSource
+import com.w36495.randomrithm.data.datasource.UserRemoteDataSource
 import com.w36495.randomrithm.data.service.LevelService
 import com.w36495.randomrithm.data.service.ProblemService
 import com.w36495.randomrithm.data.service.TagService
+import com.w36495.randomrithm.data.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +30,9 @@ object DataSourceModule {
     fun provideProblemRemoteDataSource(
         problemService: ProblemService
     ): ProblemRemoteDataSource = ProblemRemoteDataSource(problemService)
+
+    @Provides
+    fun provideUserRemoteDataSource(
+        userService: UserService
+    ): UserRemoteDataSource = UserRemoteDataSource(userService)
 }

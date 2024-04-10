@@ -2,8 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dv_grey">#FFEEEEEE</color>
 
     <color name="unrank">#2D2D2D</color>
+    <color name="sprout">#9CC420</color>
     <color name="bronze5">#9D4900</color>
     <color name="bronze4">#A54F00</color>
     <color name="bronze3">#AD5600</color>

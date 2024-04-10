@@ -2,6 +2,7 @@ package com.w36495.randomrithm.data.entity
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.w36495.randomrithm.domain.entity.Problem
 
 @JsonClass(generateAdapter = true)
 data class ProblemDTO(
@@ -79,4 +80,18 @@ class Metadata
 data class Aliase(
     @Json(name = "alias")
     val alias: String
+)
+
+fun ProblemItem.toDomainModel() = Problem(
+    id = this.problemId,
+    level = this.level.toString(),
+    title = this.titleKo,
+    tags = this.tags.map { it.toDomainModel() }
+)
+
+fun Tag.toDomainModel() = com.w36495.randomrithm.domain.entity.Tag(
+    id = bojTagId,
+    key = this.key,
+    name = this.displayNames[0].name,
+    problemCount = this.problemCount
 )

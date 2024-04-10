@@ -5,6 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.w36495.randomrithm.data.service.LevelService
 import com.w36495.randomrithm.data.service.ProblemService
 import com.w36495.randomrithm.data.service.TagService
+import com.w36495.randomrithm.data.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,4 +69,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideProblemService(retrofit: Retrofit): ProblemService = retrofit.create(ProblemService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
 }
