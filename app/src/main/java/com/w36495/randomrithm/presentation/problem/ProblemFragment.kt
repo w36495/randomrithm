@@ -20,6 +20,7 @@ import com.w36495.randomrithm.databinding.FragmentProblemBinding
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.Tag
+import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -69,6 +70,14 @@ class ProblemFragment : Fragment() {
 
         problemViewModel.problem.observe(viewLifecycleOwner) {
             showRandomProblem(it)
+        }
+
+        problemViewModel.problems.observe(viewLifecycleOwner) {
+            problemViewModel.getProblem(it)
+        }
+
+        problemViewModel.problemType.observe(viewLifecycleOwner) {
+            problemViewModel.getProblems(it)
         }
 
         problemViewModel.loading.observe(viewLifecycleOwner) {
@@ -126,7 +135,7 @@ class ProblemFragment : Fragment() {
         binding.btnNextProblem.setOnClickListener {
             if (problemViewModel.hasSavedProblem()) problemViewModel.clearSavedProblem()
 
-            problemViewModel.getProblem()
+            problemViewModel.getNextProblem()
         }
 
         binding.btnMoveProblem.setOnClickListener {
@@ -175,7 +184,7 @@ class ProblemFragment : Fragment() {
 
                     navController.navigate(
                         resId = R.id.action_problemFragment_to_problemFragment,
-                        args = Bundle().putProblemType(ProblemType(tag = tag.key))
+                        args = Bundle().putProblemType(TagType(tag = tag.key))
                     )
 
                     dialog.dismiss()

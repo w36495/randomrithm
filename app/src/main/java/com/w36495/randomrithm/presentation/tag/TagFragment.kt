@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
-import com.w36495.randomrithm.domain.entity.ProblemType
+import com.w36495.randomrithm.domain.entity.TagAndLevelType
 import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +68,7 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     override fun onClickLevel(level: Int, tag: String) {
         navController.navigate(
             resId = R.id.action_tagFragment_to_problemFragment,
-            args = Bundle().putProblemType(ProblemType(tag = tag, level = level))
+            args = Bundle().putProblemType(TagAndLevelType(tag = tag, level = level))
         )
     }
 
