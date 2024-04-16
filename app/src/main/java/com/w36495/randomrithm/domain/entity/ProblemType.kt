@@ -1,9 +1,23 @@
 package com.w36495.randomrithm.domain.entity
 
-import java.io.Serializable
+sealed class ProblemType: java.io.Serializable
 
-data class ProblemType(
-    val tag: String? = null,
-    val level: Int? = null,
-    val source: String? = null
-) : Serializable
+data class TagType(
+    val tag: String,
+) : ProblemType()
+
+
+data class LevelType(
+    val level: Int,
+) : ProblemType()
+
+
+data class SourceType(
+    val source: String,
+) : ProblemType()
+
+
+data class TagAndLevelType(
+    val tag: String,
+    val level: Int,
+) : ProblemType()
