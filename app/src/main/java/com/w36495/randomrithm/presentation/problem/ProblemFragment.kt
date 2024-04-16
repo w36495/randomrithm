@@ -21,9 +21,12 @@ import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
+import com.w36495.randomrithm.domain.usecase.USER_ID
+import com.w36495.randomrithm.domain.usecase.dataStore
 import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -76,8 +79,14 @@ class ProblemFragment : Fragment() {
             problemViewModel.getProblem(it)
         }
 
-        problemViewModel.problemType.observe(viewLifecycleOwner) {
-            problemViewModel.getProblems(it)
+        problemViewModel.problemType.observe(viewLifecycleOwner) { problemType ->
+            viewLifecycleOwner.lifecycleScope.launch {
+                requireContext().dataStore.data.map {
+                    it[USER_ID] ?: problemViewModel.getProblems(problemType)
+                }.collectLatest { userId ->
+                    problemViewModel.getSolvableProblems(userId.toString(), problemType)
+                }
+            }
         }
 
         problemViewModel.loading.observe(viewLifecycleOwner) {

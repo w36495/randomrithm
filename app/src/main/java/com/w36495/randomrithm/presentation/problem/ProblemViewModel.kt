@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.usecase.GetProblemsUseCase
+import com.w36495.randomrithm.domain.usecase.GetSolvableProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
-import com.w36495.randomrithm.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProblemViewModel @Inject constructor(
     private val getTagStateUseCase: GetTagStateUseCase,
-    private val getProblemsUseCase: GetProblemsUseCase
+    private val getProblemsUseCase: GetProblemsUseCase,
+    private val getSolvableProblemsUseCase: GetSolvableProblemsUseCase,
 ) : ViewModel() {
     private var savedProblem: Problem? = null
     private var currentProblemIndex: Int = INIT_PROBLEM_INDEX
@@ -62,6 +62,13 @@ class ProblemViewModel @Inject constructor(
         }
     }
 
+    fun getSolvableProblems(userId: String, problemType: ProblemType) {
+        viewModelScope.launch {
+            val result = getSolvableProblemsUseCase(userId, problemType)
+            _problems.value = result
+        }
+    }
+
     fun getProblems(problemType: ProblemType) {
         currentProblemIndex = INIT_PROBLEM_INDEX
 
@@ -79,7 +86,6 @@ class ProblemViewModel @Inject constructor(
     }
 
     companion object {
-        private const val ALL_LEVEL: Int = -1
         private const val INIT_PROBLEM_INDEX: Int = 0
         const val TAG: String = "ProblemViewModel"
     }
