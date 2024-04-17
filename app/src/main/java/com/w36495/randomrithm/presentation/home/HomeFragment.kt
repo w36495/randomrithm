@@ -22,6 +22,7 @@ import com.w36495.randomrithm.domain.entity.User
 import com.w36495.randomrithm.domain.usecase.USER_ID
 import com.w36495.randomrithm.domain.usecase.dataStore
 import com.w36495.randomrithm.presentation.problem.ProblemFragment
+import com.w36495.randomrithm.presentation.tag.TagFragment
 import com.w36495.randomrithm.utils.putProblemType
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,6 +105,7 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
             btnRecommendSecond.setOnClickListener { moveProblemFragment(SolvedCountType(min = 10_000)) }
             btnRecommendThird.setOnClickListener { moveProblemFragment(EssentialType(min = 2, max = 5)) }
 
+            layoutPopularAlgorithmAll.setOnClickListener { moveTagFragment() }
             btnBronze.setOnClickListener { moveProblemFragment(LevelType(level = 'b')) }
             btnSilver.setOnClickListener { moveProblemFragment(LevelType(level = 's')) }
             btnGold.setOnClickListener { moveProblemFragment(LevelType(level = 'g')) }
@@ -123,6 +125,14 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
                 arguments = Bundle().putProblemType(problemType)
             })
             .addToBackStack(ProblemFragment.TAG)
+            .setReorderingAllowed(true)
+            .commit()
+    }
+
+    private fun moveTagFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.container_fragment_home, TagFragment())
+            .addToBackStack(TagFragment.TAG)
             .setReorderingAllowed(true)
             .commit()
     }
