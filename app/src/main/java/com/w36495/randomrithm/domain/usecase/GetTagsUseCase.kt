@@ -8,7 +8,17 @@ import javax.inject.Inject
 class GetTagsUseCase @Inject constructor(
     private val tagRepository: TagRepository
 ) {
-    suspend fun getTags(): List<Tag> {
-        return tagRepository.getTags().map { it.toDomainModel() }
+    suspend operator fun invoke(): List<Tag> {
+        val result = tagRepository.fetchTags()
+
+        if (result.isSuccessful) {
+            result.body()?.let { dto ->
+                return dto.items.map {
+                    it.toDomainModel()
+                }
+            }
+        }
+
+        return emptyList()
     }
 }

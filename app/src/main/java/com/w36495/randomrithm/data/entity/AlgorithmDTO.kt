@@ -2,6 +2,7 @@ package com.w36495.randomrithm.data.entity
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.w36495.randomrithm.domain.entity.Tag
 
 @JsonClass(generateAdapter = true)
 data class AlgorithmDTO(
@@ -35,4 +36,11 @@ data class DisplayName(
     val name: String,
     @Json(name = "short")
     val short: String
+)
+
+fun AlgorithmItem.toDomainModel() = Tag(
+    id = this.bojTagId,
+    key = this.key,
+    name = this.displayNames[0].name,
+    problemCount = this.problemCount
 )

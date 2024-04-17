@@ -23,7 +23,6 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     private val navController by lazy { binding.root.findNavController() }
 
     private lateinit var tagAdapter: TagAdapter
-
     private var currentTag: String? = null
 
     override fun onCreateView(
@@ -32,6 +31,8 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAlgorithmBinding.inflate(inflater, container, false)
+        tagViewModel.getTags()
+
         return binding.root
     }
 
@@ -39,23 +40,27 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        subscribeUi()
+    }
 
-        tagViewModel.getTags()
-        tagViewModel.tags.observe(requireActivity()) { tags ->
-            tagAdapter.setList(tags)
-        }
-
-        tagViewModel.loading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.layoutProgress.visibility = View.VISIBLE
-            } else {
-                binding.layoutProgress.visibility = View.INVISIBLE
+    private fun subscribeUi() {
+        with (tagViewModel) {
+            tags.observe(viewLifecycleOwner) { tags ->
+                tagAdapter.setList(tags)
             }
-        }
 
-        tagViewModel.problemCountOfTag.observe(viewLifecycleOwner) {
-            currentTag?.let { tag ->
-                showLevelSelectionDialog(tag, it)
+            loading.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.layoutProgress.visibility = View.VISIBLE
+                } else {
+                    binding.layoutProgress.visibility = View.INVISIBLE
+                }
+            }
+
+            problemCountOfTag.observe(viewLifecycleOwner) {
+                currentTag?.let { tag ->
+                    showLevelSelectionDialog(tag, it)
+                }
             }
         }
     }

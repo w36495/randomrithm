@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
 
     private fun loadInitData() {
         viewModelScope.launch {
-            _tags.value = getTagsUseCase.getTags().subList(0, 10)
+            _tags.value = getTagsUseCase.invoke().subList(0, 10)
         }
     }
 
