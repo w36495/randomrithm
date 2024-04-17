@@ -1,13 +1,10 @@
 package com.w36495.randomrithm.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.w36495.randomrithm.data.entity.UserDTO
-import com.w36495.randomrithm.domain.entity.User
+import com.w36495.randomrithm.data.entity.UserInfoDTO
 import retrofit2.Response
 
 interface UserRepository {
-    val user: LiveData<User>
-
     suspend fun getUser(query: String): Response<UserDTO>
-    suspend fun getUserInfo(userId: String)
+    suspend fun getUserInfo(userId: String): Response<UserInfoDTO>
 }

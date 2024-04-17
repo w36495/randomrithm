@@ -1,7 +1,9 @@
 package com.w36495.randomrithm.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import com.w36495.randomrithm.data.entity.LevelDTO
 import com.w36495.randomrithm.data.entity.ProblemDTO
@@ -39,3 +41,8 @@ fun Bundle.putProblemType(problemType: ProblemType): Bundle {
 }
 
 fun Context.showShortToast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+inline val Int.dp: Int
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics
+    ).toInt()

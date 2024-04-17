@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.usecase.GetProblemsUseCase
+import com.w36495.randomrithm.domain.usecase.GetSolvableProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
-import com.w36495.randomrithm.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProblemViewModel @Inject constructor(
     private val getTagStateUseCase: GetTagStateUseCase,
-    private val getProblemsUseCase: GetProblemsUseCase
+    private val getProblemsUseCase: GetProblemsUseCase,
+    private val getSolvableProblemsUseCase: GetSolvableProblemsUseCase,
 ) : ViewModel() {
     private var savedProblem: Problem? = null
     private var currentProblemIndex: Int = INIT_PROBLEM_INDEX
@@ -30,26 +30,14 @@ class ProblemViewModel @Inject constructor(
     private val _error = MutableLiveData("")
 
     val problem: LiveData<Problem> get() = _problem
+    val problems: LiveData<List<Problem>> get() = _problems
+    val problemType: LiveData<ProblemType> get() = _problemType
     val loading: LiveData<Boolean> get() = _loading
     val error: LiveData<String> get() = _error
     val tagState: Flow<Boolean> = getTagStateUseCase.invoke()
 
     fun initCurrentProblemType(problemType: ProblemType) {
         _problemType.value = problemType
-
-        judgeCurrentProblemType()
-    }
-
-    fun getProblem() {
-        when (hasSavedProblem()) {
-            true -> _problem.value = getSavedProblem()
-            false -> {
-                _problems.value?.let { problems ->
-                    if (currentProblemIndex >= problems.size) judgeCurrentProblemType()
-                    else _problem.value = problems[currentProblemIndex++]
-                } ?: { _error.value = Constants.EXCEPTION_NOT_EXIST_PROBLEM.message }
-            }
-        }
     }
 
     fun saveCurrentProblem() { this.savedProblem = _problem.value }
@@ -63,58 +51,32 @@ class ProblemViewModel @Inject constructor(
         return this.savedProblem!!
     }
 
-    private fun judgeCurrentProblemType() {
-        _problemType.value?.run {
-            tag?.let { tag ->
-                level?.let { level ->
-                    if (level == ALL_LEVEL) getProblemsByTag(tag)
-                    else getProblemByTagAndLevel(tag, level)
-                } ?: getProblemsByTag(tag)
-            } ?: level?.let { level ->
-                getProblemsByLevel(level)
-            }
-            source?.let { source -> getProblemsBySourceOfProblem(source) }
+    fun getProblem(problems: List<Problem>) {
+        if (currentProblemIndex >= problems.size) getProblems(problemType.value!!)
+        else _problem.value = problems[currentProblemIndex++]
+    }
+
+    fun getNextProblem() {
+        problems.value?.let {
+            getProblem(it)
         }
     }
 
-    private fun getProblemByTagAndLevel(tag: String, level: Int) {
-        val replaceLevel = when (level) {
-            0 -> "b"
-            1 -> "s"
-            2 -> "g"
-            3 -> "p"
-            4 -> "d"
-            else -> "r"
+    fun getSolvableProblems(userId: String, problemType: ProblemType) {
+        viewModelScope.launch {
+            val result = getSolvableProblemsUseCase(userId, problemType)
+            _problems.value = result
         }
-        val query = "%23$tag+*$replaceLevel"
-        getProblems(query)
     }
 
-    private fun getProblemsByTag(tagKey: String) {
-        val query = "tag:$tagKey"
-        getProblems(query)
-    }
-
-    private fun getProblemsByLevel(level: Int) {
-        val query = "tier:$level"
-        getProblems(query)
-    }
-
-    private fun getProblemsBySourceOfProblem(selectedSource: String) {
-        val query = "%2F$selectedSource"
-        getProblems(query)
-    }
-
-    private fun getProblems(query: String) {
+    fun getProblems(problemType: ProblemType) {
         currentProblemIndex = INIT_PROBLEM_INDEX
 
         viewModelScope.launch {
             try {
                 _loading.value = true
-                delay(500)
 
-                _problems.value = getProblemsUseCase.invoke(query)
-                getProblem()
+                _problems.value = getProblemsUseCase.invoke(problemType)
             } catch (exception: Exception) {
                 _error.value = exception.message
             } finally {
@@ -124,7 +86,6 @@ class ProblemViewModel @Inject constructor(
     }
 
     companion object {
-        private const val ALL_LEVEL: Int = -1
         private const val INIT_PROBLEM_INDEX: Int = 0
         const val TAG: String = "ProblemViewModel"
     }

@@ -37,6 +37,17 @@
     <string name="tv_onboarding_login">solved.ac 아이디를 통해 로그인하기</string>
     <string name="tv_onboarding_just_looking">랜덤리즘 둘러보기</string>
 
+    <string name="tv_home_algorithm_all">전체보기</string>
+    <string name="tv_home_solved_problem_label">해결한 문제</string>
+    <string name="tv_home_user_label">님</string>
+    <string name="tv_home_recommend_title">추천</string>
+    <string name="btn_home_recommend_first">새싹난이도 문제</string>
+    <string name="btn_home_recommend_second">10,000명이상 푼 문제</string>
+    <string name="btn_home_recommend_third">에센셜2~5 문제</string>
+    <string name="tv_home_popular_algorithm_title">많이 찾는 알고리즘</string>
+    <string name="tv_home_level_title">레벨별 알고리즘</string>
+    <string name="tv_home_source_title">출처별 알고리즘</string>
+
     <string-array name="levelForTabItem">
         <item>Unrank</item>
         <item>브론즈</item>

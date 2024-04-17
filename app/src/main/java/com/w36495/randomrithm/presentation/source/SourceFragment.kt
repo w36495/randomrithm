@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentSourceBinding
-import com.w36495.randomrithm.domain.entity.ProblemType
+import com.w36495.randomrithm.domain.entity.SourceType
 import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,7 +56,7 @@ class SourceFragment : Fragment() {
     private fun moveProblem(source: String) {
         navController.navigate(
             resId = R.id.action_sourceFragment_to_problemFragment,
-            args = Bundle().putProblemType(ProblemType(source = source))
+            args = Bundle().putProblemType(SourceType(source = source))
         )
     }
 
