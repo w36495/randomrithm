@@ -5,6 +5,7 @@ import com.w36495.randomrithm.domain.entity.DetailLevelType
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
+import com.w36495.randomrithm.domain.entity.SolvedCountType
 import com.w36495.randomrithm.domain.entity.SourceType
 import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.TagAndLevelType
@@ -26,6 +27,7 @@ class GetProblemsUseCase @Inject constructor(
             is TagAndLevelType -> getProblemsByTagAndLevel(problemType.tag, problemType.level)
             is SourceType -> getProblemsBySource(problemType.source)
             is SproutType -> getProblemsOfSproutUseCase()
+            is SolvedCountType -> getProblemsInSolvedCount(problemType.min, problemType.max)
         }
 
         if (result.isSuccessful) {
@@ -67,5 +69,14 @@ class GetProblemsUseCase @Inject constructor(
     private suspend fun getProblemsBySource(source: String): Response<ProblemDTO> {
         val query = "%2F$source"
         return problemRepository.fetchProblems(query)
+    }
+
+    private suspend fun getProblemsInSolvedCount(min: Int, max: Int): Response<ProblemDTO> {
+        val query = StringBuilder().append("s%23")
+        if (min == -1) query.append("..$max")
+        else if (max == -1) query.append("$min..")
+        else if (min > -1 && max > -1) query.append("$min..$max")
+
+        return problemRepository.fetchProblems(query.toString())
     }
 }

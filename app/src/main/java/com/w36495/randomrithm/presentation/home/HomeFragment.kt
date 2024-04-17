@@ -12,6 +12,7 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentHomeBinding
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.ProblemType
+import com.w36495.randomrithm.domain.entity.SolvedCountType
 import com.w36495.randomrithm.domain.entity.SourceType
 import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.Tag
@@ -136,6 +137,9 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private fun setupRecommendationButtons() {
         binding.btnRecommendFirst.setOnClickListener {
             moveProblemFragment(SproutType)
+        }
+        binding.btnRecommendSecond.setOnClickListener {
+            moveProblemFragment(SolvedCountType(min = 10_000))
         }
     }
 

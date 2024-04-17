@@ -27,3 +27,8 @@ data class TagAndLevelType(
 ) : ProblemType()
 
 data object SproutType : ProblemType()
+
+data class SolvedCountType(
+    val min: Int = -1,
+    val max: Int = -1
+) : ProblemType()
