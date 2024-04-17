@@ -1,184 +1,419 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_appbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/sprout"
-        android:paddingHorizontal="16dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_appbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/sprout"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
-        <TextView
-            android:id="@+id/tv_id_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="님"
-            app:layout_constraintBaseline_toBaselineOf="@id/tv_id"
-            app:layout_constraintBottom_toBottomOf="@id/tv_id"
-            app:layout_constraintStart_toEndOf="@id/tv_id"
-            app:layout_constraintTop_toTopOf="@id/tv_id" />
+            <TextView
+                android:id="@+id/tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_solved_problem_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="해결한 문제"
-            app:layout_constraintBottom_toBottomOf="@id/tv_solved_problem_count"
-            app:layout_constraintEnd_toStartOf="@id/tv_solved_problem_count"
-            app:layout_constraintTop_toTopOf="@id/tv_solved_problem_count" />
+            <TextView
+                android:id="@+id/tv_id_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/tv_home_user_label"
+                android:textColor="@color/black"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_id"
+                app:layout_constraintBottom_toBottomOf="@id/tv_id"
+                app:layout_constraintStart_toEndOf="@id/tv_id"
+                app:layout_constraintTop_toTopOf="@id/tv_id" />
 
-        <TextView
-            android:id="@+id/tv_solved_problem_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_solved_problem_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/tv_home_solved_problem_label"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/cv_solved_problem_count"
+                app:layout_constraintEnd_toStartOf="@id/cv_solved_problem_count"
+                app:layout_constraintTop_toTopOf="@id/cv_solved_problem_count" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_solved_problem_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_recommend"
+                <TextView
+                    android:id="@+id/tv_solved_problem_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:paddingHorizontal="16dp">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/tv_recommend_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="추천"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/dv_recommend"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_marginTop="4dp"
-            app:dividerColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/tv_recommend_title"
-            app:layout_constraintStart_toStartOf="@id/tv_recommend_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_recommend_title" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="16dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_recommend_first"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_right_24"
-            android:text="새싹난이도 문제"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dv_recommend" />
+                <TextView
+                    android:id="@+id/tv_recommend_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_home_recommend_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_recommend_second"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_right_24"
-            android:text="10,000명이상 푼 문제"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_recommend_first" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dv_recommend"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    app:dividerColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@id/tv_recommend_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_recommend_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recommend_title" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_recommend_third"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_right_24"
-            android:text="에센셜2~5 문제"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_recommend_second" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_recommend_first"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_arrow_right_24"
+                    android:text="@string/btn_home_recommend_first"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dv_recommend" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_recommend_second"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_arrow_right_24"
+                    android:text="@string/btn_home_recommend_second"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_recommend_first" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        app:dividerColor="@color/dv_grey" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_recommend_third"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_arrow_right_24"
+                    android:text="@string/btn_home_recommend_third"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_recommend_second" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_popular_algorithm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:paddingHorizontal="16dp">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_popular_algorithm_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="많이 찾는 알고리즘"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginVertical="32dp"
+                app:dividerColor="@color/dv_grey" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/dv_popular_algorithm"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_marginTop="4dp"
-            app:dividerColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/tv_popular_algorithm_title"
-            app:layout_constraintStart_toStartOf="@id/tv_popular_algorithm_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_popular_algorithm_title" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_popular_algorithm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/tv_popular_algorithm_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체보기"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_popular_algorithm_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_home_popular_algorithm_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_popular_algorithm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dv_popular_algorithm" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dv_popular_algorithm"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    app:dividerColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@id/tv_popular_algorithm_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_popular_algorithm_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_popular_algorithm_title" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/layout_popular_algorithm_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_popular_algorithm_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_popular_algorithm_title">
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        app:dividerColor="@color/dv_grey" />
+                    <TextView
+                        android:id="@+id/tv_popular_algorithm_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/tv_home_algorithm_all" />
 
-</LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_popular_algorithm_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_popular_algorithm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dv_popular_algorithm" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginVertical="32dp"
+                app:dividerColor="@color/dv_grey" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:id="@+id/tv_level_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_home_level_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dv_level"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    app:dividerColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@id/tv_level_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_level_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_level_title" />
+
+                <Button
+                    android:id="@+id/btn_bronze"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/bronze"
+                    android:paddingVertical="16dp"
+                    android:text="@string/tv_bronze"
+                    app:layout_constraintEnd_toStartOf="@id/btn_silver"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dv_level" />
+
+                <Button
+                    android:id="@+id/btn_silver"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:backgroundTint="@color/silver"
+                    android:paddingVertical="16dp"
+                    android:text="@string/tv_silver"
+                    app:layout_constraintEnd_toStartOf="@id/btn_gold"
+                    app:layout_constraintStart_toEndOf="@id/btn_bronze"
+                    app:layout_constraintTop_toTopOf="@id/btn_bronze" />
+
+                <Button
+                    android:id="@+id/btn_gold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/gold"
+                    android:paddingVertical="16dp"
+                    android:text="@string/tv_gold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_silver"
+                    app:layout_constraintTop_toTopOf="@id/btn_silver" />
+
+                <Button
+                    android:id="@+id/btn_platinum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/platinum"
+                    android:paddingVertical="16dp"
+                    android:text="@string/tv_platinum"
+                    app:layout_constraintEnd_toStartOf="@id/tv_diamond"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_bronze" />
+
+                <Button
+                    android:id="@+id/tv_diamond"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:backgroundTint="@color/diamond"
+                    android:paddingVertical="16dp"
+                    android:text="@string/tv_diamond"
+                    app:layout_constraintEnd_toStartOf="@id/tv_ruby"
+                    app:layout_constraintStart_toEndOf="@id/btn_platinum"
+                    app:layout_constraintTop_toTopOf="@id/btn_platinum" />
+
+                <Button
+                    android:id="@+id/tv_ruby"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/ruby"
+                    android:paddingVertical="16dp"
+                    android:text="@string/tv_ruby"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_diamond"
+                    app:layout_constraintTop_toTopOf="@id/tv_diamond" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginVertical="32dp"
+                app:dividerColor="@color/dv_grey" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:id="@+id/tv_source_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_home_source_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dv_source"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    app:dividerColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@id/tv_source_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_source_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_source_title" />
+
+                <Button
+                    android:id="@+id/btn_icpc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_btn_grey"
+                    android:backgroundTint="@color/dv_grey"
+                    android:drawableEnd="@drawable/ic_arrow_right_24"
+                    android:text="@string/source_btn_icpc"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/dv_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dv_source" />
+
+                <Button
+                    android:id="@+id/btn_olympiad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_btn_grey"
+                    android:drawableEnd="@drawable/ic_arrow_right_24"
+                    android:text="@string/source_btn_olympiad"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/dv_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_icpc" />
+
+                <Button
+                    android:id="@+id/btn_university"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_btn_grey"
+                    android:drawableEnd="@drawable/ic_arrow_right_24"
+                    android:text="@string/source_btn_university"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/dv_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_olympiad" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
