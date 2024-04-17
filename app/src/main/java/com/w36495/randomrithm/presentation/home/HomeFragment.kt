@@ -12,6 +12,7 @@ import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentHomeBinding
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.ProblemType
+import com.w36495.randomrithm.domain.entity.SourceType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.domain.entity.User
@@ -30,7 +31,11 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
     private val homeViewModel by viewModels<HomeViewModel>()
-    private val popularAlgorithmAdapter by lazy { PopularAlgorithmAdapter() }
+    private val popularAlgorithmAdapter by lazy {
+        PopularAlgorithmAdapter().apply {
+            setPopularAlgorithmClickListener(this@HomeFragment)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,12 +61,13 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         subscribeUi()
         setupPopularAlgorithm()
         setupLevelButtons()
+        setupSourceButtons()
 
         viewLifecycleOwner.lifecycleScope.launch {
             requireContext().dataStore.data.map {
                 it[USER_ID]
             }.collectLatest { userId ->
-                homeViewModel.getUserProfile(userId!!)
+                homeViewModel.getUserProfile(userId.toString())
             }
         }
     }
@@ -111,12 +117,26 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         }
     }
 
+    private fun setupSourceButtons() {
+        binding.btnIcpc.setOnClickListener {
+            moveProblemFragment(SourceType(source = "icpc"))
+        }
+
+        binding.btnOlympiad.setOnClickListener {
+            moveProblemFragment(SourceType(source = "olympiad"))
+        }
+
+        binding.btnUniversity.setOnClickListener {
+            moveProblemFragment(SourceType(source = "univ"))
+        }
+    }
+
     private fun moveProblemFragment(problemType: ProblemType) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.container_fragment_home, ProblemFragment().apply {
                 arguments = Bundle().putProblemType(problemType)
             })
-            .addToBackStack(TAG)
+            .addToBackStack(ProblemFragment.TAG)
             .setReorderingAllowed(true)
             .commit()
     }

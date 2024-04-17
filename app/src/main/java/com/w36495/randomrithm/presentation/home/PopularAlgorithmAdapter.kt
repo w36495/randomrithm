@@ -29,4 +29,8 @@ class PopularAlgorithmAdapter : RecyclerView.Adapter<PopularAlgorithmViewHolder>
         this.popularTags = tags
         notifyDataSetChanged()
     }
+
+    fun setPopularAlgorithmClickListener(listener: PopularAlgorithmClickListener) {
+        this.popularAlgorithmClickListener = listener
+    }
 }
