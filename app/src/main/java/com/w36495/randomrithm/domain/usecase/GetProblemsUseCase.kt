@@ -1,7 +1,9 @@
 package com.w36495.randomrithm.domain.usecase
 
 import com.w36495.randomrithm.data.entity.ProblemDTO
+import com.w36495.randomrithm.data.entity.ProblemItem
 import com.w36495.randomrithm.domain.entity.DetailLevelType
+import com.w36495.randomrithm.domain.entity.EssentialType
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
@@ -28,6 +30,7 @@ class GetProblemsUseCase @Inject constructor(
             is SourceType -> getProblemsBySource(problemType.source)
             is SproutType -> getProblemsOfSproutUseCase()
             is SolvedCountType -> getProblemsInSolvedCount(problemType.min, problemType.max)
+            is EssentialType -> getProblemsInEssential(problemType.min, problemType.max)
         }
 
         if (result.isSuccessful) {
@@ -73,10 +76,47 @@ class GetProblemsUseCase @Inject constructor(
 
     private suspend fun getProblemsInSolvedCount(min: Int, max: Int): Response<ProblemDTO> {
         val query = StringBuilder().append("s%23")
-        if (min == -1) query.append("..$max")
-        else if (max == -1) query.append("$min..")
-        else if (min > -1 && max > -1) query.append("$min..$max")
+        if (min == DEFAULT_VALUE) query.append("..$max")
+        else if (max == DEFAULT_VALUE) query.append("$min..")
+        else if (min > DEFAULT_VALUE && max > DEFAULT_VALUE) query.append("$min..$max")
 
         return problemRepository.fetchProblems(query.toString())
+    }
+
+    private suspend fun getProblemsInEssential(min: Int, max: Int): Response<ProblemDTO> {
+        val query = StringBuilder().append("e%2F")
+
+        if (min == DEFAULT_VALUE) query.append(max)
+        else if (max == DEFAULT_VALUE) query.append(min)
+        else if (min > DEFAULT_VALUE && max > DEFAULT_VALUE) {
+            val essentialProblems = mutableListOf<ProblemItem>()
+            var solvedProblemCount = 0
+
+            (min..max).forEach { level ->
+                if (min != level) {
+                    query.setLength(query.length - 1)
+                }
+                query.append(level)
+
+                val result = problemRepository.fetchProblems(query.toString())
+                if (result.isSuccessful) {
+                    result.body()?.let { dto ->
+                        dto.items.let {
+
+                        }
+                        solvedProblemCount += dto.count
+                        essentialProblems.addAll(dto.items)
+                    }
+                }
+            }
+
+            return Response.success(ProblemDTO(solvedProblemCount, essentialProblems.shuffled().toList()))
+        }
+
+        return problemRepository.fetchProblems(query.toString())
+    }
+
+    companion object {
+        private const val DEFAULT_VALUE = -1
     }
 }

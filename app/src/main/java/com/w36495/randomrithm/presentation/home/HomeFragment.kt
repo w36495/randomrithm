@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentHomeBinding
+import com.w36495.randomrithm.domain.entity.EssentialType
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.SolvedCountType
@@ -140,6 +141,9 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         }
         binding.btnRecommendSecond.setOnClickListener {
             moveProblemFragment(SolvedCountType(min = 10_000))
+        }
+        binding.btnRecommendThird.setOnClickListener {
+            moveProblemFragment(EssentialType(min = 2, max = 5))
         }
     }
 
