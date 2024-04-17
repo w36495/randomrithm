@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
-import com.w36495.randomrithm.domain.entity.LevelType
+import com.w36495.randomrithm.domain.entity.DetailLevelType
 import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +60,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     override fun onClickLevelItem(level: Int) {
         navController.navigate(
             resId = R.id.action_levelFragment_to_problemFragment,
-            args = Bundle().putProblemType(LevelType(level = level))
+            args = Bundle().putProblemType(DetailLevelType(level = level))
         )
     }
 

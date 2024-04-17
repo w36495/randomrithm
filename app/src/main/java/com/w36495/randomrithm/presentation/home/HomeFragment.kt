@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentHomeBinding
+import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
@@ -43,7 +44,8 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private fun setupPopularAlgorithm() {
         binding.rvPopularAlgorithm.apply {
             adapter = popularAlgorithmAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(SpaceItemDecoration(12))
         }
     }
@@ -53,6 +55,7 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
 
         subscribeUi()
         setupPopularAlgorithm()
+        setupLevelButtons()
 
         viewLifecycleOwner.lifecycleScope.launch {
             requireContext().dataStore.data.map {
@@ -85,6 +88,27 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         binding.layoutAppbar.setBackgroundColor(colors[user.tier])
         binding.tvId.text = user.id
         binding.tvSolvedProblemCount.text = user.solvedCount.toString()
+    }
+
+    private fun setupLevelButtons() {
+        binding.btnBronze.setOnClickListener {
+            moveProblemFragment(LevelType(level = 'b'))
+        }
+        binding.btnSilver.setOnClickListener {
+            moveProblemFragment(LevelType(level = 's'))
+        }
+        binding.btnGold.setOnClickListener {
+            moveProblemFragment(LevelType(level = 'g'))
+        }
+        binding.btnPlatinum.setOnClickListener {
+            moveProblemFragment(LevelType(level = 'p'))
+        }
+        binding.tvDiamond.setOnClickListener {
+            moveProblemFragment(LevelType(level = 'd'))
+        }
+        binding.tvRuby.setOnClickListener {
+            moveProblemFragment(LevelType(level = 'r'))
+        }
     }
 
     private fun moveProblemFragment(problemType: ProblemType) {

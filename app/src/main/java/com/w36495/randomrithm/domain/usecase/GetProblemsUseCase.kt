@@ -1,6 +1,7 @@
 package com.w36495.randomrithm.domain.usecase
 
 import com.w36495.randomrithm.data.entity.ProblemDTO
+import com.w36495.randomrithm.domain.entity.DetailLevelType
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
@@ -18,7 +19,8 @@ class GetProblemsUseCase @Inject constructor(
     suspend operator fun invoke(problemType: ProblemType): List<Problem> {
         val result = when (problemType) {
             is TagType -> getProblemsByTag(problemType.tag)
-            is LevelType -> getProblemsByLevel(problemType.level)
+            is LevelType -> getProblemsOfLevel(problemType.level)
+            is DetailLevelType -> getProblemsOfDetailLevel(problemType.level)
             is TagAndLevelType -> getProblemsByTagAndLevel(problemType.tag, problemType.level)
             is SourceType -> getProblemsBySource(problemType.source)
         }
@@ -36,7 +38,12 @@ class GetProblemsUseCase @Inject constructor(
         return problemRepository.fetchProblems(query)
     }
 
-    private suspend fun getProblemsByLevel(level: Int): Response<ProblemDTO> {
+    private suspend fun getProblemsOfLevel(level: Char): Response<ProblemDTO> {
+        val query = "%2A$level"
+        return problemRepository.fetchProblems(query)
+    }
+
+    private suspend fun getProblemsOfDetailLevel(level: Int): Response<ProblemDTO> {
         val query = "tier:$level"
         return problemRepository.fetchProblems(query)
     }
