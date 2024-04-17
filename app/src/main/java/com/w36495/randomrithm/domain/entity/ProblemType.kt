@@ -8,7 +8,11 @@ data class TagType(
 
 
 data class LevelType(
-    val level: Int,
+    val level: Char,
+) : ProblemType()
+
+data class DetailLevelType(
+    val level: Int
 ) : ProblemType()
 
 
