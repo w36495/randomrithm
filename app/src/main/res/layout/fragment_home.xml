@@ -302,32 +302,32 @@
                     android:backgroundTint="@color/platinum"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_platinum"
-                    app:layout_constraintEnd_toStartOf="@id/tv_diamond"
+                    app:layout_constraintEnd_toStartOf="@id/btn_diamond"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_bronze" />
 
                 <Button
-                    android:id="@+id/tv_diamond"
+                    android:id="@+id/btn_diamond"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:backgroundTint="@color/diamond"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_diamond"
-                    app:layout_constraintEnd_toStartOf="@id/tv_ruby"
+                    app:layout_constraintEnd_toStartOf="@id/btn_ruby"
                     app:layout_constraintStart_toEndOf="@id/btn_platinum"
                     app:layout_constraintTop_toTopOf="@id/btn_platinum" />
 
                 <Button
-                    android:id="@+id/tv_ruby"
+                    android:id="@+id/btn_ruby"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/ruby"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_ruby"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_diamond"
-                    app:layout_constraintTop_toTopOf="@id/tv_diamond" />
+                    app:layout_constraintStart_toEndOf="@id/btn_diamond"
+                    app:layout_constraintTop_toTopOf="@id/btn_diamond" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

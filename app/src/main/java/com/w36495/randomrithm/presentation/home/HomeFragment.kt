@@ -63,9 +63,7 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
 
         subscribeUi()
         setupPopularAlgorithm()
-        setupLevelButtons()
-        setupSourceButtons()
-        setupRecommendationButtons()
+        setupButtons()
 
         viewLifecycleOwner.lifecycleScope.launch {
             requireContext().dataStore.data.map {
@@ -100,50 +98,22 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         binding.tvSolvedProblemCount.text = user.solvedCount.toString()
     }
 
-    private fun setupLevelButtons() {
-        binding.btnBronze.setOnClickListener {
-            moveProblemFragment(LevelType(level = 'b'))
-        }
-        binding.btnSilver.setOnClickListener {
-            moveProblemFragment(LevelType(level = 's'))
-        }
-        binding.btnGold.setOnClickListener {
-            moveProblemFragment(LevelType(level = 'g'))
-        }
-        binding.btnPlatinum.setOnClickListener {
-            moveProblemFragment(LevelType(level = 'p'))
-        }
-        binding.tvDiamond.setOnClickListener {
-            moveProblemFragment(LevelType(level = 'd'))
-        }
-        binding.tvRuby.setOnClickListener {
-            moveProblemFragment(LevelType(level = 'r'))
-        }
-    }
+    private fun setupButtons() {
+        with (binding) {
+            btnRecommendFirst.setOnClickListener { moveProblemFragment(SproutType) }
+            btnRecommendSecond.setOnClickListener { moveProblemFragment(SolvedCountType(min = 10_000)) }
+            btnRecommendThird.setOnClickListener { moveProblemFragment(EssentialType(min = 2, max = 5)) }
 
-    private fun setupSourceButtons() {
-        binding.btnIcpc.setOnClickListener {
-            moveProblemFragment(SourceType(source = "icpc"))
-        }
+            btnBronze.setOnClickListener { moveProblemFragment(LevelType(level = 'b')) }
+            btnSilver.setOnClickListener { moveProblemFragment(LevelType(level = 's')) }
+            btnGold.setOnClickListener { moveProblemFragment(LevelType(level = 'g')) }
+            btnPlatinum.setOnClickListener { moveProblemFragment(LevelType(level = 'p')) }
+            btnDiamond.setOnClickListener { moveProblemFragment(LevelType(level = 'd')) }
+            btnRuby.setOnClickListener { moveProblemFragment(LevelType(level = 'r')) }
 
-        binding.btnOlympiad.setOnClickListener {
-            moveProblemFragment(SourceType(source = "olympiad"))
-        }
-
-        binding.btnUniversity.setOnClickListener {
-            moveProblemFragment(SourceType(source = "univ"))
-        }
-    }
-
-    private fun setupRecommendationButtons() {
-        binding.btnRecommendFirst.setOnClickListener {
-            moveProblemFragment(SproutType)
-        }
-        binding.btnRecommendSecond.setOnClickListener {
-            moveProblemFragment(SolvedCountType(min = 10_000))
-        }
-        binding.btnRecommendThird.setOnClickListener {
-            moveProblemFragment(EssentialType(min = 2, max = 5))
+            btnIcpc.setOnClickListener { moveProblemFragment(SourceType(source = "icpc")) }
+            btnOlympiad.setOnClickListener { moveProblemFragment(SourceType(source = "olympiad")) }
+            btnUniversity.setOnClickListener { moveProblemFragment(SourceType(source = "univ")) }
         }
     }
 
@@ -167,6 +137,6 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     }
 
     companion object {
-        private const val TAG: String = "HomeFragment"
+        const val TAG: String = "HomeFragment"
     }
 }
