@@ -6,6 +6,7 @@ import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.SourceType
+import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.TagAndLevelType
 import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.domain.repository.ProblemRepository
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class GetProblemsUseCase @Inject constructor(
     private val problemRepository: ProblemRepository,
+    private val getProblemsOfSproutUseCase: GetProblemsOfSproutUseCase,
 ) {
     suspend operator fun invoke(problemType: ProblemType): List<Problem> {
         val result = when (problemType) {
@@ -23,6 +25,7 @@ class GetProblemsUseCase @Inject constructor(
             is DetailLevelType -> getProblemsOfDetailLevel(problemType.level)
             is TagAndLevelType -> getProblemsByTagAndLevel(problemType.tag, problemType.level)
             is SourceType -> getProblemsBySource(problemType.source)
+            is SproutType -> getProblemsOfSproutUseCase()
         }
 
         if (result.isSuccessful) {

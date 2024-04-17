@@ -25,3 +25,5 @@ data class TagAndLevelType(
     val tag: String,
     val level: Int,
 ) : ProblemType()
+
+data object SproutType : ProblemType()

@@ -13,6 +13,7 @@ import com.w36495.randomrithm.databinding.FragmentHomeBinding
 import com.w36495.randomrithm.domain.entity.LevelType
 import com.w36495.randomrithm.domain.entity.ProblemType
 import com.w36495.randomrithm.domain.entity.SourceType
+import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.domain.entity.User
@@ -62,6 +63,7 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         setupPopularAlgorithm()
         setupLevelButtons()
         setupSourceButtons()
+        setupRecommendationButtons()
 
         viewLifecycleOwner.lifecycleScope.launch {
             requireContext().dataStore.data.map {
@@ -128,6 +130,12 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
 
         binding.btnUniversity.setOnClickListener {
             moveProblemFragment(SourceType(source = "univ"))
+        }
+    }
+
+    private fun setupRecommendationButtons() {
+        binding.btnRecommendFirst.setOnClickListener {
+            moveProblemFragment(SproutType)
         }
     }
 
