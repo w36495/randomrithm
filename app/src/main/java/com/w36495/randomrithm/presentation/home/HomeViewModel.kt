@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.w36495.randomrithm.data.entity.toDomainModel
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.User
-import com.w36495.randomrithm.domain.repository.UserRepository
+import com.w36495.randomrithm.domain.usecase.GetCachedUserInfoUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository,
     private val getTagsUseCase: GetTagsUseCase,
+    private val getCachedUserInfoUseCase: GetCachedUserInfoUseCase,
 ) : ViewModel() {
     private var _error = MutableLiveData<String>()
     private var _tags = MutableLiveData<List<Tag>>()
@@ -36,15 +35,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getUserProfile(userId: String) {
-        viewModelScope.launch {
-            val result = userRepository.getUserInfo(userId)
+    fun getUserInfo(): User? {
+        var user: User? = null
 
-            if (result.isSuccessful) {
-                result.body()?.let { info ->
-                    _user.value = info.toDomainModel()
-                }
-            }
+        try {
+            user = getCachedUserInfoUseCase()
+        } catch (exception: Exception) {
+            _error.value = exception.message.toString()
         }
+
+        return user
     }
 }

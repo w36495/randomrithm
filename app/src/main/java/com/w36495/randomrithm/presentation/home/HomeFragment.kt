@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentHomeBinding
@@ -19,17 +18,11 @@ import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.domain.entity.User
-import com.w36495.randomrithm.domain.usecase.USER_ID
-import com.w36495.randomrithm.domain.usecase.dataStore
 import com.w36495.randomrithm.presentation.problem.ProblemFragment
 import com.w36495.randomrithm.presentation.tag.TagFragment
 import com.w36495.randomrithm.utils.putProblemType
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private var _binding: FragmentHomeBinding? = null
@@ -47,6 +40,8 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        homeViewModel.getUserInfo()?.let { setupUserProfile(it) }
+
         return binding.root
     }
 
@@ -65,14 +60,6 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         subscribeUi()
         setupPopularAlgorithm()
         setupButtons()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            requireContext().dataStore.data.map {
-                it[USER_ID]
-            }.collectLatest { userId ->
-                homeViewModel.getUserProfile(userId.toString())
-            }
-        }
     }
 
     private fun subscribeUi() {
