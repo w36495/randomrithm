@@ -7,6 +7,8 @@ enum class Constants(val message: String) {
     LOGIN_SUGGESTION_CHECK_ACCOUNT("계정 확인을 해주세요."),
     LOGIN_SUGGESTION_INPUT_ACCOUNT("올바른 아이디를 입력해주세요."),
 
+    SUCCESS_LOGOUT("성공적으로 로그아웃 되었습니다."),
+
     EXCEPTION_WRONG_INPUT("잘못된 입력입니다. 다시 입력해주세요."),
     EXCEPTION_NOT_EXIST_PROBLEM("문제가 존재하지 않습니다."),
     EXCEPTION_DATA_ROAD_FAILED("데이터를 불러오는데 실패하였습니다."),

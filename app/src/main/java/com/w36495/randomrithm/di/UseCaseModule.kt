@@ -2,6 +2,7 @@ package com.w36495.randomrithm.di
 
 import android.content.Context
 import com.w36495.randomrithm.domain.usecase.ChangeTagStateUseCase
+import com.w36495.randomrithm.domain.usecase.ClearUserIdUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
 import com.w36495.randomrithm.domain.usecase.LoadUserIdUseCase
 import com.w36495.randomrithm.domain.usecase.SaveUserIdUseCase
@@ -33,4 +34,9 @@ object UseCaseModule {
     fun provideLoadUserIdUseCase(
         @ApplicationContext context: Context
     ): LoadUserIdUseCase = LoadUserIdUseCase(context)
+
+    @Provides
+    fun provideClearUserIdUseCase(
+        @ApplicationContext context: Context
+    ): ClearUserIdUseCase = ClearUserIdUseCase(context)
 }
