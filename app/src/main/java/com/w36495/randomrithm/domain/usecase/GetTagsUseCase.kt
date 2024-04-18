@@ -1,14 +1,24 @@
 package com.w36495.randomrithm.domain.usecase
 
-import com.w36495.randomrithm.data.entity.AlgorithmDTO
+import com.w36495.randomrithm.data.entity.toDomainModel
+import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.repository.TagRepository
-import retrofit2.Response
 import javax.inject.Inject
 
 class GetTagsUseCase @Inject constructor(
     private val tagRepository: TagRepository
 ) {
-    suspend fun fetchTags(): Response<AlgorithmDTO> {
-        return tagRepository.fetchTags()
+    suspend operator fun invoke(): List<Tag> {
+        val result = tagRepository.fetchTags()
+
+        if (result.isSuccessful) {
+            result.body()?.let { dto ->
+                return dto.items.map {
+                    it.toDomainModel()
+                }
+            }
+        }
+
+        return emptyList()
     }
 }

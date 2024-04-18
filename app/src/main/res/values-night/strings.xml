@@ -48,6 +48,14 @@
     <string name="tv_home_level_title">레벨별 알고리즘</string>
     <string name="tv_home_source_title">출처별 알고리즘</string>
 
+    <string name="nav_home">홈</string>
+    <string name="nav_tag">알고리즘</string>
+    <string name="nav_level">레벨</string>
+    <string name="nav_setting">설정</string>
+    <string name="nav_source">출처</string>
+    <string name="nav_onboarding">온보딩</string>
+    <string name="nav_login">로그인</string>
+
     <string-array name="levelForTabItem">
         <item>Unrank</item>
         <item>브론즈</item>

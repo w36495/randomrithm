@@ -12,13 +12,6 @@ class CheckUserIdUseCase @Inject constructor(
             throw IllegalArgumentException(Constants.EXCEPTION_WRONG_INPUT.message)
         }
 
-        val result = userRepository.getUser(userId)
-        if (result.isSuccessful) {
-            result.body()?.let {
-                if (it.count == 1) return true
-            }
-        }
-
-        return false
+        return userRepository.getUser(userId)
     }
 }

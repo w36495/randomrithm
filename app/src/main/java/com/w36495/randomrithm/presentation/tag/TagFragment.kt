@@ -23,7 +23,6 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     private val navController by lazy { binding.root.findNavController() }
 
     private lateinit var tagAdapter: TagAdapter
-
     private var currentTag: String? = null
 
     override fun onCreateView(
@@ -32,6 +31,12 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAlgorithmBinding.inflate(inflater, container, false)
+
+        val parentView = arguments?.takeIf { it.containsKey(ARGUMENT_PARENT_VIEW_HOME) }?.getBoolean(ARGUMENT_PARENT_VIEW_HOME)
+        if (parentView != null){
+            binding.layoutToolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_24)
+        }
+
         return binding.root
     }
 
@@ -39,23 +44,31 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        subscribeUi()
 
-        tagViewModel.getTags()
-        tagViewModel.tags.observe(requireActivity()) { tags ->
-            tagAdapter.setList(tags)
+        binding.layoutToolbar.setNavigationOnClickListener {
+            navController.popBackStack()
         }
+    }
 
-        tagViewModel.loading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.layoutProgress.visibility = View.VISIBLE
-            } else {
-                binding.layoutProgress.visibility = View.INVISIBLE
+    private fun subscribeUi() {
+        with (tagViewModel) {
+            tags.observe(viewLifecycleOwner) { tags ->
+                tagAdapter.setList(tags)
             }
-        }
 
-        tagViewModel.problemCountOfTag.observe(viewLifecycleOwner) {
-            currentTag?.let { tag ->
-                showLevelSelectionDialog(tag, it)
+            loading.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.layoutProgress.visibility = View.VISIBLE
+                } else {
+                    binding.layoutProgress.visibility = View.INVISIBLE
+                }
+            }
+
+            problemCountOfTag.observe(viewLifecycleOwner) {
+                currentTag?.let { tag ->
+                    showLevelSelectionDialog(tag, it)
+                }
             }
         }
     }
@@ -98,5 +111,6 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
 
     companion object {
         const val TAG: String = "TagFragment"
+        const val ARGUMENT_PARENT_VIEW_HOME: String = "Home"
     }
 }

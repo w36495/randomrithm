@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_tag"
+        android:name="com.w36495.randomrithm.presentation.tag.TagFragment"
+        android:label="TagFragment"
+        tools:layout="@layout/fragment_algorithm">
+
+        <action
+            android:id="@+id/action_tagFragment_to_problemFragment"
+            app:destination="@id/nav_problem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_problem"
+        android:name="com.w36495.randomrithm.presentation.problem.ProblemFragment"
+        android:label="ProblemFragment"
+        tools:layout="@layout/fragment_problem">
+
+        <action
+            android:id="@+id/action_problemFragment_to_problemFragment"
+            app:destination="@id/nav_problem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.w36495.randomrithm.presentation.settings.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.w36495.randomrithm.presentation.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_nav_problem"
+            app:destination="@id/nav_problem" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_tag"
+            app:destination="@id/nav_tag" />
+    </fragment>
+
+</navigation>

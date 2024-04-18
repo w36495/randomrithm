@@ -68,10 +68,14 @@ class LoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             if (loginViewModel.loginState.value == true) {
-                requireContext().showShortToast(Constants.LOGIN_SUCCESS.message)
-                loginViewModel.getUserInfo(binding.etId.text.toString())
+                val inputId = binding.etId.text.toString()
 
-                moveHomeActivity()
+                if (inputId == loginViewModel.getUserId()) {
+                    requireContext().showShortToast(Constants.LOGIN_SUCCESS.message)
+                    moveHomeActivity()
+                } else {
+                    requireContext().showShortToast(Constants.LOGIN_SUGGESTION_CHECK_ACCOUNT.message)
+                }
             } else {
                 if (binding.etId.text.toString().trim().isNotEmpty()) {
                     requireContext().showShortToast(Constants.LOGIN_SUGGESTION_CHECK_ACCOUNT.message)

@@ -3,7 +3,7 @@ package com.w36495.randomrithm.presentation.tag
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.w36495.randomrithm.databinding.ItemAlgorhtimBinding
+import com.w36495.randomrithm.databinding.ItemAlgorithmBinding
 import com.w36495.randomrithm.domain.entity.Tag
 
 class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
@@ -11,7 +11,7 @@ class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
 
     private var tags: List<Tag> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagViewHolder {
-        return TagViewHolder(ItemAlgorhtimBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return TagViewHolder(ItemAlgorithmBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int = tags.size
@@ -35,7 +35,7 @@ class TagAdapter : RecyclerView.Adapter<TagViewHolder>() {
 }
 
 class TagViewHolder(
-    private val binding: ItemAlgorhtimBinding
+    private val binding: ItemAlgorithmBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     var onClickItem: ((RecyclerView.ViewHolder) -> Unit)? = null

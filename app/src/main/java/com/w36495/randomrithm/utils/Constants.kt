@@ -10,4 +10,6 @@ enum class Constants(val message: String) {
     EXCEPTION_WRONG_INPUT("잘못된 입력입니다. 다시 입력해주세요."),
     EXCEPTION_NOT_EXIST_PROBLEM("문제가 존재하지 않습니다."),
     EXCEPTION_DATA_ROAD_FAILED("데이터를 불러오는데 실패하였습니다."),
+    EXCEPTION_NOT_EXIST_USER("잘못된 사용자 정보입니다."),
+    EXCEPTION_WRONG_ACCESS("잘못된 접근입니다."),
 }

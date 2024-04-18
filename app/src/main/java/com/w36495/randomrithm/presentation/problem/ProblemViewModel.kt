@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
+import com.w36495.randomrithm.domain.entity.User
+import com.w36495.randomrithm.domain.usecase.GetCachedUserInfoUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetSolvableProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
@@ -19,6 +21,7 @@ class ProblemViewModel @Inject constructor(
     private val getTagStateUseCase: GetTagStateUseCase,
     private val getProblemsUseCase: GetProblemsUseCase,
     private val getSolvableProblemsUseCase: GetSolvableProblemsUseCase,
+    private val getCachedUserInfoUseCase: GetCachedUserInfoUseCase,
 ) : ViewModel() {
     private var savedProblem: Problem? = null
     private var currentProblemIndex: Int = INIT_PROBLEM_INDEX
@@ -49,6 +52,18 @@ class ProblemViewModel @Inject constructor(
     private fun getSavedProblem(): Problem {
         _loading.value = false
         return this.savedProblem!!
+    }
+
+    fun getUserInfo(): User? {
+        var user: User? = null
+
+        try {
+            user = getCachedUserInfoUseCase()
+        } catch (exception: Exception) {
+            _error.value = exception.message.toString()
+        }
+
+        return user
     }
 
     fun getProblem(problems: List<Problem>) {
