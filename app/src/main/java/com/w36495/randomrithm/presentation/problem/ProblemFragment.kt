@@ -96,10 +96,8 @@ class ProblemFragment : Fragment() {
         }
 
         problemViewModel.error.observe(viewLifecycleOwner) {
-            if (!it.equals("")) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
-            }
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

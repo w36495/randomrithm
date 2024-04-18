@@ -59,7 +59,7 @@ class OnboardingFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             if (hasUserId) loginViewModel.setCacheUserId(userId)
-            else navController.navigate(R.id.action_onboarding_to_login)
+            else navController.navigate(R.id.action_onboardingFragment_to_loginFragment)
         }
 
         binding.btnJustLooking.setOnClickListener {

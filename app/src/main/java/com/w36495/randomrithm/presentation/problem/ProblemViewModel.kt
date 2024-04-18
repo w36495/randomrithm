@@ -65,9 +65,9 @@ class ProblemViewModel @Inject constructor(
         }
     }
 
-    fun getSolvableProblems(userId: String, problemType: ProblemType) {
+    fun getSolvableProblems(problemType: ProblemType) {
         viewModelScope.launch {
-            val result = getSolvableProblemsUseCase(userId, problemType)
+            val result = getSolvableProblemsUseCase(problemType)
             _problems.value = result
         }
     }

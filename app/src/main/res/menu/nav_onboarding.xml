@@ -3,10 +3,10 @@
 
     <item
         android:id="@+id/nav_onboarding"
-        android:title="온보딩" />
+        android:title="@string/nav_onboarding" />
 
     <item
         android:id="@+id/nav_login"
-        android:title="로그인" />
+        android:title="@string/nav_login" />
 
 </menu>

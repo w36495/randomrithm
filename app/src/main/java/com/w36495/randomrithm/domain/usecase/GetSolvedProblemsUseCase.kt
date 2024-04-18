@@ -11,21 +11,13 @@ class GetSolvedProblemsUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val problemRepository: ProblemRepository
 ) {
-    suspend operator fun invoke(userId: String): List<Problem> {
-        return getUserInfo(userId)
+    suspend operator fun invoke(): List<Problem> {
+        return getUserInfo()
     }
 
-    private suspend fun getUserInfo(userId: String): List<Problem> {
-        val result = userRepository.getUserInfo(userId)
-        if (result.isSuccessful) {
-            result.body()?.let { dto ->
-                dto.toDomainModel().also { user ->
-                    return getSolvedProblems(user.id, user.solvedCount)
-                }
-            }
-        }
-
-        return emptyList()
+    private suspend fun getUserInfo(): List<Problem> {
+        val user = userRepository.getCachedUserInfo()!!.toDomainModel()
+        return getSolvedProblems(user.id, user.solvedCount)
     }
 
     private suspend fun getSolvedProblems(userId: String, solvedProblemCount: Int): List<Problem> {
