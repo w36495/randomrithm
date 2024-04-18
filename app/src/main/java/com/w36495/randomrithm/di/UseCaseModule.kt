@@ -3,6 +3,8 @@ package com.w36495.randomrithm.di
 import android.content.Context
 import com.w36495.randomrithm.domain.usecase.ChangeTagStateUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
+import com.w36495.randomrithm.domain.usecase.LoadUserIdUseCase
+import com.w36495.randomrithm.domain.usecase.SaveUserIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +23,14 @@ object UseCaseModule {
     fun provideChangeTagStateUseCase(
         @ApplicationContext context: Context
     ): ChangeTagStateUseCase = ChangeTagStateUseCase(context)
+
+    @Provides
+    fun provideSaveUserIdUseCase(
+        @ApplicationContext context: Context
+    ): SaveUserIdUseCase = SaveUserIdUseCase(context)
+
+    @Provides
+    fun provideLoadUserIdUseCase(
+        @ApplicationContext context: Context
+    ): LoadUserIdUseCase = LoadUserIdUseCase(context)
 }

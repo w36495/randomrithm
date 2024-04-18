@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Problem
 import com.w36495.randomrithm.domain.entity.ProblemType
-import com.w36495.randomrithm.domain.entity.User
-import com.w36495.randomrithm.domain.usecase.GetCachedUserInfoUseCase
 import com.w36495.randomrithm.domain.usecase.GetProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetSolvableProblemsUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagStateUseCase
+import com.w36495.randomrithm.domain.usecase.HasCacheUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ class ProblemViewModel @Inject constructor(
     private val getTagStateUseCase: GetTagStateUseCase,
     private val getProblemsUseCase: GetProblemsUseCase,
     private val getSolvableProblemsUseCase: GetSolvableProblemsUseCase,
-    private val getCachedUserInfoUseCase: GetCachedUserInfoUseCase,
+    private val hasCacheUserInfoUseCase: HasCacheUserInfoUseCase,
 ) : ViewModel() {
     private var savedProblem: Problem? = null
     private var currentProblemIndex: Int = INIT_PROBLEM_INDEX
@@ -30,7 +29,7 @@ class ProblemViewModel @Inject constructor(
     private val _problems = MutableLiveData<List<Problem>>()
     private val _problem = MutableLiveData<Problem>()
     private val _loading = MutableLiveData(false)
-    private val _error = MutableLiveData("")
+    private val _error = MutableLiveData<String>()
 
     val problem: LiveData<Problem> get() = _problem
     val problems: LiveData<List<Problem>> get() = _problems
@@ -38,6 +37,7 @@ class ProblemViewModel @Inject constructor(
     val loading: LiveData<Boolean> get() = _loading
     val error: LiveData<String> get() = _error
     val tagState: Flow<Boolean> = getTagStateUseCase.invoke()
+    val hasCacheUserInfo = hasCacheUserInfoUseCase()
 
     fun initCurrentProblemType(problemType: ProblemType) {
         _problemType.value = problemType
@@ -52,18 +52,6 @@ class ProblemViewModel @Inject constructor(
     private fun getSavedProblem(): Problem {
         _loading.value = false
         return this.savedProblem!!
-    }
-
-    fun getUserInfo(): User? {
-        var user: User? = null
-
-        try {
-            user = getCachedUserInfoUseCase()
-        } catch (exception: Exception) {
-            _error.value = exception.message.toString()
-        }
-
-        return user
     }
 
     fun getProblem(problems: List<Problem>) {

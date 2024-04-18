@@ -71,6 +71,8 @@ class LoginFragment : Fragment() {
                 val inputId = binding.etId.text.toString()
 
                 if (inputId == loginViewModel.getUserId()) {
+                    if (binding.cbSaveUserId.isChecked) { loginViewModel.saveUserId(inputId) }
+
                     requireContext().showShortToast(Constants.LOGIN_SUCCESS.message)
                     moveHomeActivity()
                 } else {
