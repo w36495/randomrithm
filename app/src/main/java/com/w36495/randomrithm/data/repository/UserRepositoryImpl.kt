@@ -11,7 +11,7 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     private var user: UserInfoDTO? = null
 
-    override fun getCacheUserInfo(): UserInfoDTO? {
+    override fun getCachedUserInfo(): UserInfoDTO? {
         return this.user
     }
 

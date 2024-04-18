@@ -10,7 +10,7 @@ class GetCachedUserInfoUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
     operator fun invoke(): User {
-        val result = userRepository.getCacheUserInfo()
+        val result = userRepository.getCachedUserInfo()
 
         val user = result?.let {
             it.toDomainModel()

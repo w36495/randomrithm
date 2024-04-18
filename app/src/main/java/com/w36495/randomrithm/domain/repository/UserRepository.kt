@@ -5,7 +5,7 @@ import com.w36495.randomrithm.data.entity.UserInfoDTO
 import retrofit2.Response
 
 interface UserRepository {
-    fun getCacheUserInfo(): UserInfoDTO?
+    fun getCachedUserInfo(): UserInfoDTO?
     suspend fun getUser(query: String): Boolean
     suspend fun getUserInfo(userId: String): Response<UserInfoDTO>
 }
