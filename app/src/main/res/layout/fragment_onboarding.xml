@@ -5,17 +5,96 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="150dp"
-        android:text="@string/tv_onboarding_title"
-        android:textSize="28sp"
-        android:textStyle="bold"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_al"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_gorithm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="고리즘"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_al"
+            app:layout_constraintBottom_toBottomOf="@id/tv_al"
+            app:layout_constraintStart_toEndOf="@id/tv_al" />
+
+        <TextView
+            android:id="@+id/tv_ran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="랜"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_al" />
+
+        <TextView
+            android:id="@+id/tv_dom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="덤"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_ran"
+            app:layout_constraintBottom_toBottomOf="@id/tv_ran"
+            app:layout_constraintStart_toEndOf="@id/tv_ran" />
+
+        <TextView
+            android:id="@+id/tv_de"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="디"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ran" />
+
+        <TextView
+            android:id="@+id/pence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="펜스"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_de"
+            app:layout_constraintBottom_toBottomOf="@id/tv_de"
+            app:layout_constraintStart_toEndOf="@id/tv_de" />
+
+        <TextView
+            android:id="@+id/tv_randomrithm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="를 위한 랜덤리즘"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_de" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btn_login"
