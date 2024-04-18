@@ -55,6 +55,8 @@
     <string name="nav_source">출처</string>
     <string name="nav_onboarding">온보딩</string>
     <string name="nav_login">로그인</string>
+    <string name="tv_logout_title">로그아웃 하시겠습니까?</string>
+    <string name="tv_logout">로그아웃</string>
 
     <string-array name="levelForTabItem">
         <item>Unrank</item>

@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.w36495.randomrithm.BuildConfig
 import com.w36495.randomrithm.databinding.FragmentSettingBinding
+import com.w36495.randomrithm.presentation.onboarding.OnboardingActivity
+import com.w36495.randomrithm.utils.Constants
+import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,6 +25,7 @@ class SettingFragment : Fragment() {
     private val binding: FragmentSettingBinding get() = _binding!!
 
     private val viewModel: SettingViewModel by viewModels()
+    private val navController by lazy { binding.root.findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +41,11 @@ class SettingFragment : Fragment() {
 
         sendSurvey()
 
+        if (viewModel.hasUserInfo) {
+            binding.dvBetweenSurveyLogout.visibility = View.VISIBLE
+            binding.layoutLogout.visibility = View.VISIBLE
+        }
+
         binding.switchTag.setOnCheckedChangeListener { _, isChecked ->
             viewModel.changeTagState(isChecked)
         }
@@ -44,6 +54,14 @@ class SettingFragment : Fragment() {
             viewModel.tagState.collectLatest {
                 binding.switchTag.isChecked = it
             }
+        }
+
+        binding.layoutLogout.setOnClickListener {
+            LogoutDialog( onClickLogout = {
+                viewModel.resetUserIdUseCase()
+                requireContext().showShortToast(Constants.SUCCESS_LOGOUT.message)
+                startActivity(Intent(requireActivity(), OnboardingActivity::class.java))
+            }).show(childFragmentManager, LogoutDialog.TAG)
         }
     }
 
