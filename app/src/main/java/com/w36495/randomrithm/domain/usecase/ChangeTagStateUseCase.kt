@@ -8,9 +8,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import javax.inject.Inject
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-val TAG_STATE_KEY = booleanPreferencesKey("tag_state")
-
 class ChangeTagStateUseCase @Inject constructor(
     private val context: Context
 ) {
@@ -18,5 +15,10 @@ class ChangeTagStateUseCase @Inject constructor(
         context.dataStore.edit { settings ->
             settings[TAG_STATE_KEY] = changedState
         }
+    }
+
+    companion object {
+        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+        val TAG_STATE_KEY = booleanPreferencesKey("tag_state")
     }
 }
