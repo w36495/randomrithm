@@ -8,10 +8,10 @@ class GetSolvableProblemsUseCase @Inject constructor(
     private val getProblemsUseCase: GetProblemsUseCase,
     private val getSolvedProblemsUseCase: GetSolvedProblemsUseCase,
 ) {
-    suspend operator fun invoke(userId: String, problemType: ProblemType): List<Problem> {
+    suspend operator fun invoke(problemType: ProblemType): List<Problem> {
         val solvableProblems = mutableListOf<Problem>()
         val problems = getProblemsUseCase(problemType)
-        val solvedProblems = getSolvedProblemsUseCase(userId)
+        val solvedProblems = getSolvedProblemsUseCase()
 
         problems.forEach { problem ->
             if (isSolvableProblem(problem, solvedProblems)) solvableProblems.addAll(problems)

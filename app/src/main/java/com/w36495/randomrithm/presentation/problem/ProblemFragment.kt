@@ -77,11 +77,12 @@ class ProblemFragment : Fragment() {
         }
 
         problemViewModel.problemType.observe(viewLifecycleOwner) { problemType ->
-            val user = problemViewModel.getUserInfo()
+            val hasUserInfo = problemViewModel.hasCacheUserInfo
 
-            user?.let {
-                problemViewModel.getSolvableProblems(it.id, problemType)
-            } ?: problemViewModel.getProblems(problemType)
+            with (problemViewModel) {
+                if (hasUserInfo) getSolvableProblems(problemType)
+                else getProblems(problemType)
+            }
         }
 
         problemViewModel.loading.observe(viewLifecycleOwner) {
@@ -95,10 +96,8 @@ class ProblemFragment : Fragment() {
         }
 
         problemViewModel.error.observe(viewLifecycleOwner) {
-            if (!it.equals("")) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
-            }
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

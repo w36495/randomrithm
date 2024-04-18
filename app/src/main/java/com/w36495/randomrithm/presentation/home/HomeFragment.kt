@@ -22,6 +22,7 @@ import com.w36495.randomrithm.domain.entity.User
 import com.w36495.randomrithm.utils.putProblemType
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private var _binding: FragmentHomeBinding? = null
@@ -40,7 +41,6 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        homeViewModel.getUserInfo()?.let { setupUserProfile(it) }
 
         return binding.root
     }
@@ -58,16 +58,13 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         subscribeUi()
+        setupUserProfile(homeViewModel.user)
         setupPopularAlgorithm()
         setupButtons()
     }
 
     private fun subscribeUi() {
         with(homeViewModel) {
-            user.observe(viewLifecycleOwner) { user ->
-                setupUserProfile(user)
-            }
-
             error.observe(viewLifecycleOwner) { message ->
                 requireContext().showShortToast(message)
             }
