@@ -97,7 +97,7 @@ class ProblemFragment : Fragment() {
         problemViewModel.error.observe(viewLifecycleOwner) {
             if (!it.equals("")) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
+                navController.popBackStack()
             }
         }
 
@@ -151,7 +151,7 @@ class ProblemFragment : Fragment() {
 
     private fun setupToolbarNavigation() {
         binding.layoutToolbar.setNavigationOnClickListener {
-            parentFragmentManager.popBackStack()
+            navController.popBackStack()
         }
     }
 

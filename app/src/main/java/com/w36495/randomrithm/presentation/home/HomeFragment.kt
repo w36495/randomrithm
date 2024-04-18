@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentHomeBinding
@@ -18,8 +19,6 @@ import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.domain.entity.User
-import com.w36495.randomrithm.presentation.problem.ProblemFragment
-import com.w36495.randomrithm.presentation.tag.TagFragment
 import com.w36495.randomrithm.utils.putProblemType
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +27,7 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
     private val homeViewModel by viewModels<HomeViewModel>()
+    private val navController by lazy { binding.root.findNavController() }
     private val popularAlgorithmAdapter by lazy {
         PopularAlgorithmAdapter().apply {
             setPopularAlgorithmClickListener(this@HomeFragment)
@@ -107,21 +107,18 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     }
 
     private fun moveProblemFragment(problemType: ProblemType) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.container_fragment_home, ProblemFragment().apply {
-                arguments = Bundle().putProblemType(problemType)
-            })
-            .addToBackStack(ProblemFragment.TAG)
-            .setReorderingAllowed(true)
-            .commit()
+        navController.navigate(
+            resId = R.id.action_homeFragment_to_nav_problem,
+            args = Bundle().putProblemType(problemType)
+        )
     }
 
     private fun moveTagFragment() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.container_fragment_home, TagFragment())
-            .addToBackStack(TagFragment.TAG)
-            .setReorderingAllowed(true)
-            .commit()
+        navController.navigate(
+            R.id.action_nav_home_to_nav_tag,
+            args = Bundle().apply {
+                putBoolean("Home", true)
+            })
     }
 
     override fun onClickPopularAlgorithm(tag: Tag) {

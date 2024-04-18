@@ -27,7 +27,11 @@ class TagViewModel @Inject constructor(
     val loading: LiveData<Boolean> get() = _loading
     val problemCountOfTag: LiveData<List<Boolean>> get() = _problemCountOfTag
 
-    fun getTags() {
+    init {
+        getTags()
+    }
+
+    private fun getTags() {
         viewModelScope.launch {
             try {
                 _loading.value = true

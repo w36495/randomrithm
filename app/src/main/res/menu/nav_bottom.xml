@@ -4,26 +4,26 @@
 
     <item
         android:id="@+id/nav_level"
-        android:title="레벨"
         android:icon="@drawable/ic_bolt_24"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/nav_level"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_tag"
-        android:title="알고리즘"
         android:icon="@drawable/ic_tag_24"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/nav_tag"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_source"
-        android:title="출처"
         android:icon="@drawable/ic_copyright_24"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/nav_source"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_settings"
-        android:title="설정"
         android:icon="@drawable/ic_settings_24"
+        android:title="@string/nav_setting"
         app:showAsAction="ifRoom" />
 
 </menu>

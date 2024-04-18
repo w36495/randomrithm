@@ -31,7 +31,11 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAlgorithmBinding.inflate(inflater, container, false)
-        tagViewModel.getTags()
+
+        val parentView = arguments?.takeIf { it.containsKey(ARGUMENT_PARENT_VIEW_HOME) }?.getBoolean(ARGUMENT_PARENT_VIEW_HOME)
+        if (parentView != null){
+            binding.layoutToolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_24)
+        }
 
         return binding.root
     }
@@ -41,6 +45,10 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
 
         setupRecyclerView()
         subscribeUi()
+
+        binding.layoutToolbar.setNavigationOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     private fun subscribeUi() {
@@ -103,5 +111,6 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
 
     companion object {
         const val TAG: String = "TagFragment"
+        const val ARGUMENT_PARENT_VIEW_HOME: String = "Home"
     }
 }
