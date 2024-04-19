@@ -6,12 +6,12 @@ import javax.inject.Inject
 
 class GetSolvableProblemsUseCase @Inject constructor(
     private val getProblemsUseCase: GetProblemsUseCase,
-    private val getSolvedProblemsUseCase: GetSolvedProblemsUseCase,
+    private val getCacheSolvedProblemsUseCase: GetCacheSolvedProblemsUseCase,
 ) {
     suspend operator fun invoke(problemType: ProblemType): List<Problem> {
         val solvableProblems = mutableListOf<Problem>()
         val problems = getProblemsUseCase(problemType)
-        val solvedProblems = getSolvedProblemsUseCase()
+        val solvedProblems = getCacheSolvedProblemsUseCase()
 
         problems.forEach { problem ->
             if (isSolvableProblem(problem, solvedProblems)) solvableProblems.addAll(problems)

@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetCacheUserInfoUseCase
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
+import com.w36495.randomrithm.domain.usecase.SaveCacheSolvedProblemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +17,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getTagsUseCase: GetTagsUseCase,
     private val getCacheUserInfoUseCase: GetCacheUserInfoUseCase,
+    private val saveCacheSolvedProblemsUseCase: SaveCacheSolvedProblemsUseCase,
+
 ) : ViewModel() {
     private var _error = MutableLiveData<String>()
     private var _tags = MutableLiveData<List<Tag>>()
@@ -28,6 +32,7 @@ class HomeViewModel @Inject constructor(
 
     private fun loadInitData() {
         viewModelScope.launch {
+            async { saveCacheSolvedProblemsUseCase() }.await()
             _tags.value = getTagsUseCase.invoke().subList(0, 10)
         }
     }

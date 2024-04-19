@@ -28,6 +28,7 @@ abstract class RepositoryModule {
     ): LevelRepository
 
     @Binds
+    @Singleton
     abstract fun bindProblemRepository(
         problemRepositoryImpl: ProblemRepositoryImpl
     ): ProblemRepository
