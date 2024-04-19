@@ -26,7 +26,14 @@ data class AlgorithmItem(
     val key: String,
     @Json(name = "problemCount")
     val problemCount: Int
-)
+) {
+    fun toDomainModel() = Tag(
+        id = this.bojTagId,
+        key = this.key,
+        name = this.displayNames[0].name,
+        problemCount = this.problemCount
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class DisplayName(
@@ -36,11 +43,4 @@ data class DisplayName(
     val name: String,
     @Json(name = "short")
     val short: String
-)
-
-fun AlgorithmItem.toDomainModel() = Tag(
-    id = this.bojTagId,
-    key = this.key,
-    name = this.displayNames[0].name,
-    problemCount = this.problemCount
 )

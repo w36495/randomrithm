@@ -71,7 +71,14 @@ data class Tag(
     val key: String,
     @Json(name = "problemCount")
     val problemCount: Int
-)
+) {
+    fun toDomainModel() = com.w36495.randomrithm.domain.entity.Tag(
+        id = bojTagId,
+        key = this.key,
+        name = this.displayNames[0].name,
+        problemCount = this.problemCount
+    )
+}
 
 @JsonClass(generateAdapter = true)
 class Metadata
@@ -87,11 +94,4 @@ fun ProblemItem.toDomainModel() = Problem(
     level = this.level.toString(),
     title = this.titleKo,
     tags = this.tags.map { it.toDomainModel() }
-)
-
-fun Tag.toDomainModel() = com.w36495.randomrithm.domain.entity.Tag(
-    id = bojTagId,
-    key = this.key,
-    name = this.displayNames[0].name,
-    problemCount = this.problemCount
 )

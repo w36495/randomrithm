@@ -72,10 +72,10 @@ data class UserInfoDTO(
     val tier: Int,
     @Json(name = "voteCount")
     val voteCount: Int
-)
-
-fun UserInfoDTO.toDomainModel() = User(
-    id = handle,
-    tier = tier,
-    solvedCount = solvedCount
-)
+) {
+    fun toDomainModel() = User(
+        id = handle,
+        tier = tier,
+        solvedCount = solvedCount
+    )
+}
