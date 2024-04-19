@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.w36495.randomrithm.domain.usecase.CheckUserIdUseCase
-import com.w36495.randomrithm.domain.usecase.GetCachedUserInfoUseCase
+import com.w36495.randomrithm.domain.usecase.GetCacheUserInfoUseCase
 import com.w36495.randomrithm.domain.usecase.LoadUserIdUseCase
 import com.w36495.randomrithm.domain.usecase.SaveUserIdUseCase
 import com.w36495.randomrithm.domain.usecase.SetCacheUserIdUseCase
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val checkUserIdUseCase: CheckUserIdUseCase,
-    private val getCachedUserInfoUseCase: GetCachedUserInfoUseCase,
+    private val getCacheUserInfoUseCase: GetCacheUserInfoUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase,
     private val loadUserIdUseCase: LoadUserIdUseCase,
     private var setCacheUserIdUseCase: SetCacheUserIdUseCase,
@@ -44,7 +44,7 @@ class LoginViewModel @Inject constructor(
         var userId: String? = null
 
         try {
-            userId = getCachedUserInfoUseCase().id
+            userId = getCacheUserInfoUseCase().id
         } catch (exception: Exception) {
             _error.value = exception.message.toString()
         }

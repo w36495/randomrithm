@@ -7,6 +7,6 @@ class HasCacheUserInfoUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
     operator fun invoke(): Boolean {
-        return userRepository.getCachedUserInfo()?.let { true } ?: false
+        return userRepository.hasCacheUserInfo()
     }
 }
