@@ -16,7 +16,7 @@ class GetSolvedProblemsUseCase @Inject constructor(
     }
 
     private suspend fun getUserInfo(): List<Problem> {
-        val user = userRepository.getCachedUserInfo()!!.toDomainModel()
+        val user = userRepository.getCacheUserInfo().toDomainModel()
         return getSolvedProblems(user.id, user.solvedCount)
     }
 

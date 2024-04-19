@@ -10,8 +10,12 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     private var user: UserInfoDTO? = null
 
-    override fun getCachedUserInfo(): UserInfoDTO? {
-        return this.user
+    override fun getCacheUserInfo(): UserInfoDTO {
+        return this.user!!
+    }
+
+    override fun hasCacheUserInfo(): Boolean {
+        return this.user?.let { true } ?: false
     }
 
     override suspend fun getUser(query: String): Boolean {
@@ -20,7 +24,7 @@ class UserRepositoryImpl @Inject constructor(
         if (result.isSuccessful) {
             result.body()?.let { dto ->
                 if (dto.count == 1) {
-                    user = dto.items[0]
+                    saveCacheUserInfo(dto.items[0])
                     return true
                 }
             }
@@ -33,11 +37,15 @@ class UserRepositoryImpl @Inject constructor(
 
         if (result.isSuccessful) {
             result.body()?.let {
-                user = it
+                saveCacheUserInfo(it)
                 return true
             }
         }
 
         return false
+    }
+
+    private fun saveCacheUserInfo(user: UserInfoDTO) {
+        this.user = user
     }
 }

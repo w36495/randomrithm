@@ -6,16 +6,13 @@ import com.w36495.randomrithm.domain.repository.UserRepository
 import com.w36495.randomrithm.utils.Constants
 import javax.inject.Inject
 
-class GetCachedUserInfoUseCase @Inject constructor(
+class GetCacheUserInfoUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
     operator fun invoke(): User {
-        val result = userRepository.getCachedUserInfo()
-
-        val user = result?.let {
-            it.toDomainModel()
-        } ?: throw IllegalStateException(Constants.EXCEPTION_NOT_EXIST_USER.message)
-
-        return user
+        when (userRepository.hasCacheUserInfo()) {
+            true -> return userRepository.getCacheUserInfo().toDomainModel()
+            false -> throw IllegalStateException(Constants.EXCEPTION_NOT_EXIST_USER.message)
+        }
     }
 }
