@@ -51,6 +51,55 @@
 
 </br>
 
+***
+
+## ⚡️ 핵심 기능
+### 사용자가 풀지 않은 문제 보여주기
+<img src="https://github.com/w36495/randomrithm/assets/52291662/151868c3-b83a-4026-971b-2fc2c084e17e" width=70%>
+
+### 구현 과정
+1. 사용자가 선택한 문제의 목록을 가져온다. (GetProblemsUseCase)
+2. 사용자가 기존에 풀었던 문제의 목록을 가져온다. (GetCacheSolvedProblemsUseCase)
+3. 이분 탐색을 통해 사용자가 풀었던 문제인지/아닌지 확인한다. (GetSolvableProblemsUseCase)
+``` kotlin
+class GetSolvableProblemsUseCase @Inject constructor(
+    private val getProblemsUseCase: GetProblemsUseCase,
+    private val getCacheSolvedProblemsUseCase: GetCacheSolvedProblemsUseCase,
+) {
+    suspend operator fun invoke(problemType: ProblemType): List<Problem> {
+        val solvableProblems = mutableListOf<Problem>()
+        val problems = getProblemsUseCase(problemType)
+        val solvedProblems = getCacheSolvedProblemsUseCase()
+
+        problems.forEach { problem ->
+            if (isSolvableProblem(problem, solvedProblems)) solvableProblems.addAll(problems)
+        }
+
+        return solvableProblems.toList()
+    }
+
+    private fun isSolvableProblem(problem: Problem, solvedProblem: List<Problem>): Boolean {
+        var start = 0
+        var end = solvedProblem.lastIndex
+
+        while (start < end) {
+            val middle = (start + end) / 2
+
+            if (solvedProblem[middle].id == problem.id) return true
+            else if (solvedProblem[middle].id < problem.id) end = middle - 1
+            else start = middle + 1
+        }
+
+        return false
+    }
+}
+```
+4. 풀지 않은 문제를 화면에 보여준다.
+
+</br>
+
+*** 
+
 ## 💥 Trouble Shooting
 ### 1️⃣ 기존에 선택했던 메뉴를 클릭한 후, 다른 메뉴를 클릭했을 때 화면에 문제가 보이지 않음
 ViewModelProvider 을 통해 VIewModel 의 객체를 생성하는 과정에서 ViewModelStoreOwner 를 LiveData 를 관찰하는 Fragment 가 아닌 해당  Fragment 와 연결되어 있는 FragmentActivity 로 연결되어있음을 확인하였다.  
