@@ -53,7 +53,7 @@ class OnboardingFragment : Fragment() {
         loginViewModel.cacheState.observe(viewLifecycleOwner) {
             if (it) {
                 requireContext().showShortToast("$userId 계정으로 로그인되었습니다.")
-                startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                navController.navigate(R.id.nav_home)
             }
         }
 
@@ -63,7 +63,7 @@ class OnboardingFragment : Fragment() {
         }
 
         binding.btnJustLooking.setOnClickListener {
-            startActivity(Intent(requireActivity(), MainActivity::class.java))
+            navController.navigate(R.id.nav_main)
         }
     }
 
