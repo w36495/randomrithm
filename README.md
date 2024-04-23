@@ -1,4 +1,6 @@
 # 🎰 랜덤리즘
+<img src="https://github.com/w36495/randomrithm/assets/52291662/3476b254-0732-40a5-adb9-877ad16ef195">
+
 백준 사이트의 알고리즘 문제들을 정답비율과 레벨로 편식하는 편식러를 위해 만든 **랜덤으로 알고리즘 문제를 보여주는 서비스**  
 </br>
 `solved.ac` 의 비공식 API 사용 ==> [API 사이트로 이동](https://solvedac.github.io/unofficial-documentation/#/)
