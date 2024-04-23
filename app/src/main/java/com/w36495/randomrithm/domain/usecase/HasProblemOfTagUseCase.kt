@@ -6,16 +6,22 @@ import javax.inject.Inject
 class HasProblemOfTagUseCase @Inject constructor(
     private val problemRepository: ProblemRepository
 ) {
-    suspend operator fun invoke(tag: String, level: Char): Boolean {
-        val query = "solvable:true+%23$tag+*$level"
+    suspend operator fun invoke(tag: String): List<Boolean> {
+        val levels = listOf('b', 's', 'g', 'p', 'd', 'r')
+        val results = mutableListOf<Boolean>()
 
-        val result = problemRepository.fetchProblems(query)
-        if (result.isSuccessful) {
-            result.body()?.let {
-                if (it.count == 0) return false
+        levels.forEach { level ->
+            val query = "solvable:true+%23$tag+*$level"
+
+            val result = problemRepository.fetchProblems(query)
+            if (result.isSuccessful) {
+                result.body()?.let {
+                    if (it.count == 0) results.add(false)
+                    else results.add(true)
+                }
             }
         }
 
-        return true
+        return results.toList()
     }
 }
