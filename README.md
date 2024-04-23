@@ -4,7 +4,7 @@
 `solved.ac` 의 비공식 API 사용 ==> [API 사이트로 이동](https://solvedac.github.io/unofficial-documentation/#/)
 
 ## 🎯 배포
-[PlayStore 이동 (v1.3)](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
+[PlayStore 이동 (v1.5)](https://play.google.com/store/apps/details?id=com.w36495.randomrithm)
 
 </br>
 
@@ -37,33 +37,17 @@
 
 </br>
 
-## 💥 예외 처리
-### 문제가 존재하지 않는 경우 (count = 0인 경우)
-``` kotlin
-// GetProblemsUseCase.kt
+### 회원 기능 -1
+|`로그인(성공)`|`로그인(실패)`|`자동로그인`|
+|:--:|:--:|:--:|
+|![로그인-성공](https://github.com/w36495/randomrithm/assets/52291662/52eb7992-c45b-41a5-8a60-70433cb910f6)|![로그인-실패](https://github.com/w36495/randomrithm/assets/52291662/9d0fcccf-62e9-402b-b120-587a7daf0b29)|![자동로그인](https://github.com/w36495/randomrithm/assets/52291662/8348c6a2-f1ab-475e-9fc2-27ce90246254)|
 
-class GetProblemsUseCase @Inject constructor(
-    private val problemRepository: ProblemRepository
-){
-    suspend operator fun invoke(query: String): List<Problem> {
-        val queryPrefix = "solvable:true+"
-        val result = problemRepository.fetchProblems(queryPrefix + query)
+</br>
 
-        if (result.isSuccessful) {
-            result.body()?.let { dto ->
-                if (dto.count == 0) {
-                    throw IllegalStateException(ExceptionMessage.NonExistProblem.message)
-                }
-
-                return dto.toProblems()
-            }
-        }
-
-        return emptyList()
-    }
-}
-```
-IllegalStateException 발생시킨 후, Toast를 통해 사용자에게 문제가 존재하지 않음을 인식하게 함
+### 회원 기능 -2
+|`로그아웃`|`비회원`|
+|:--:|:--:|
+|![로그아웃](https://github.com/w36495/randomrithm/assets/52291662/8c7dd522-7773-4b43-8b35-e99cc5859020)|![비회원](https://github.com/w36495/randomrithm/assets/52291662/aa4875bd-197a-4a84-a1ea-88a31a2f75b5)|
 
 </br>
 
