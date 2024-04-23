@@ -1,6 +1,5 @@
 package com.w36495.randomrithm.presentation.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLoginBinding
-import com.w36495.randomrithm.presentation.home.HomeActivity
 import com.w36495.randomrithm.utils.Constants
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +88,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun moveHomeActivity() {
-        startActivity(Intent(requireActivity(), HomeActivity::class.java))
+        navController.navigate(R.id.nav_home)
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {
