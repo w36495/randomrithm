@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -19,6 +20,7 @@ import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.entity.TagType
 import com.w36495.randomrithm.domain.entity.User
+import com.w36495.randomrithm.presentation.tag.TagFragment
 import com.w36495.randomrithm.utils.putProblemType
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +91,8 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
             btnRecommendSecond.setOnClickListener { moveProblemFragment(SolvedCountType(min = 10_000)) }
             btnRecommendThird.setOnClickListener { moveProblemFragment(EssentialType(min = 2, max = 5)) }
 
-            layoutPopularAlgorithmAll.setOnClickListener { moveTagFragment() }
+            layoutPopularAlgorithmAll.setOnClickListener { moveTagOrLevelFragment(R.id.action_nav_homeFragment_to_nav_tagFragment) }
+            layoutLevelAll.setOnClickListener { moveTagOrLevelFragment(R.id.action_nav_homeFragment_to_levelFragment) }
             btnBronze.setOnClickListener { moveProblemFragment(LevelType(level = 'b')) }
             btnSilver.setOnClickListener { moveProblemFragment(LevelType(level = 's')) }
             btnGold.setOnClickListener { moveProblemFragment(LevelType(level = 'g')) }
@@ -110,12 +113,13 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener {
         )
     }
 
-    private fun moveTagFragment() {
+    private fun moveTagOrLevelFragment(@IdRes action: Int) {
         navController.navigate(
-            R.id.action_nav_home_to_nav_tag,
+            action,
             args = Bundle().apply {
-                putBoolean("Home", true)
-            })
+                putBoolean(TagFragment.ARGUMENT_PARENT_VIEW_HOME, true)
+            }
+        )
     }
 
     override fun onClickPopularAlgorithm(tag: Tag) {

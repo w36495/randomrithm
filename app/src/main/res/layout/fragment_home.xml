@@ -259,6 +259,30 @@
                     app:layout_constraintStart_toStartOf="@id/tv_level_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_level_title" />
 
+                <LinearLayout
+                    android:id="@+id/layout_level_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_level_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_level_title">
+
+                    <TextView
+                        android:id="@+id/tv_level_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/tv_home_algorithm_all" />
+
+                    <ImageView
+                        android:id="@+id/iv_level_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24" />
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btn_bronze"
                     android:layout_width="0dp"

@@ -31,7 +31,7 @@
         android:id="@+id/nav_settings"
         android:name="com.w36495.randomrithm.presentation.settings.SettingFragment"
         android:label="SettingFragment"
-        tools:layout="@layout/fragment_setting" >
+        tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/action_nav_settings_to_logoutDialog"
             app:destination="@id/nav_logout" />
@@ -47,14 +47,36 @@
             android:id="@+id/action_homeFragment_to_nav_problem"
             app:destination="@id/nav_problem" />
         <action
-            android:id="@+id/action_nav_home_to_nav_tag"
+            android:id="@+id/action_nav_homeFragment_to_nav_tagFragment"
             app:destination="@id/nav_tag" />
+        <action
+            android:id="@+id/action_nav_homeFragment_to_levelFragment"
+            app:destination="@id/nav_level" />
     </fragment>
 
     <dialog
         android:id="@+id/nav_logout"
         android:name="com.w36495.randomrithm.presentation.settings.LogoutDialog"
-        tools:layout="@layout/dialog_logout"
-        android:label="LogoutDialog" />
+        android:label="LogoutDialog"
+        tools:layout="@layout/dialog_logout" />
+
+    <fragment
+        android:id="@+id/nav_level"
+        android:name="com.w36495.randomrithm.presentation.level.LevelFragment"
+        android:label="LevelFragment"
+        tools:layout="@layout/fragment_level">
+        <action
+            android:id="@+id/action_levelFragment_to_problemFragment"
+            app:destination="@id/nav_problem" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_level_list"
+        android:name="com.w36495.randomrithm.presentation.level.LevelListFragment"
+        android:label="LevelListFragment"
+        tools:layout="@layout/fragment_level_list">
+        <action
+            android:id="@+id/action_levelListFragment_to_problemFragment"
+            app:destination="@id/nav_problem" />
+    </fragment>
 
 </navigation>
