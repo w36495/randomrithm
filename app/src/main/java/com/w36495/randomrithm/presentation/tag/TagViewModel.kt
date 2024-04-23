@@ -9,8 +9,6 @@ import com.w36495.randomrithm.domain.entity.Tag
 import com.w36495.randomrithm.domain.usecase.GetTagsUseCase
 import com.w36495.randomrithm.domain.usecase.HasProblemOfTagUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,19 +45,7 @@ class TagViewModel @Inject constructor(
 
     fun hasProblemOfTag(tag: String) {
         viewModelScope.launch {
-            try {
-                val bronze = async { hasProblemOfTagUseCase.invoke(tag, 'b') }
-                val silver = async { hasProblemOfTagUseCase.invoke(tag, 's') }
-                val gold = async { hasProblemOfTagUseCase.invoke(tag, 'g') }
-                val platinum = async { hasProblemOfTagUseCase.invoke(tag, 'p') }
-                val diamond = async { hasProblemOfTagUseCase.invoke(tag, 'd') }
-                val ruby = async { hasProblemOfTagUseCase.invoke(tag, 'd') }
-
-                val result = awaitAll(bronze, silver, gold, platinum, diamond, ruby)
-                _problemCountOfTag.value = result
-            } catch (exception: Exception) {
-
-            }
+            _problemCountOfTag.value = hasProblemOfTagUseCase.invoke(tag)
         }
     }
 
