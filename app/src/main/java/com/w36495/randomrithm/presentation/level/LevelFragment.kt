@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLevelBinding
+import com.w36495.randomrithm.presentation.tag.TagFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +22,7 @@ class LevelFragment : Fragment() {
 
     private val viewModel: LevelViewModel by activityViewModels()
     private lateinit var viewPagerAdapter: LevelViewPagerAdapter
+    private val navController by lazy { binding.root.findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,18 @@ class LevelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val hasHomeParentView = arguments?.takeIf {
+            it.containsKey(TagFragment.ARGUMENT_PARENT_VIEW_HOME)
+        }?.getBoolean(TagFragment.ARGUMENT_PARENT_VIEW_HOME)
+
+        if (hasHomeParentView == true){
+            binding.layoutToolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_24)
+        }
+
+        binding.layoutToolbar.setNavigationOnClickListener {
+            navController.popBackStack()
+        }
 
         setupViewPager()
         setupTabLayout()
