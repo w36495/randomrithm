@@ -1,6 +1,5 @@
 package com.w36495.randomrithm.presentation.onboarding
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentOnboardingBinding
-import com.w36495.randomrithm.presentation.MainActivity
-import com.w36495.randomrithm.presentation.home.HomeActivity
 import com.w36495.randomrithm.presentation.login.LoginViewModel
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +50,8 @@ class OnboardingFragment : Fragment() {
         loginViewModel.cacheState.observe(viewLifecycleOwner) {
             if (it) {
                 requireContext().showShortToast("$userId 계정으로 로그인되었습니다.")
-                startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                navController.navigate(R.id.nav_home)
+                requireActivity().finish()
             }
         }
 
@@ -63,7 +61,8 @@ class OnboardingFragment : Fragment() {
         }
 
         binding.btnJustLooking.setOnClickListener {
-            startActivity(Intent(requireActivity(), MainActivity::class.java))
+            navController.navigate(R.id.nav_main)
+            requireActivity().finish()
         }
     }
 

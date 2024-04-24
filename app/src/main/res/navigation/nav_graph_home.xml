@@ -5,6 +5,12 @@
     android:id="@+id/nav_graph_home"
     app:startDestination="@+id/nav_home">
 
+    <activity
+        android:id="@+id/nav_onboarding"
+        android:name="com.w36495.randomrithm.presentation.onboarding.OnboardingActivity"
+        app:action="android.intent.action.VIEW"
+        tools:layout="@layout/activity_onboarding" />
+
     <fragment
         android:id="@+id/nav_tag"
         android:name="com.w36495.randomrithm.presentation.tag.TagFragment"
@@ -14,6 +20,8 @@
         <action
             android:id="@+id/action_tagFragment_to_problemFragment"
             app:destination="@id/nav_problem" />
+        <argument android:name="tag" app:argType="string" android:defaultValue="non-tag"/>
+        <argument android:name="level" app:argType="integer" android:defaultValue="-1"/>
     </fragment>
 
     <fragment
@@ -79,4 +87,11 @@
             app:destination="@id/nav_problem" />
     </fragment>
 
+    <dialog
+        android:id="@+id/nav_level_selection_dialog"
+        android:name="com.w36495.randomrithm.presentation.tag.LevelSelectionDialog">
+        <action
+            android:id="@+id/action_levelSelectionDialog_to_tagFragment"
+            app:destination="@id/nav_tag" />
+    </dialog>
 </navigation>

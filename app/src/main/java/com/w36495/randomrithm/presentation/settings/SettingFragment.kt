@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.w36495.randomrithm.BuildConfig
+import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentSettingBinding
-import com.w36495.randomrithm.presentation.onboarding.OnboardingActivity
 import com.w36495.randomrithm.utils.Constants
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +60,8 @@ class SettingFragment : Fragment() {
             LogoutDialog( onClickLogout = {
                 viewModel.resetUserIdUseCase()
                 requireContext().showShortToast(Constants.SUCCESS_LOGOUT.message)
-                startActivity(Intent(requireActivity(), OnboardingActivity::class.java))
+                navController.navigate(R.id.nav_onboarding)
+                requireActivity().finish()
             }).show(childFragmentManager, LogoutDialog.TAG)
         }
     }
