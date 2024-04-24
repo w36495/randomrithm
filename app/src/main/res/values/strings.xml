@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Randomrithm</string>
+    <string name="app_name">랜덤리즘</string>
     <string name="dialog_title_change_problem">%1$s 관련 랜덤 문제로 이동하시겠습니까?</string>
     <string name="dialog_btn_okay">확인</string>
     <string name="dialog_btn_cancel">취소</string>
