@@ -74,7 +74,7 @@ class GetSolvableProblemsUseCase @Inject constructor(
         val solvedProblems = getCacheSolvedProblemsUseCase()
 
         problems.forEach { problem ->
-            if (isSolvableProblem(problem, solvedProblems)) solvableProblems.addAll(problems)
+            if (isSolvableProblem(problem, solvedProblems)) solvableProblems.add(problem)
         }
 
         return solvableProblems.toList()
@@ -87,12 +87,12 @@ class GetSolvableProblemsUseCase @Inject constructor(
         while (start < end) {
             val middle = (start + end) / 2
 
-            if (solvedProblem[middle].id == problem.id) return true
-            else if (solvedProblem[middle].id < problem.id) end = middle - 1
-            else start = middle + 1
+            if (solvedProblem[middle].id == problem.id) return false
+            else if (solvedProblem[middle].id < problem.id) start = middle + 1
+            else end = middle - 1
         }
 
-        return false
+        return true
     }
 }
 ```
