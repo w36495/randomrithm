@@ -20,8 +20,8 @@ android {
         applicationId = "com.w36495.randomrithm"
         minSdk = 24
         targetSdk = 33
-        versionCode = 8
-        versionName = "1.6"
+        versionCode = 9
+        versionName = "1.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
