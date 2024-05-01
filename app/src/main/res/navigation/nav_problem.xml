@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/problemFragment"
+    android:id="@+id/nav_problem">
+
+    <fragment
+        android:id="@+id/problemFragment"
+        android:name="com.w36495.randomrithm.presentation.problem.ProblemFragment"
+        android:label="problemFragment"
+        tools:layout="@layout/fragment_problem" >
+        <action
+            android:id="@+id/action_problemFragment_to_problemFragment"
+            app:destination="@id/problemFragment" />
+    </fragment>
+
+</navigation>
