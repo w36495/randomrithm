@@ -69,13 +69,13 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
     }
 
     private fun selectLevel() {
-        binding.tvBronze.setOnClickListener { selectLevel(0) }
-        binding.tvSilver.setOnClickListener { selectLevel(1) }
-        binding.tvGold.setOnClickListener { selectLevel(2) }
-        binding.tvPlatinum.setOnClickListener { selectLevel(3) }
-        binding.tvDiamond.setOnClickListener { selectLevel(4) }
-        binding.tvRuby.setOnClickListener { selectLevel(5) }
-        binding.tvAll.setOnClickListener { selectLevel(-1) }
+        binding.tvBronze.setOnClickListener { selectLevel(LEVEL_BRONZE) }
+        binding.tvSilver.setOnClickListener { selectLevel(LEVEL_SILVER) }
+        binding.tvGold.setOnClickListener { selectLevel(LEVEL_GOLD) }
+        binding.tvPlatinum.setOnClickListener { selectLevel(LEVEL_PLATINUM) }
+        binding.tvDiamond.setOnClickListener { selectLevel(LEVEL_DIAMOND) }
+        binding.tvRuby.setOnClickListener { selectLevel(LEVEL_RUBY) }
+        binding.tvAll.setOnClickListener { selectLevel(LEVEL_ALL) }
     }
 
     private fun selectLevel(level: Int) {
@@ -98,6 +98,14 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
+        private const val LEVEL_BRONZE = 0
+        private const val LEVEL_SILVER = 1
+        private const val LEVEL_GOLD = 2
+        private const val LEVEL_PLATINUM = 3
+        private const val LEVEL_DIAMOND = 4
+        private const val LEVEL_RUBY = 5
+        private const val LEVEL_ALL = -1
+
         const val TAG: String = "LevelSelectionDialog"
     }
 }
