@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.w36495.randomrithm.R
@@ -21,7 +21,7 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
     private val binding: DialogLevelSelectionBinding get() = _binding!!
 
     private val tagViewModel by viewModels<TagViewModel>()
-    private val navController by lazy { requireActivity().findNavController(R.id.container_fragment) }
+    private val navController by lazy { findNavController() }
     private val args: LevelSelectionDialogArgs by navArgs<LevelSelectionDialogArgs>()
 
     private var tag: String? = null

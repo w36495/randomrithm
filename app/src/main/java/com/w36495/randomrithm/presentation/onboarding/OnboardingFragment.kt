@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import com.w36495.randomrithm.R
+import androidx.navigation.fragment.findNavController
 import com.w36495.randomrithm.databinding.FragmentOnboardingBinding
 import com.w36495.randomrithm.presentation.login.LoginViewModel
 import com.w36495.randomrithm.utils.showShortToast
@@ -21,7 +20,7 @@ class OnboardingFragment : Fragment() {
     private var _binding: FragmentOnboardingBinding? = null
     private val binding: FragmentOnboardingBinding get() = _binding!!
     private val loginViewModel by viewModels<LoginViewModel>()
-    private val navController by lazy { binding.root.findNavController() }
+    private val navController by lazy { findNavController() }
 
     private var hasUserId = false
     private lateinit var userId: String
@@ -50,19 +49,19 @@ class OnboardingFragment : Fragment() {
         loginViewModel.cacheState.observe(viewLifecycleOwner) {
             if (it) {
                 requireContext().showShortToast("$userId 계정으로 로그인되었습니다.")
-                navController.navigate(R.id.nav_home)
                 requireActivity().finish()
+                navController.navigate(OnboardingFragmentDirections.actionOnboardingFragmentToHomeActivity())
             }
         }
 
         binding.btnLogin.setOnClickListener {
             if (hasUserId) loginViewModel.setCacheUserId(userId)
-            else navController.navigate(R.id.action_onboardingFragment_to_loginFragment)
+            else navController.navigate(OnboardingFragmentDirections.actionOnboardingFragmentToLoginFragment())
         }
 
         binding.btnJustLooking.setOnClickListener {
-            navController.navigate(R.id.nav_main)
             requireActivity().finish()
+            navController.navigate(OnboardingFragmentDirections.actionOnboardingFragmentToMainActivity())
         }
     }
 

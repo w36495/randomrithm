@@ -7,14 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.w36495.randomrithm.BuildConfig
-import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentSettingBinding
-import com.w36495.randomrithm.utils.Constants
-import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -24,7 +21,7 @@ class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding get() = _binding!!
 
-    private val viewModel: SettingViewModel by viewModels()
+    private val viewModel: SettingViewModel by activityViewModels<SettingViewModel>()
     private val navController by lazy { binding.root.findNavController() }
 
     override fun onCreateView(
@@ -57,12 +54,7 @@ class SettingFragment : Fragment() {
         }
 
         binding.layoutLogout.setOnClickListener {
-            LogoutDialog( onClickLogout = {
-                viewModel.resetUserIdUseCase()
-                requireContext().showShortToast(Constants.SUCCESS_LOGOUT.message)
-                navController.navigate(R.id.nav_onboarding)
-                requireActivity().finish()
-            }).show(childFragmentManager, LogoutDialog.TAG)
+            navController.navigate(SettingFragmentDirections.actionSettingFragmentToLogoutDialog())
         }
     }
 
