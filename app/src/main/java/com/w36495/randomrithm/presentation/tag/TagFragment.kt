@@ -10,12 +10,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentAlgorithmBinding
-import com.w36495.randomrithm.domain.entity.TagAndLevelType
-import com.w36495.randomrithm.utils.putProblemType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
+class TagFragment : Fragment(), TagClickListener {
 
     private var _binding: FragmentAlgorithmBinding? = null
     private val binding: FragmentAlgorithmBinding get() = _binding!!
@@ -23,7 +21,6 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
     private val navController by lazy { binding.root.findNavController() }
 
     private lateinit var tagAdapter: TagAdapter
-    private var currentTag: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,25 +61,11 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
                     binding.layoutProgress.visibility = View.INVISIBLE
                 }
             }
-
-            problemCountOfTag.observe(viewLifecycleOwner) {
-                currentTag?.let { tag ->
-                    showLevelSelectionDialog(tag, it)
-                }
-            }
         }
     }
 
     override fun onClickTagItem(tagKey: String) {
-        currentTag = tagKey
-        tagViewModel.hasProblemOfTag(tagKey)
-    }
-
-    override fun onClickLevel(level: Int, tag: String) {
-        navController.navigate(
-            resId = R.id.action_tagFragment_to_problemFragment,
-            args = Bundle().putProblemType(TagAndLevelType(tag = tag, level = level))
-        )
+        showLevelSelectionDialog(tagKey)
     }
 
     private fun setupRecyclerView() {
@@ -94,14 +77,9 @@ class TagFragment : Fragment(), TagClickListener, LevelSelectionClickListener {
         tagAdapter.setTagClickListener(this)
     }
 
-    private fun showLevelSelectionDialog(tag: String, possibleSelectionLevel: List<Boolean>) {
-        LevelSelectionDialog().apply {
-            setLevelSelectionClickListener(this@TagFragment)
-            arguments = Bundle().apply {
-                putString("tag", tag)
-                putBooleanArray("levels", possibleSelectionLevel.toBooleanArray())
-            }
-        }.show(parentFragmentManager, LevelSelectionDialog.TAG)
+    private fun showLevelSelectionDialog(tag: String) {
+        val action = TagFragmentDirections.actionTagFragmentToLevelSelectionDialog(tag)
+        navController.navigate(action)
     }
 
     override fun onDestroyView() {
