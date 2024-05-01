@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_settings"
+    app:startDestination="@id/settingFragment">
+
+    <activity
+        android:id="@+id/onboardingActivity"
+        android:name="com.w36495.randomrithm.presentation.onboarding.OnboardingActivity"
+        android:label="onboardingActivity"
+        tools:layout="@layout/activity_onboarding" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.w36495.randomrithm.presentation.settings.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_logoutDialog"
+            app:destination="@id/logoutDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/logoutDialog"
+        android:name="com.w36495.randomrithm.presentation.settings.LogoutDialog"
+        android:label="logoutDialog"
+        tools:layout="@layout/dialog_logout">
+        <action
+            android:id="@+id/action_logoutDialog_to_onboardingActivity"
+            app:destination="@id/onboardingActivity" />
+    </dialog>
+
+</navigation>

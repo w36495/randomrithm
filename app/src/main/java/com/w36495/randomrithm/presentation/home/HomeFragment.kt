@@ -18,17 +18,14 @@ import com.w36495.randomrithm.domain.entity.SolvedCountType
 import com.w36495.randomrithm.domain.entity.SourceType
 import com.w36495.randomrithm.domain.entity.SproutType
 import com.w36495.randomrithm.domain.entity.Tag
-import com.w36495.randomrithm.domain.entity.TagAndLevelType
 import com.w36495.randomrithm.domain.entity.User
-import com.w36495.randomrithm.presentation.tag.LevelSelectionClickListener
-import com.w36495.randomrithm.presentation.tag.LevelSelectionDialog
 import com.w36495.randomrithm.presentation.tag.TagFragment
 import com.w36495.randomrithm.utils.putProblemType
 import com.w36495.randomrithm.utils.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PopularAlgorithmClickListener, LevelSelectionClickListener {
+class HomeFragment : Fragment(), PopularAlgorithmClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
     private val homeViewModel by viewModels<HomeViewModel>()
@@ -76,13 +73,6 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener, LevelSelectionCl
             tags.observe(viewLifecycleOwner) { tags ->
                 popularAlgorithmAdapter.setupPopularTags(tags)
             }
-
-            hasLevels.observe(viewLifecycleOwner) {
-                val tag = it.getValue("tag").toString()
-                val levels = it.getValue("levels") as List<Boolean>
-
-                openLevelSelectionDialog(tag, levels)
-            }
         }
     }
 
@@ -100,8 +90,8 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener, LevelSelectionCl
             btnRecommendSecond.setOnClickListener { moveProblemFragment(SolvedCountType(min = 10_000)) }
             btnRecommendThird.setOnClickListener { moveProblemFragment(EssentialType(min = 2, max = 5)) }
 
-            layoutPopularAlgorithmAll.setOnClickListener { moveTagOrLevelFragment(R.id.action_nav_homeFragment_to_nav_tagFragment) }
-            layoutLevelAll.setOnClickListener { moveTagOrLevelFragment(R.id.action_nav_homeFragment_to_levelFragment) }
+            layoutPopularAlgorithmAll.setOnClickListener { moveTagOrLevelFragment(R.id.action_homeFragment_to_tagFragment) }
+            layoutLevelAll.setOnClickListener { moveTagOrLevelFragment(R.id.action_homeFragment_to_levelFragment) }
             btnBronze.setOnClickListener { moveProblemFragment(LevelType(level = 'b')) }
             btnSilver.setOnClickListener { moveProblemFragment(LevelType(level = 's')) }
             btnGold.setOnClickListener { moveProblemFragment(LevelType(level = 'g')) }
@@ -117,7 +107,7 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener, LevelSelectionCl
 
     private fun moveProblemFragment(problemType: ProblemType) {
         navController.navigate(
-            resId = R.id.action_homeFragment_to_nav_problem,
+            resId = R.id.action_homeFragment_to_problemFragment,
             args = Bundle().putProblemType(problemType)
         )
     }
@@ -131,22 +121,8 @@ class HomeFragment : Fragment(), PopularAlgorithmClickListener, LevelSelectionCl
         )
     }
 
-    private fun openLevelSelectionDialog(tag: String, levels: List<Boolean>) {
-        LevelSelectionDialog().apply {
-            setLevelSelectionClickListener(this@HomeFragment)
-            arguments = Bundle().apply {
-                putString("tag", tag)
-                putBooleanArray("levels", levels.toBooleanArray())
-            }
-        }.show(parentFragmentManager, "LevelSelectionDialog")
-    }
-
     override fun onClickPopularAlgorithm(tag: Tag) {
-        homeViewModel.hasProblemOfTag(tag.key)
-    }
-
-    override fun onClickLevel(level: Int, tag: String) {
-        moveProblemFragment(TagAndLevelType(tag = tag, level = level))
+        navController.navigate(HomeFragmentDirections.actionHomeFragmentToLevelSelectionDialog(tag.key))
     }
 
     override fun onDestroyView() {

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLevelListBinding
 import com.w36495.randomrithm.domain.entity.DetailLevelType
@@ -19,7 +19,7 @@ class LevelListFragment : Fragment(), LevelItemClickListener {
     private val binding: FragmentLevelListBinding get() = _binding!!
 
     private val viewModel: LevelViewModel by activityViewModels()
-    private val navController by lazy { binding.root.findNavController() }
+    private val navController by lazy { findNavController() }
     private lateinit var levelListAdapter: LevelListAdapter
 
     override fun onCreateView(

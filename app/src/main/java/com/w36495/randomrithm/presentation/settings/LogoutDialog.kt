@@ -5,19 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.w36495.randomrithm.databinding.DialogLogoutBinding
+import com.w36495.randomrithm.utils.Constants
 import com.w36495.randomrithm.utils.dialogFragmentResize
+import com.w36495.randomrithm.utils.showShortToast
 
-class LogoutDialog(
-    private val onClickLogout: () -> Unit
-) : DialogFragment() {
+class LogoutDialog : DialogFragment() {
     private var _binding: DialogLogoutBinding? = null
     private val binding: DialogLogoutBinding get() = _binding!!
+    private val settingViewModel by activityViewModels<SettingViewModel>()
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = DialogLogoutBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,7 +36,12 @@ class LogoutDialog(
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvCancel.setOnClickListener { dismiss() }
-        binding.tvOkay.setOnClickListener { onClickLogout() }
+        binding.tvOkay.setOnClickListener {
+            settingViewModel.resetUserIdUseCase()
+            requireContext().showShortToast(Constants.SUCCESS_LOGOUT.message)
+            requireActivity().finish()
+            navController.navigate(LogoutDialogDirections.actionLogoutDialogToOnboardingActivity())
+        }
     }
 
     override fun onDestroyView() {

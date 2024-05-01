@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.FragmentLoginBinding
 import com.w36495.randomrithm.utils.Constants
 import com.w36495.randomrithm.utils.showShortToast
@@ -88,8 +87,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun moveHomeActivity() {
-        navController.navigate(R.id.nav_home)
         requireActivity().finish()
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToHomeActivity())
     }
 
     override fun onDestroyView() {

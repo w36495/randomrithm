@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_tag"
+    app:startDestination="@id/tagFragment">
+
+    <include app:graph="@navigation/nav_problem" />
+
+    <fragment
+        android:id="@+id/tagFragment"
+        android:name="com.w36495.randomrithm.presentation.tag.TagFragment"
+        android:label="tagFragment"
+        tools:layout="@layout/fragment_algorithm">
+        <action
+            android:id="@+id/action_tagFragment_to_levelSelectionDialog"
+            app:destination="@id/levelSelectionDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/levelSelectionDialog"
+        android:name="com.w36495.randomrithm.presentation.tag.LevelSelectionDialog"
+        android:label="levelSelectionDialog"
+        tools:layout="@layout/dialog_level_selection">
+        <argument android:name="tag" app:argType="string" />
+        <action
+            android:id="@+id/action_levelSelectionDialog_to_problemFragment"
+            app:destination="@id/nav_problem" />
+    </dialog>
+
+</navigation>

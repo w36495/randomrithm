@@ -4,14 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.w36495.randomrithm.R
 import com.w36495.randomrithm.databinding.DialogLevelSelectionBinding
+import com.w36495.randomrithm.domain.entity.TagAndLevelType
+import com.w36495.randomrithm.domain.entity.TagType
+import com.w36495.randomrithm.utils.putProblemType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LevelSelectionDialog : BottomSheetDialogFragment() {
     private var _binding: DialogLevelSelectionBinding? = null
     private val binding: DialogLevelSelectionBinding get() = _binding!!
 
-    private lateinit var levelSelectionClickListener: LevelSelectionClickListener
+    private val tagViewModel by viewModels<TagViewModel>()
+    private val navController by lazy { findNavController() }
+    private val args: LevelSelectionDialogArgs by navArgs<LevelSelectionDialogArgs>()
 
     private var tag: String? = null
 
@@ -21,23 +32,19 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogLevelSelectionBinding.inflate(inflater, container, false)
+        tagViewModel.hasProblemOfTag(args.tag)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tag = arguments?.takeIf { it.containsKey("tag") }?.getString("tag")
-        val levels = arguments?.takeIf { it.containsKey("levels") }?.getBooleanArray("levels")
-
-        if (levels != null) {
-            initButtons(levels)
+        tagViewModel.problemCountOfTag.observe(viewLifecycleOwner) {
+            initButtons(it.toBooleanArray())
         }
-        selectLevel()
-    }
 
-    fun setLevelSelectionClickListener(levelSelectionClickListener: LevelSelectionClickListener) {
-        this.levelSelectionClickListener = levelSelectionClickListener
+        selectLevel()
     }
 
     private fun initButtons(levels: BooleanArray) {
@@ -62,20 +69,26 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
     }
 
     private fun selectLevel() {
-        binding.tvBronze.setOnClickListener { selectLevel(0) }
-        binding.tvSilver.setOnClickListener { selectLevel(1) }
-        binding.tvGold.setOnClickListener { selectLevel(2) }
-        binding.tvPlatinum.setOnClickListener { selectLevel(3) }
-        binding.tvDiamond.setOnClickListener { selectLevel(4) }
-        binding.tvRuby.setOnClickListener { selectLevel(5) }
-        binding.tvAll.setOnClickListener { selectLevel(-1) }
+        binding.tvBronze.setOnClickListener { selectLevel(LEVEL_BRONZE) }
+        binding.tvSilver.setOnClickListener { selectLevel(LEVEL_SILVER) }
+        binding.tvGold.setOnClickListener { selectLevel(LEVEL_GOLD) }
+        binding.tvPlatinum.setOnClickListener { selectLevel(LEVEL_PLATINUM) }
+        binding.tvDiamond.setOnClickListener { selectLevel(LEVEL_DIAMOND) }
+        binding.tvRuby.setOnClickListener { selectLevel(LEVEL_RUBY) }
+        binding.tvAll.setOnClickListener { selectLevel(LEVEL_ALL) }
     }
 
     private fun selectLevel(level: Int) {
-        tag?.let {
-            levelSelectionClickListener.onClickLevel(level, it)
+        val bundle = Bundle()
+        when (level) {
+            -1 -> bundle.putProblemType(TagType(tag = args.tag))
+            else -> bundle.putProblemType(TagAndLevelType(tag = args.tag, level = level))
         }
-        dismiss()
+
+        navController.navigate(
+            R.id.action_levelSelectionDialog_to_problemFragment,
+            bundle
+        )
     }
 
     override fun onDestroyView() {
@@ -85,6 +98,14 @@ class LevelSelectionDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
+        private const val LEVEL_BRONZE = 0
+        private const val LEVEL_SILVER = 1
+        private const val LEVEL_GOLD = 2
+        private const val LEVEL_PLATINUM = 3
+        private const val LEVEL_DIAMOND = 4
+        private const val LEVEL_RUBY = 5
+        private const val LEVEL_ALL = -1
+
         const val TAG: String = "LevelSelectionDialog"
     }
 }
