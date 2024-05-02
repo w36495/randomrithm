@@ -14,17 +14,17 @@ import kotlinx.coroutines.flow.onEach
 
 class ProblemTimerViewModel : ViewModel() {
     private var job: Job? = null
-    val solveTime = mutableIntStateOf(2400)
 
     private var _timerState = mutableStateOf(ProblemTimerState.STOP)
     val timerState: MutableState<ProblemTimerState> get() = _timerState
+    val passedTime = mutableIntStateOf(INIT_TIME)
 
     fun startProblemTimer() {
         _timerState.value = ProblemTimerState.RUNNING
 
-        if (solveTime.intValue <= 0) return
-        job = decreaseSecond().onEach {
-            solveTime.intValue = it
+        if (passedTime.intValue >= MAX_TIME) return
+        job = increaseSecond().onEach {
+            passedTime.intValue = it
         }.launchIn(viewModelScope)
     }
 
@@ -36,15 +36,22 @@ class ProblemTimerViewModel : ViewModel() {
     fun resetProblemTimer() {
         job?.cancel()
         _timerState.value = ProblemTimerState.STOP
-        solveTime.intValue = 2400
+        passedTime.intValue = INIT_TIME
     }
 
-    private fun decreaseSecond(): Flow<Int> = flow {
-        var i = solveTime.intValue
-        while (i > 0) {
-            delay(1000)
-            emit(--i)
+
+    private fun increaseSecond(): Flow<Int> = flow {
+        var time = passedTime.intValue
+
+        while (time < MAX_TIME) {
+            delay(1_000)
+            emit(++time)
         }
+    }
+
+    companion object {
+        private const val MAX_TIME: Int = 86_320
+        private const val INIT_TIME: Int = 0
     }
 }
 
