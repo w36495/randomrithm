@@ -13,6 +13,13 @@
         <action
             android:id="@+id/action_problemFragment_to_problemFragment"
             app:destination="@id/problemFragment" />
+        <action
+            android:id="@+id/action_problemFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.w36495.randomrithm.presentation.problem.TimerFragment"
+        tools:layout="timerFragment" />
 </navigation>

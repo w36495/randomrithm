@@ -152,6 +152,15 @@ class ProblemFragment : Fragment() {
         binding.layoutToolbar.setNavigationOnClickListener {
             navController.popBackStack()
         }
+        binding.layoutToolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.menu_timer -> {
+                    navController.navigate(ProblemFragmentDirections.actionProblemFragmentToTimerFragment())
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun showRandomProblem(randomProblem: Problem) {

@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
+            app:menu="@menu/menu_timer"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:title="랜덤리즘"
             app:titleCentered="true" />
