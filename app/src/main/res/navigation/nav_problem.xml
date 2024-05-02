@@ -30,7 +30,7 @@
 
     <dialog
         android:id="@+id/timerCompleteDialog"
-        android:name="com.w36495.randomrithm.presentation.problem.TimerCompleteDialog"
+        android:name="com.w36495.randomrithm.presentation.timer.TimerCompleteDialog"
         android:label="timerCompleteDialog" >
         <argument android:name="passedTime" app:argType="integer" />
         <action
