@@ -36,12 +36,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.w36495.randomrithm.utils.TimeFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(
     modifier: Modifier = Modifier,
-    leftTime: Int,
+    passedTime: Int,
     timerState: ProblemTimerState,
     topBarTitle: String,
     onBackPressed: () -> Unit,
@@ -84,10 +85,8 @@ fun TimerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                val timeFormat = String.format("%02d", leftTime % 60)
-
                 Text(
-                    text = "${leftTime / 60} : $timeFormat",
+                    text = TimeFormat.formattedTimeToDisplay(passedTime),
                     fontSize = 58.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -105,13 +104,12 @@ fun TimerScreen(
                     onClickReset = onClickReset
                 )
             }
-
         }
     }
 }
 
 @Composable
-fun TimerButtons(
+private fun TimerButtons(
     modifier: Modifier = Modifier,
     isActive: Boolean,
     onClickActiveOrPause: () -> Unit,
@@ -141,7 +139,7 @@ fun TimerButtons(
 }
 
 @Composable
-fun TimerLargeButton(
+private fun TimerLargeButton(
     modifier: Modifier = Modifier,
     isActive: Boolean = true,
     onClickActiveOrPause: () -> Unit,
@@ -162,7 +160,7 @@ fun TimerLargeButton(
 }
 
 @Composable
-fun TimerSmallButton(
+private fun TimerSmallButton(
     modifier: Modifier = Modifier,
     buttonIcon: ImageVector,
     onClickButton: () -> Unit,

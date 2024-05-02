@@ -155,7 +155,8 @@ class ProblemFragment : Fragment() {
         binding.layoutToolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.menu_timer -> {
-                    navController.navigate(ProblemFragmentDirections.actionProblemFragmentToTimerFragment())
+                    val currentProblemId = problemViewModel.getProblemId()
+                    navController.navigate(ProblemFragmentDirections.actionProblemFragmentToTimerFragment(currentProblemId))
                     true
                 }
                 else -> false

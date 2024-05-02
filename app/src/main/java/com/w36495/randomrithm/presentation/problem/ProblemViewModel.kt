@@ -59,6 +59,14 @@ class ProblemViewModel @Inject constructor(
         else _problem.value = problems[currentProblemIndex++]
     }
 
+    fun getProblemId(): Int {
+        problems.value?.let {
+            return it[currentProblemIndex - 1].id
+        }
+
+        return 0
+    }
+
     fun getNextProblem() {
         problems.value?.let {
             getProblem(it)

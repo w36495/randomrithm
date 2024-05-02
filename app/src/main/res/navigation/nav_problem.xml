@@ -21,5 +21,24 @@
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.w36495.randomrithm.presentation.problem.TimerFragment"
-        tools:layout="timerFragment" />
+        android:label="timerFragment" >
+        <argument android:name="problemId" app:argType="integer" />
+        <action
+            android:id="@+id/action_timerFragment_to_timerCompleteDialog"
+            app:destination="@id/timerCompleteDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/timerCompleteDialog"
+        android:name="com.w36495.randomrithm.presentation.problem.TimerCompleteDialog"
+        android:label="timerCompleteDialog" >
+        <argument android:name="passedTime" app:argType="integer" />
+        <action
+            android:id="@+id/action_timerCompleteDialog_to_problemFragment"
+            app:destination="@id/problemFragment" />
+        <action
+            android:id="@+id/action_timerCompleteDialog_to_homeFragment"
+            app:destination="@id/nav_home" />
+    </dialog>
+
 </navigation>
