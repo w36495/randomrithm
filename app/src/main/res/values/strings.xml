@@ -101,5 +101,6 @@
         <item>루비 2</item>
         <item>루비 1</item>
     </string-array>
+    <string name="title_activity_timer_fragment">TimerFragment</string>
 
 </resources>
