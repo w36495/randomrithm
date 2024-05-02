@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.w36495.randomrithm.presentation.problem.TimerFragment"
+        android:name="com.w36495.randomrithm.presentation.timer.TimerFragment"
         android:label="timerFragment" >
         <argument android:name="problemId" app:argType="integer" />
         <action

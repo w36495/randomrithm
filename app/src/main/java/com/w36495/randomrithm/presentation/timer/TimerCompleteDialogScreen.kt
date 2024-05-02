@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.presentation.problem
+package com.w36495.randomrithm.presentation.timer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.presentation.problem
+package com.w36495.randomrithm.presentation.timer
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.w36495.randomrithm.presentation.problem.ui.theme.RandomrithmTheme
+import com.w36495.randomrithm.presentation.timer.ui.theme.RandomrithmTheme
 
 class TimerCompleteDialog : DialogFragment() {
     private val navController by lazy { findNavController() }

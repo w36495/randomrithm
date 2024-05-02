@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.presentation.problem.ui.theme
+package com.w36495.randomrithm.presentation.timer.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

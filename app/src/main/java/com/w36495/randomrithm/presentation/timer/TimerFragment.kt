@@ -1,4 +1,4 @@
-package com.w36495.randomrithm.presentation.problem
+package com.w36495.randomrithm.presentation.timer
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.w36495.randomrithm.presentation.problem.ui.theme.RandomrithmTheme
+import com.w36495.randomrithm.presentation.timer.ui.theme.RandomrithmTheme
 
 class TimerFragment : Fragment() {
     private val timerViewModel by viewModels<ProblemTimerViewModel>()
