@@ -96,12 +96,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:background="@drawable/bg_btn_rounded10"
+        android:backgroundTint="@color/purple40"
         android:text="@string/tv_onboarding_login"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/btn_just_looking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
