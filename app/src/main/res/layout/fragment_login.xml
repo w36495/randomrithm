@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_btn_rounded10"
         android:text="@string/btn_login_check_id"
         app:layout_constraintBottom_toBottomOf="@id/et_id"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,13 +90,16 @@
         app:layout_constraintBottom_toTopOf="@id/btn_login"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_btn_rounded10"
+        android:backgroundTint="@color/purple40"
         android:text="@string/dialog_btn_okay"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -273,72 +273,84 @@
 
                 </LinearLayout>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_bronze"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/bronze"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_bronze"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@id/btn_silver"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dv_level" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_silver"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/silver"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_silver"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@id/btn_gold"
                     app:layout_constraintStart_toEndOf="@id/btn_bronze"
                     app:layout_constraintTop_toTopOf="@id/btn_bronze" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_gold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/gold"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_gold"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_silver"
                     app:layout_constraintTop_toTopOf="@id/btn_silver" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_platinum"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/platinum"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_platinum"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@id/btn_diamond"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_bronze" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_diamond"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/diamond"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_diamond"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@id/btn_ruby"
                     app:layout_constraintStart_toEndOf="@id/btn_platinum"
                     app:layout_constraintTop_toTopOf="@id/btn_platinum" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_ruby"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/ruby"
                     android:paddingVertical="16dp"
                     android:text="@string/tv_ruby"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_diamond"
                     app:layout_constraintTop_toTopOf="@id/btn_diamond" />
@@ -378,7 +390,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_btn_grey"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:backgroundTint="@color/dv_grey"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:text="@string/source_btn_icpc"
@@ -394,7 +406,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_btn_grey"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:text="@string/source_btn_olympiad"
                     android:textAlignment="textStart"
@@ -409,7 +421,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_btn_grey"
+                    android:background="@drawable/bg_btn_rounded10"
                     android:drawableEnd="@drawable/ic_arrow_right_24"
                     android:text="@string/source_btn_university"
                     android:textAlignment="textStart"
