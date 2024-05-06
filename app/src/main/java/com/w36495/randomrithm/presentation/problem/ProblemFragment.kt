@@ -152,6 +152,16 @@ class ProblemFragment : Fragment() {
         binding.layoutToolbar.setNavigationOnClickListener {
             navController.popBackStack()
         }
+        binding.layoutToolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.menu_timer -> {
+                    val currentProblemId = problemViewModel.getProblemId()
+                    navController.navigate(ProblemFragmentDirections.actionProblemFragmentToTimerFragment(currentProblemId))
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun showRandomProblem(randomProblem: Problem) {
